@@ -1,3 +1,6 @@
+from ..data.action_db_players import add_player_to_db, get_players_from_db
+
+
 class Player:
     def __init__(
         self,
@@ -81,6 +84,8 @@ class PlayerManager:
         }
 
         self.__all_players.append(new_player)
+
+        add_player_to_db(new_player_dict)
 
     def edit_player(self, licence_number: str) -> None:
         return ""
