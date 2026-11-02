@@ -31,7 +31,7 @@
         "firstname": "Paul",
         "lastname": "Collin",
         "club": "CTT Ixelles",
-        "federation_ranking": "A",
+        "federation_ranking": "D2",
         "email": "paul.collin@example.com",
         "phone_number": "0493 28 18 23"
     },
@@ -58,7 +58,7 @@
         "firstname": "Sarah",
         "lastname": "Laurent",
         "club": "TT Evere",
-        "federation_ranking": "A",
+        "federation_ranking": "D2",
         "email": "sarah.laurent@example.com",
         "phone_number": "0480 21 57 18"
     },
@@ -67,7 +67,7 @@
         "firstname": "Léa",
         "lastname": "Dupont",
         "club": "TT Anderlecht",
-        "federation_ranking": "A",
+        "federation_ranking": "D2",
         "email": "lea.dupont@example.com",
         "phone_number": "0499 26 23 57"
     },
@@ -103,7 +103,7 @@
         "firstname": "Nathan",
         "lastname": "Servais",
         "club": "CTT Ixelles",
-        "federation_ranking": "A",
+        "federation_ranking": "D2",
         "email": "nathan.servais@example.com",
         "phone_number": "0486 36 67 13"
     },

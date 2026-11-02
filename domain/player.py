@@ -72,6 +72,10 @@ class PlayerManager:
             )
             self.__all_players.append(player)
 
+    @property
+    def all_players(self) -> list[Player]:
+        return self.__all_players
+
     def licence_exists(self, licence_number: str) -> bool:
         for player in self.__all_players:
             if player.licence_number == licence_number:
