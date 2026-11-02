@@ -1,4 +1,4 @@
-from ..data.action_db_players import add_player_to_db, get_players_from_db
+from data.action_db_players import add_player_to_db, get_players_from_db
 
 
 class Player:
