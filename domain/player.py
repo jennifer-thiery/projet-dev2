@@ -53,3 +53,36 @@ class Player:
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
         )
 
+
+class PlayerManager:
+    def __init__(self):
+        self.__all_players = []
+        for data in get_players_from_db():
+            player = Player(
+                licence_number=data["licence_number"],
+                firstname=data["firstname"],
+                lastname=data["lastname"],
+                club=data["club"],
+                federation_ranking=data["federation_ranking"],
+                email=data["email"],
+                phone_number=data["phone_number"],
+            )
+            self.__all_players.append(player)
+
+    def add_player(self, new_player: Player) -> None:
+        new_player_dict = {
+            "licence_number": new_player.licence_number,
+            "firstname": new_player.firstname,
+            "lastname": new_player.lastname,
+            "club": new_player.club,
+            "federation_ranking": new_player.federation_ranking,
+            "email": new_player.email,
+            "phone_number": new_player.phone_number,
+        }
+
+        self.__all_players.append(new_player)
+    def edit_player(self, licence_number: str) -> None:
+        return ""
+
+    def delete_player(self, licence_number: str) -> None:
+        return ""
