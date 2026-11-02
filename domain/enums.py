@@ -1,0 +1,2 @@
+BracketType = ["JUNIOR", "BEGINNER", "INTERMADIATE", "EXPERT"]
+MatchType = ["POOL", "ROUND_OF_32", "ROUND_OF_16", "QUARTER", "SEMI_FINAL", "FINAL"]
