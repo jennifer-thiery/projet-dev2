@@ -18,7 +18,7 @@ def required_input(prompt: str):
 def form_add_player():
     while True:
         ct()
-        print("\n=== Ajouter des participants ===")
+        print("\n=== Ajouter un participant ===")
         licence_number = required_input("Numéro de licence : ")
 
         # Check licence number before asking other informations
@@ -81,3 +81,11 @@ def form_add_player():
             return
         else:
             print("Entrée invalide")
+
+
+def form_edit_player():
+    print("edit player")
+
+
+def form_delete_player():
+    print("delete player")
