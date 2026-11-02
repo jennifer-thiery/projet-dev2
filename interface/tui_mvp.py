@@ -1,3 +1,4 @@
+from interface import pool_manager
 from lib.tools import ct
 
 
