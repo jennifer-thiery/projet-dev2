@@ -1,4 +1,7 @@
+from time import sleep
+
 from domain.player import Player, PlayerManager
+from lib.tools import ct
 
 
 def required_input(prompt: str):
@@ -12,10 +15,12 @@ def required_input(prompt: str):
 
 
 def form_add_player():
-    # Check licence number before asking other informations
     while True:
-        licence_number = input("Numéro de licence : ")
+        ct()
+        print("\n=== Ajouter des participants ===")
+        licence_number = required_input("Numéro de licence : ")
 
+        # Check licence number before asking other informations
         if len(licence_number) != 8 or not licence_number.isdigit():
             print("La licence doit être composée de 8 chiffres.")
         elif PlayerManager().licence_exists(licence_number):
@@ -24,7 +29,7 @@ def form_add_player():
             break
 
         while True:
-            user_rep = input("Quiter [Q] ou Recommencer [R] : ")[:1]
+            user_rep = input("Quitter [Q] ou Recommencer [R] : ")[:1]
 
             if user_rep == "Q":
                 print("Création du joueur annulée.")
@@ -34,7 +39,7 @@ def form_add_player():
             else:
                 print("Entrée invalide")
 
-    print("--- Renseignez les informations du joueur ---")
+    print("\n--- Renseignez les informations du joueur ---")
     firstname = required_input("Prénom : ")
     lastname = required_input("Nom : ")
     club = required_input("Club : ")
@@ -52,7 +57,7 @@ def form_add_player():
         email=email,
         phone_number=phone_number,
     )
-    print("--- Aperçu du joueur ---")
+    print("\n--- Aperçu du joueur ---")
     print(new_player.player_overview())
 
     # Ask confirmation before adding player to list
@@ -61,6 +66,7 @@ def form_add_player():
         if confirm == "O":
             PlayerManager().add_player(new_player)
             print(f"Joueur {licence_number} : {firstname} {lastname} ajouté")
+            sleep(1.5)
             break
         elif confirm == "N":
             return

@@ -24,7 +24,6 @@ def show_menu() -> None:
                     print("Au revoir !")
                     break
                 case "1":
-                    print("Ajouter des participants : fonctionnalité à venir.")
                     form_add_player()
                 case "2":
                     print("Gérer la liste des participants : fonctionnalité à venir.")
