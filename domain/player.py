@@ -88,9 +88,17 @@ class PlayerManager:
         add_player_to_db(new_player_dict)
 
     def edit_player(
-        self, licence_number: str, firstname, lastname, club, federation_ranking, email, phone_number
+        self,
+        licence_number: str,
+        firstname: str,
+        lastname: str,
+        club: str,
+        federation_ranking: str,
+        email: str,
+        phone_number: str,
     ) -> None:
-        for d in self.__all_players:
+        # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
+        for d in self.__all_players:  # reference for the dict inside of all_players
             if d["licence_number"] == licence_number:
                 d["licence_number"] = licence_number
                 d["firstname"] = firstname
