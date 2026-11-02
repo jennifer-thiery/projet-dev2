@@ -81,8 +81,12 @@ class PlayerManager:
         }
 
         self.__all_players.append(new_player)
+
     def edit_player(self, licence_number: str) -> None:
         return ""
 
     def delete_player(self, licence_number: str) -> None:
-        return ""
+        for i, player in enumerate(self.__all_players):
+            if player.licence_number == licence_number:
+                del self.__all_players[i]
+                break
