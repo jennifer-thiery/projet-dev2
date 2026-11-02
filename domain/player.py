@@ -72,6 +72,12 @@ class PlayerManager:
             )
             self.__all_players.append(player)
 
+    def licence_exists(self, licence_number: str):
+        for d in self.__all_players:
+            if d["licence_number"] == licence_number:
+                return True
+        return False
+
     def add_player(self, new_player: Player) -> None:
         new_player_dict = {
             "licence_number": new_player.licence_number,
