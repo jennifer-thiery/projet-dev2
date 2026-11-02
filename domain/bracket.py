@@ -1,9 +1,14 @@
-from domain.enums import BracketType, MatchType
+from domain.enums import BracketType, MatchType, RankingFede
+from domain.match import Match
 from domain.pool import Pool
 
 
+def sort_classement(elem):
+    return RankingFede.index(elem.federation_ranking)
+
+
 class Braket:
-    def __init__(self, type):
+    def __init__(self, type: str):
         self.current_phase = MatchType[0]
         self.matches = []
         self.players = []
@@ -18,7 +23,7 @@ class Braket:
     def type(self) -> str:
         return self.__type
 
-    def get_next_match(self):  # manque -> match
+    def get_next_match(self) -> Match:
         if self.current_phase == MatchType[0]:
             return self.__pools[0].get_next_match()
         else:
@@ -57,15 +62,10 @@ class Braket:
                     nbr_of_4 -= 1
                     self.__pools.append(Pool(i, list_temp))
         else:
-            if self.type == BracketType[0]:
-                pass  # add to BracketType[1]
-            elif self.type == BracketType[len(BracketType) - 1]:
-                pass  # add to BracketType[len(BracketType)-2]
-            else:
-                pass  # add to BracketType[me+1]
-            print(
-                "aled je dois add mes players au voisin mais j'ai peur de faire une bétise du coup je mets ça pour le moment"
-            )
+            list_temp = []
+            for j in range(0, nbr_play + 1):
+                list_temp.append(self.players.pop(0))
+            self.__pools.append(Pool(1, list_temp))
 
     def rank_player_by_ranking(self) -> None:
-        pass  # Pas encore intégrer (raison = flemme)
+        self.players.sort(key=sort_classement)

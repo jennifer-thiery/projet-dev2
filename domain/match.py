@@ -2,20 +2,13 @@ from domain.player import Player
 
 
 class Match:
-    def __init__(
-        self,
-        id: str,
-        scores: list(2),
-        players: list(Player),
-        type: str,
-        winner: Player,
-    ):
+    def __init__(self, id: str, players: list(Player), type: str):
 
         self.__id = id
-        self.__scores = scores
+        self.__scores = [0, 0]
         self.__players = players
         self.__type = type
-        self.__winner = winner
+        self.__winner = None
 
     @property
     def id(self) -> str:
