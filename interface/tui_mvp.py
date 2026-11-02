@@ -1,4 +1,4 @@
-from interface.pool_manager import pool_manager
+from interface.player_form import form_add_player
 from lib.tools import ct
 
 
@@ -23,11 +23,12 @@ def show_menu() -> None:
                 break
             case "1":
                 print("Ajouter des participants : fonctionnalité à venir.")
+                form_add_player()
             case "2":
                 print("Gérer la liste des participants : fonctionnalité à venir.")
             case "3":
                 print("Répartir les joueurs dans les poules : fonctionnalité à venir.")
             case "4":
-                pool_manager()
+                print("Gestion des scores : fonctionnalité à venir.")
             case _:
                 print("Choix invalide.")
