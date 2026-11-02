@@ -1,0 +1,24 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    "ruff.configuration": {
+        "line-length": 120,
+        "indent-width": 4,
+        "target-version": "py312",
+        "lint": {
+            "select": ["E", "F", "I", "N", "ARG"],
+            "ignore": ["E501"],
+            "unfixable": ["F401", "F841"]
+        },
+        "format": {
+            "quote-style": "double",
+            "indent-style": "space"
+        }
+    }
+}
