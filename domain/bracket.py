@@ -58,9 +58,9 @@ class Braket:
                     self.__pools.append(Pool(i, list_temp))
         else:
             if self.type == BracketType[0]:
-                pass  # add BracketType[1]
+                pass  # add to BracketType[1]
             elif self.type == BracketType[len(BracketType) - 1]:
-                pass  # add BracketType[len(BracketType)-2]
+                pass  # add to BracketType[len(BracketType)-2]
             else:
                 pass  # add to BracketType[me+1]
             print(
