@@ -52,9 +52,17 @@ def form_add_player():
         email=email,
         phone_number=phone_number,
     )
-
     print("--- Aperçu du joueur ---")
     print(new_player.player_overview())
 
-    PlayerManager().add_player(new_player)
-    print(f"Joueur {licence_number} : {firstname} {lastname} ajouté")
+    # Ask confirmation before adding player to list
+    while True:
+        confirm = input("Validez-vous la création de ce joueur ? [O/N] : ")[:1]
+        if confirm == "O":
+            PlayerManager().add_player(new_player)
+            print(f"Joueur {licence_number} : {firstname} {lastname} ajouté")
+            break
+        elif confirm == "N":
+            return
+        else:
+            print("Entrée invalide")
