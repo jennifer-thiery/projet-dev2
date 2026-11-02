@@ -87,8 +87,19 @@ class PlayerManager:
 
         add_player_to_db(new_player_dict)
 
-    def edit_player(self, licence_number: str) -> None:
-        return ""
+    def edit_player(
+        self, licence_number: str, firstname, lastname, club, federation_ranking, email, phone_number
+    ) -> None:
+        for d in self.__all_players:
+            if d["licence_number"] == licence_number:
+                d["licence_number"] = licence_number
+                d["firstname"] = firstname
+                d["lastname"] = lastname
+                d["club"] = club
+                d["federation_ranking"] = federation_ranking
+                d["email"] = email
+                d["phone_number"] = phone_number
+                break
 
     def delete_player(self, licence_number: str) -> None:
         for i, player in enumerate(self.__all_players):
