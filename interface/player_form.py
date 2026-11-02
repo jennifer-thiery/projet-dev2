@@ -1,5 +1,6 @@
 from time import sleep
 
+from domain.enums import FederationRanking
 from domain.player import Player, PlayerManager
 from lib.tools import ct
 
@@ -43,7 +44,15 @@ def form_add_player():
     firstname = required_input("Prénom : ")
     lastname = required_input("Nom : ")
     club = required_input("Club : ")
-    federation_ranking = required_input("Classement fédéral : ")
+
+    # Check if it's a valid federation ranking
+    while True:
+        federation_ranking = required_input("Classement fédéral : ")
+        if federation_ranking not in FederationRanking:
+            print("Classement invalide")
+        else:
+            break
+
     email = required_input("Email : ")
     phone_number = required_input("Numéro de téléphone : ")
 
