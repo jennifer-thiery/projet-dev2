@@ -57,6 +57,12 @@ class Braket:
                     nbr_of_4 -= 1
                     self.__pools.append(Pool(i, list_temp))
         else:
+            if self.type == BracketType[0]:
+                pass  # add BracketType[1]
+            elif self.type == BracketType[len(BracketType) - 1]:
+                pass  # add BracketType[len(BracketType)-2]
+            else:
+                pass  # add to BracketType[me+1]
             print(
                 "aled je dois add mes players au voisin mais j'ai peur de faire une bétise du coup je mets ça pour le moment"
             )
