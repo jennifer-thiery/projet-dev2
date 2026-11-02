@@ -1,6 +1,16 @@
 from domain.player import Player, PlayerManager
 
 
+def required_input(prompt: str):
+    while True:
+        value = input(prompt)
+
+        if value == "":
+            print("Veillez introduire une valeur !")
+        else:
+            return value
+
+
 def form_add_player():
     # Check licence number before asking other informations
     while True:
@@ -25,14 +35,14 @@ def form_add_player():
                 print("Entrée invalide")
 
     print("--- Renseignez les informations du joueur ---")
-    licence_number = input("Numéro de licence : ")
-    firstname = input("Prénom : ")
-    lastname = input("Nom : ")
-    club = input("Club : ")
-    federation_ranking = input("Classement fédéral : ")
-    email = input("Email : ")
-    phone_number = input("Numéro de téléphone : ")
+    firstname = required_input("Prénom : ")
+    lastname = required_input("Nom : ")
+    club = required_input("Club : ")
+    federation_ranking = required_input("Classement fédéral : ")
+    email = required_input("Email : ")
+    phone_number = required_input("Numéro de téléphone : ")
 
+    # Display informations of the new player
     new_player = Player(
         licence_number=licence_number,
         firstname=firstname,
