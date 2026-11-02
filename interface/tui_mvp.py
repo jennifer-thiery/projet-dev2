@@ -13,23 +13,26 @@ def show_option() -> None:
 
 
 def show_menu() -> None:
-    while True:
-        ct()
-        show_option()
-        choix = input("\nVotre choix : ").strip()
+    try:
+        while True:
+            ct()
+            show_option()
+            choix = input("\nVotre choix : ").strip()
 
-        match choix:
-            case "0":
-                print("Au revoir !")
-                break
-            case "1":
-                print("Ajouter des participants : fonctionnalité à venir.")
-                form_add_player()
-            case "2":
-                print("Gérer la liste des participants : fonctionnalité à venir.")
-            case "3":
-                print("Répartir les joueurs dans les poules : fonctionnalité à venir.")
-            case "4":
-                pool_manager()
-            case _:
-                print("Choix invalide.")
+            match choix:
+                case "0":
+                    print("Au revoir !")
+                    break
+                case "1":
+                    print("Ajouter des participants : fonctionnalité à venir.")
+                    form_add_player()
+                case "2":
+                    print("Gérer la liste des participants : fonctionnalité à venir.")
+                case "3":
+                    print("Répartir les joueurs dans les poules : fonctionnalité à venir.")
+                case "4":
+                    pool_manager()
+                case _:
+                    print("Choix invalide.")
+    except KeyboardInterrupt:
+        print("\nAu revoir !")
