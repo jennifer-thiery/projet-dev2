@@ -1,37 +1,5 @@
 from enum import StrEnum, auto
 
-RankingFede = [
-    "NC",
-    "E6",
-    "E5",
-    "E4",
-    "E3",
-    "E2",
-    "E1",
-    "E0",
-    "D6",
-    "D5",
-    "D4",
-    "D3",
-    "D2",
-    "D1",
-    "D0",
-    "C6",
-    "C5",
-    "C4",
-    "C3",
-    "C2",
-    "C1",
-    "C0",
-    "B6",
-    "B5",
-    "B4",
-    "B3",
-    "B2",
-    "B1",
-    "B0",
-]
-
 
 class BracketType(StrEnum):
     JUNIOR = auto()
