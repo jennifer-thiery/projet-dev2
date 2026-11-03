@@ -8,6 +8,7 @@ def show_option() -> None:
     print("1. Gérer les participants")
     print("2. Répartir les joueurs dans les poules")
     print("3. Gestion des scores")
+    print("4. Gérer les poules")
     print("0. Quitter")
 
 
