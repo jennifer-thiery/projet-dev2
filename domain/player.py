@@ -82,6 +82,11 @@ class PlayerManager:
                 return True
         return False
 
+    def player_pointer(self, licence_number: str) -> Player:
+        for player in self.all_players:
+            if player.licence_number == licence_number:
+                return player
+
     def add_player(self, new_player: Player) -> None:
         new_player_dict = {
             "licence_number": new_player.licence_number,
@@ -99,7 +104,8 @@ class PlayerManager:
 
     def edit_player(
         self,
-        licence_number: str,
+        pLicence_number: str,  # the current licence number
+        licence_number: str,  # The potentially changed licence number
         firstname: str,
         lastname: str,
         club: str,
@@ -108,19 +114,19 @@ class PlayerManager:
         phone_number: str,
     ) -> None:
         # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
-        for d in self.__all_players:  # reference for the dict inside of all_players
-            if d["licence_number"] == licence_number:
-                d["licence_number"] = licence_number
-                d["firstname"] = firstname
-                d["lastname"] = lastname
-                d["club"] = club
-                d["federation_ranking"] = federation_ranking
-                d["email"] = email
-                d["phone_number"] = phone_number
+        for player in self.__all_players:  # player references the dict Player inside of all_players
+            if player.licence_number == pLicence_number:
+                player.licence_number = licence_number
+                player.firstname = firstname
+                player.lastname = lastname
+                player.club = club
+                player.federation_ranking = federation_ranking
+                player.email = email
+                player.phone_number = phone_number
                 break
 
     def delete_player(self, licence_number: str) -> None:
-        for i, player in enumerate(self.__all_players):
+        for player in self.__all_players:
             if player.licence_number == licence_number:
-                del self.__all_players[i]
+                self.__all_players.remove(player)
                 break
