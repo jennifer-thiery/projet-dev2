@@ -8,7 +8,7 @@ def sort_classement(elem) -> int:
 
 
 class Braket:
-    def __init__(self, type: str):
+    def __init__(self, type: BracketType):
         self.current_phase = MatchType.POOL
         self.matches = []
         self.players = []
@@ -29,10 +29,10 @@ class Braket:
         else:
             return self.matches[0]
 
-    def add_player_to_bracket(self, player) -> None:
+    def add_player(self, player) -> None:
         self.players.append(player)
 
-    def remove_player_from_bracket(self, licence_number) -> None:
+    def remove_player(self, licence_number) -> None:
         for i, player in enumerate(self.players):
             if player.licence_number == licence_number:
                 self.players.remove(i)
