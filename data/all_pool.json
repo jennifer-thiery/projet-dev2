@@ -1,0 +1,2631 @@
+[
+    {
+        "id": 1,
+        "players": [
+            {
+                "licence_number": "12345678",
+                "firstname": "Chloé",
+                "lastname": "Lejeune",
+                "club": "TTC Etterbeek",
+                "federation_ranking": "D4",
+                "email": "chloe.lejeune@example.com",
+                "phone_number": "0489 86 73 73"
+            },
+            {
+                "licence_number": "85688041",
+                "firstname": "Victor",
+                "lastname": "Servais",
+                "club": "TTC Laeken",
+                "federation_ranking": "C4",
+                "email": "victor.servais@example.com",
+                "phone_number": "0473 16 93 30"
+            },
+            {
+                "licence_number": "99288112",
+                "firstname": "Raphaël",
+                "lastname": "Dubois",
+                "club": "TT Evere",
+                "federation_ranking": "C2",
+                "email": "raphael.dubois@example.com",
+                "phone_number": "0486 96 47 25"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_1_match_1",
+                "players": [
+                    {
+                        "licence_number": "12345678",
+                        "firstname": "Chloé",
+                        "lastname": "Lejeune",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "D4",
+                        "email": "chloe.lejeune@example.com",
+                        "phone_number": "0489 86 73 73"
+                    },
+                    {
+                        "licence_number": "85688041",
+                        "firstname": "Victor",
+                        "lastname": "Servais",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "C4",
+                        "email": "victor.servais@example.com",
+                        "phone_number": "0473 16 93 30"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    40,
+                    0
+                ],
+                "winner": 12345678
+            },
+            {
+                "id": "poule_1_match_2",
+                "players": [
+                    {
+                        "licence_number": "12345678",
+                        "firstname": "Chloé",
+                        "lastname": "Lejeune",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "D4",
+                        "email": "chloe.lejeune@example.com",
+                        "phone_number": "0489 86 73 73"
+                    },
+                    {
+                        "licence_number": "99288112",
+                        "firstname": "Raphaël",
+                        "lastname": "Dubois",
+                        "club": "TT Evere",
+                        "federation_ranking": "C2",
+                        "email": "raphael.dubois@example.com",
+                        "phone_number": "0486 96 47 25"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_1_match_3",
+                "players": [
+                    {
+                        "licence_number": "85688041",
+                        "firstname": "Victor",
+                        "lastname": "Servais",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "C4",
+                        "email": "victor.servais@example.com",
+                        "phone_number": "0473 16 93 30"
+                    },
+                    {
+                        "licence_number": "99288112",
+                        "firstname": "Raphaël",
+                        "lastname": "Dubois",
+                        "club": "TT Evere",
+                        "federation_ranking": "C2",
+                        "email": "raphael.dubois@example.com",
+                        "phone_number": "0486 96 47 25"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "players": [
+            {
+                "licence_number": "71202897",
+                "firstname": "Paul",
+                "lastname": "Collin",
+                "club": "CTT Ixelles",
+                "federation_ranking": "D2",
+                "email": "paul.collin@example.com",
+                "phone_number": "0493 28 18 23"
+            },
+            {
+                "licence_number": "18877198",
+                "firstname": "Léo",
+                "lastname": "Delvaux",
+                "club": "CTT Schaerbeek",
+                "federation_ranking": "E2",
+                "email": "leo.delvaux@example.com",
+                "phone_number": "0499 35 63 88"
+            },
+            {
+                "licence_number": "19972707",
+                "firstname": "Camille",
+                "lastname": "Simon",
+                "club": "TTC Bruxelles",
+                "federation_ranking": "E4",
+                "email": "camille.simon@example.com",
+                "phone_number": "0485 79 58 21"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_2_match_1",
+                "players": [
+                    {
+                        "licence_number": "71202897",
+                        "firstname": "Paul",
+                        "lastname": "Collin",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "D2",
+                        "email": "paul.collin@example.com",
+                        "phone_number": "0493 28 18 23"
+                    },
+                    {
+                        "licence_number": "18877198",
+                        "firstname": "Léo",
+                        "lastname": "Delvaux",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E2",
+                        "email": "leo.delvaux@example.com",
+                        "phone_number": "0499 35 63 88"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_2_match_2",
+                "players": [
+                    {
+                        "licence_number": "71202897",
+                        "firstname": "Paul",
+                        "lastname": "Collin",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "D2",
+                        "email": "paul.collin@example.com",
+                        "phone_number": "0493 28 18 23"
+                    },
+                    {
+                        "licence_number": "19972707",
+                        "firstname": "Camille",
+                        "lastname": "Simon",
+                        "club": "TTC Bruxelles",
+                        "federation_ranking": "E4",
+                        "email": "camille.simon@example.com",
+                        "phone_number": "0485 79 58 21"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_2_match_3",
+                "players": [
+                    {
+                        "licence_number": "18877198",
+                        "firstname": "Léo",
+                        "lastname": "Delvaux",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E2",
+                        "email": "leo.delvaux@example.com",
+                        "phone_number": "0499 35 63 88"
+                    },
+                    {
+                        "licence_number": "19972707",
+                        "firstname": "Camille",
+                        "lastname": "Simon",
+                        "club": "TTC Bruxelles",
+                        "federation_ranking": "E4",
+                        "email": "camille.simon@example.com",
+                        "phone_number": "0485 79 58 21"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "players": [
+            {
+                "licence_number": "30293476",
+                "firstname": "Sarah",
+                "lastname": "Laurent",
+                "club": "TT Evere",
+                "federation_ranking": "D2",
+                "email": "sarah.laurent@example.com",
+                "phone_number": "0480 21 57 18"
+            },
+            {
+                "licence_number": "48983884",
+                "firstname": "Léa",
+                "lastname": "Dupont",
+                "club": "TT Anderlecht",
+                "federation_ranking": "D2",
+                "email": "lea.dupont@example.com",
+                "phone_number": "0499 26 23 57"
+            },
+            {
+                "licence_number": "16845953",
+                "firstname": "Alice",
+                "lastname": "Mertens",
+                "club": "CTT Forest",
+                "federation_ranking": "D4",
+                "email": "alice.mertens@example.com",
+                "phone_number": "0481 71 63 40"
+            },
+            {
+                "licence_number": "68579255",
+                "firstname": "Océane",
+                "lastname": "Renard",
+                "club": "TT Evere",
+                "federation_ranking": "D2",
+                "email": "oceane.renard@example.com",
+                "phone_number": "0471 98 75 95"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_3_match_1",
+                "players": [
+                    {
+                        "licence_number": "30293476",
+                        "firstname": "Sarah",
+                        "lastname": "Laurent",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "sarah.laurent@example.com",
+                        "phone_number": "0480 21 57 18"
+                    },
+                    {
+                        "licence_number": "48983884",
+                        "firstname": "Léa",
+                        "lastname": "Dupont",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "D2",
+                        "email": "lea.dupont@example.com",
+                        "phone_number": "0499 26 23 57"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_3_match_2",
+                "players": [
+                    {
+                        "licence_number": "30293476",
+                        "firstname": "Sarah",
+                        "lastname": "Laurent",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "sarah.laurent@example.com",
+                        "phone_number": "0480 21 57 18"
+                    },
+                    {
+                        "licence_number": "16845953",
+                        "firstname": "Alice",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D4",
+                        "email": "alice.mertens@example.com",
+                        "phone_number": "0481 71 63 40"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_3_match_3",
+                "players": [
+                    {
+                        "licence_number": "30293476",
+                        "firstname": "Sarah",
+                        "lastname": "Laurent",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "sarah.laurent@example.com",
+                        "phone_number": "0480 21 57 18"
+                    },
+                    {
+                        "licence_number": "68579255",
+                        "firstname": "Océane",
+                        "lastname": "Renard",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "oceane.renard@example.com",
+                        "phone_number": "0471 98 75 95"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_3_match_4",
+                "players": [
+                    {
+                        "licence_number": "48983884",
+                        "firstname": "Léa",
+                        "lastname": "Dupont",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "D2",
+                        "email": "lea.dupont@example.com",
+                        "phone_number": "0499 26 23 57"
+                    },
+                    {
+                        "licence_number": "16845953",
+                        "firstname": "Alice",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D4",
+                        "email": "alice.mertens@example.com",
+                        "phone_number": "0481 71 63 40"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_3_match_5",
+                "players": [
+                    {
+                        "licence_number": "48983884",
+                        "firstname": "Léa",
+                        "lastname": "Dupont",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "D2",
+                        "email": "lea.dupont@example.com",
+                        "phone_number": "0499 26 23 57"
+                    },
+                    {
+                        "licence_number": "68579255",
+                        "firstname": "Océane",
+                        "lastname": "Renard",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "oceane.renard@example.com",
+                        "phone_number": "0471 98 75 95"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_3_match_6",
+                "players": [
+                    {
+                        "licence_number": "16845953",
+                        "firstname": "Alice",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D4",
+                        "email": "alice.mertens@example.com",
+                        "phone_number": "0481 71 63 40"
+                    },
+                    {
+                        "licence_number": "68579255",
+                        "firstname": "Océane",
+                        "lastname": "Renard",
+                        "club": "TT Evere",
+                        "federation_ranking": "D2",
+                        "email": "oceane.renard@example.com",
+                        "phone_number": "0471 98 75 95"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "players": [
+            {
+                "licence_number": "37042751",
+                "firstname": "Zoé",
+                "lastname": "Janssens",
+                "club": "TTC Bruxelles",
+                "federation_ranking": "B2",
+                "email": "zoe.janssens@example.com",
+                "phone_number": "0499 69 53 19"
+            },
+            {
+                "licence_number": "45767577",
+                "firstname": "Nathan",
+                "lastname": "Servais",
+                "club": "CTT Ixelles",
+                "federation_ranking": "D2",
+                "email": "nathan.servais@example.com",
+                "phone_number": "0486 36 67 13"
+            },
+            {
+                "licence_number": "63156012",
+                "firstname": "Louise",
+                "lastname": "Jacobs",
+                "club": "TTC Etterbeek",
+                "federation_ranking": "D4",
+                "email": "louise.jacobs@example.com",
+                "phone_number": "0478 81 95 66"
+            },
+            {
+                "licence_number": "89549796",
+                "firstname": "Océane",
+                "lastname": "Leclercq",
+                "club": "CTT Schaerbeek",
+                "federation_ranking": "E2",
+                "email": "oceane.leclercq@example.com",
+                "phone_number": "0483 22 30 66"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_4_match_1",
+                "players": [
+                    {
+                        "licence_number": "37042751",
+                        "firstname": "Zoé",
+                        "lastname": "Janssens",
+                        "club": "TTC Bruxelles",
+                        "federation_ranking": "B2",
+                        "email": "zoe.janssens@example.com",
+                        "phone_number": "0499 69 53 19"
+                    },
+                    {
+                        "licence_number": "45767577",
+                        "firstname": "Nathan",
+                        "lastname": "Servais",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "D2",
+                        "email": "nathan.servais@example.com",
+                        "phone_number": "0486 36 67 13"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_4_match_2",
+                "players": [
+                    {
+                        "licence_number": "37042751",
+                        "firstname": "Zoé",
+                        "lastname": "Janssens",
+                        "club": "TTC Bruxelles",
+                        "federation_ranking": "B2",
+                        "email": "zoe.janssens@example.com",
+                        "phone_number": "0499 69 53 19"
+                    },
+                    {
+                        "licence_number": "63156012",
+                        "firstname": "Louise",
+                        "lastname": "Jacobs",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "D4",
+                        "email": "louise.jacobs@example.com",
+                        "phone_number": "0478 81 95 66"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_4_match_3",
+                "players": [
+                    {
+                        "licence_number": "37042751",
+                        "firstname": "Zoé",
+                        "lastname": "Janssens",
+                        "club": "TTC Bruxelles",
+                        "federation_ranking": "B2",
+                        "email": "zoe.janssens@example.com",
+                        "phone_number": "0499 69 53 19"
+                    },
+                    {
+                        "licence_number": "89549796",
+                        "firstname": "Océane",
+                        "lastname": "Leclercq",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E2",
+                        "email": "oceane.leclercq@example.com",
+                        "phone_number": "0483 22 30 66"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_4_match_4",
+                "players": [
+                    {
+                        "licence_number": "45767577",
+                        "firstname": "Nathan",
+                        "lastname": "Servais",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "D2",
+                        "email": "nathan.servais@example.com",
+                        "phone_number": "0486 36 67 13"
+                    },
+                    {
+                        "licence_number": "63156012",
+                        "firstname": "Louise",
+                        "lastname": "Jacobs",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "D4",
+                        "email": "louise.jacobs@example.com",
+                        "phone_number": "0478 81 95 66"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_4_match_5",
+                "players": [
+                    {
+                        "licence_number": "45767577",
+                        "firstname": "Nathan",
+                        "lastname": "Servais",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "D2",
+                        "email": "nathan.servais@example.com",
+                        "phone_number": "0486 36 67 13"
+                    },
+                    {
+                        "licence_number": "89549796",
+                        "firstname": "Océane",
+                        "lastname": "Leclercq",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E2",
+                        "email": "oceane.leclercq@example.com",
+                        "phone_number": "0483 22 30 66"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_4_match_6",
+                "players": [
+                    {
+                        "licence_number": "63156012",
+                        "firstname": "Louise",
+                        "lastname": "Jacobs",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "D4",
+                        "email": "louise.jacobs@example.com",
+                        "phone_number": "0478 81 95 66"
+                    },
+                    {
+                        "licence_number": "89549796",
+                        "firstname": "Océane",
+                        "lastname": "Leclercq",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E2",
+                        "email": "oceane.leclercq@example.com",
+                        "phone_number": "0483 22 30 66"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "players": [
+            {
+                "licence_number": "33121945",
+                "firstname": "Clara",
+                "lastname": "Verhaegen",
+                "club": "CTT Saint-Gilles",
+                "federation_ranking": "D2",
+                "email": "clara.verhaegen@example.com",
+                "phone_number": "0498 56 46 57"
+            },
+            {
+                "licence_number": "93264334",
+                "firstname": "Louis",
+                "lastname": "Mathieu",
+                "club": "TT Evere",
+                "federation_ranking": "C4",
+                "email": "louis.mathieu@example.com",
+                "phone_number": "0486 25 62 48"
+            },
+            {
+                "licence_number": "89321348",
+                "firstname": "Clara",
+                "lastname": "Mertens",
+                "club": "TT Evere",
+                "federation_ranking": "B2",
+                "email": "clara.mertens@example.com",
+                "phone_number": "0494 38 82 41"
+            },
+            {
+                "licence_number": "48391926",
+                "firstname": "Eva",
+                "lastname": "De Smet",
+                "club": "TT Anderlecht",
+                "federation_ranking": "C4",
+                "email": "eva.desmet@example.com",
+                "phone_number": "0497 37 29 32"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_5_match_1",
+                "players": [
+                    {
+                        "licence_number": "33121945",
+                        "firstname": "Clara",
+                        "lastname": "Verhaegen",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "D2",
+                        "email": "clara.verhaegen@example.com",
+                        "phone_number": "0498 56 46 57"
+                    },
+                    {
+                        "licence_number": "93264334",
+                        "firstname": "Louis",
+                        "lastname": "Mathieu",
+                        "club": "TT Evere",
+                        "federation_ranking": "C4",
+                        "email": "louis.mathieu@example.com",
+                        "phone_number": "0486 25 62 48"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_5_match_2",
+                "players": [
+                    {
+                        "licence_number": "33121945",
+                        "firstname": "Clara",
+                        "lastname": "Verhaegen",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "D2",
+                        "email": "clara.verhaegen@example.com",
+                        "phone_number": "0498 56 46 57"
+                    },
+                    {
+                        "licence_number": "89321348",
+                        "firstname": "Clara",
+                        "lastname": "Mertens",
+                        "club": "TT Evere",
+                        "federation_ranking": "B2",
+                        "email": "clara.mertens@example.com",
+                        "phone_number": "0494 38 82 41"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_5_match_3",
+                "players": [
+                    {
+                        "licence_number": "33121945",
+                        "firstname": "Clara",
+                        "lastname": "Verhaegen",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "D2",
+                        "email": "clara.verhaegen@example.com",
+                        "phone_number": "0498 56 46 57"
+                    },
+                    {
+                        "licence_number": "48391926",
+                        "firstname": "Eva",
+                        "lastname": "De Smet",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "C4",
+                        "email": "eva.desmet@example.com",
+                        "phone_number": "0497 37 29 32"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_5_match_4",
+                "players": [
+                    {
+                        "licence_number": "93264334",
+                        "firstname": "Louis",
+                        "lastname": "Mathieu",
+                        "club": "TT Evere",
+                        "federation_ranking": "C4",
+                        "email": "louis.mathieu@example.com",
+                        "phone_number": "0486 25 62 48"
+                    },
+                    {
+                        "licence_number": "89321348",
+                        "firstname": "Clara",
+                        "lastname": "Mertens",
+                        "club": "TT Evere",
+                        "federation_ranking": "B2",
+                        "email": "clara.mertens@example.com",
+                        "phone_number": "0494 38 82 41"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_5_match_5",
+                "players": [
+                    {
+                        "licence_number": "93264334",
+                        "firstname": "Louis",
+                        "lastname": "Mathieu",
+                        "club": "TT Evere",
+                        "federation_ranking": "C4",
+                        "email": "louis.mathieu@example.com",
+                        "phone_number": "0486 25 62 48"
+                    },
+                    {
+                        "licence_number": "48391926",
+                        "firstname": "Eva",
+                        "lastname": "De Smet",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "C4",
+                        "email": "eva.desmet@example.com",
+                        "phone_number": "0497 37 29 32"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_5_match_6",
+                "players": [
+                    {
+                        "licence_number": "89321348",
+                        "firstname": "Clara",
+                        "lastname": "Mertens",
+                        "club": "TT Evere",
+                        "federation_ranking": "B2",
+                        "email": "clara.mertens@example.com",
+                        "phone_number": "0494 38 82 41"
+                    },
+                    {
+                        "licence_number": "48391926",
+                        "firstname": "Eva",
+                        "lastname": "De Smet",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "C4",
+                        "email": "eva.desmet@example.com",
+                        "phone_number": "0497 37 29 32"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "players": [
+            {
+                "licence_number": "44105402",
+                "firstname": "Arthur",
+                "lastname": "Claes",
+                "club": "TTC Auderghem",
+                "federation_ranking": "B4",
+                "email": "arthur.claes@example.com",
+                "phone_number": "0497 24 34 99"
+            },
+            {
+                "licence_number": "77717246",
+                "firstname": "Paul",
+                "lastname": "Wouters",
+                "club": "TT Woluwe",
+                "federation_ranking": "B4",
+                "email": "paul.wouters@example.com",
+                "phone_number": "0471 46 10 43"
+            },
+            {
+                "licence_number": "91466361",
+                "firstname": "Emma",
+                "lastname": "Laurent",
+                "club": "TTC Etterbeek",
+                "federation_ranking": "B2",
+                "email": "emma.laurent@example.com",
+                "phone_number": "0495 95 78 16"
+            },
+            {
+                "licence_number": "26010739",
+                "firstname": "Nathan",
+                "lastname": "Dupont",
+                "club": "CTT Schaerbeek",
+                "federation_ranking": "E6",
+                "email": "nathan.dupont@example.com",
+                "phone_number": "0480 96 53 59"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_6_match_1",
+                "players": [
+                    {
+                        "licence_number": "44105402",
+                        "firstname": "Arthur",
+                        "lastname": "Claes",
+                        "club": "TTC Auderghem",
+                        "federation_ranking": "B4",
+                        "email": "arthur.claes@example.com",
+                        "phone_number": "0497 24 34 99"
+                    },
+                    {
+                        "licence_number": "77717246",
+                        "firstname": "Paul",
+                        "lastname": "Wouters",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B4",
+                        "email": "paul.wouters@example.com",
+                        "phone_number": "0471 46 10 43"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_6_match_2",
+                "players": [
+                    {
+                        "licence_number": "44105402",
+                        "firstname": "Arthur",
+                        "lastname": "Claes",
+                        "club": "TTC Auderghem",
+                        "federation_ranking": "B4",
+                        "email": "arthur.claes@example.com",
+                        "phone_number": "0497 24 34 99"
+                    },
+                    {
+                        "licence_number": "91466361",
+                        "firstname": "Emma",
+                        "lastname": "Laurent",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "emma.laurent@example.com",
+                        "phone_number": "0495 95 78 16"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_6_match_3",
+                "players": [
+                    {
+                        "licence_number": "44105402",
+                        "firstname": "Arthur",
+                        "lastname": "Claes",
+                        "club": "TTC Auderghem",
+                        "federation_ranking": "B4",
+                        "email": "arthur.claes@example.com",
+                        "phone_number": "0497 24 34 99"
+                    },
+                    {
+                        "licence_number": "26010739",
+                        "firstname": "Nathan",
+                        "lastname": "Dupont",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "nathan.dupont@example.com",
+                        "phone_number": "0480 96 53 59"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_6_match_4",
+                "players": [
+                    {
+                        "licence_number": "77717246",
+                        "firstname": "Paul",
+                        "lastname": "Wouters",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B4",
+                        "email": "paul.wouters@example.com",
+                        "phone_number": "0471 46 10 43"
+                    },
+                    {
+                        "licence_number": "91466361",
+                        "firstname": "Emma",
+                        "lastname": "Laurent",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "emma.laurent@example.com",
+                        "phone_number": "0495 95 78 16"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_6_match_5",
+                "players": [
+                    {
+                        "licence_number": "77717246",
+                        "firstname": "Paul",
+                        "lastname": "Wouters",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B4",
+                        "email": "paul.wouters@example.com",
+                        "phone_number": "0471 46 10 43"
+                    },
+                    {
+                        "licence_number": "26010739",
+                        "firstname": "Nathan",
+                        "lastname": "Dupont",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "nathan.dupont@example.com",
+                        "phone_number": "0480 96 53 59"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_6_match_6",
+                "players": [
+                    {
+                        "licence_number": "91466361",
+                        "firstname": "Emma",
+                        "lastname": "Laurent",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "emma.laurent@example.com",
+                        "phone_number": "0495 95 78 16"
+                    },
+                    {
+                        "licence_number": "26010739",
+                        "firstname": "Nathan",
+                        "lastname": "Dupont",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "nathan.dupont@example.com",
+                        "phone_number": "0480 96 53 59"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "players": [
+            {
+                "licence_number": "30834919",
+                "firstname": "Clara",
+                "lastname": "Goossens",
+                "club": "TTC Laeken",
+                "federation_ranking": "B0",
+                "email": "clara.goossens@example.com",
+                "phone_number": "0499 51 87 26"
+            },
+            {
+                "licence_number": "72812014",
+                "firstname": "Anna",
+                "lastname": "Delvaux",
+                "club": "TT Anderlecht",
+                "federation_ranking": "B0",
+                "email": "anna.delvaux@example.com",
+                "phone_number": "0499 13 58 55"
+            },
+            {
+                "licence_number": "52547810",
+                "firstname": "Ethan",
+                "lastname": "Hermans",
+                "club": "TT Jette",
+                "federation_ranking": "C4",
+                "email": "ethan.hermans@example.com",
+                "phone_number": "0473 95 22 92"
+            },
+            {
+                "licence_number": "91222056",
+                "firstname": "Juliette",
+                "lastname": "Renard",
+                "club": "TTC Laeken",
+                "federation_ranking": "C0",
+                "email": "juliette.renard@example.com",
+                "phone_number": "0496 53 89 64"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_7_match_1",
+                "players": [
+                    {
+                        "licence_number": "30834919",
+                        "firstname": "Clara",
+                        "lastname": "Goossens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "B0",
+                        "email": "clara.goossens@example.com",
+                        "phone_number": "0499 51 87 26"
+                    },
+                    {
+                        "licence_number": "72812014",
+                        "firstname": "Anna",
+                        "lastname": "Delvaux",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "B0",
+                        "email": "anna.delvaux@example.com",
+                        "phone_number": "0499 13 58 55"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_7_match_2",
+                "players": [
+                    {
+                        "licence_number": "30834919",
+                        "firstname": "Clara",
+                        "lastname": "Goossens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "B0",
+                        "email": "clara.goossens@example.com",
+                        "phone_number": "0499 51 87 26"
+                    },
+                    {
+                        "licence_number": "52547810",
+                        "firstname": "Ethan",
+                        "lastname": "Hermans",
+                        "club": "TT Jette",
+                        "federation_ranking": "C4",
+                        "email": "ethan.hermans@example.com",
+                        "phone_number": "0473 95 22 92"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_7_match_3",
+                "players": [
+                    {
+                        "licence_number": "30834919",
+                        "firstname": "Clara",
+                        "lastname": "Goossens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "B0",
+                        "email": "clara.goossens@example.com",
+                        "phone_number": "0499 51 87 26"
+                    },
+                    {
+                        "licence_number": "91222056",
+                        "firstname": "Juliette",
+                        "lastname": "Renard",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "C0",
+                        "email": "juliette.renard@example.com",
+                        "phone_number": "0496 53 89 64"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_7_match_4",
+                "players": [
+                    {
+                        "licence_number": "72812014",
+                        "firstname": "Anna",
+                        "lastname": "Delvaux",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "B0",
+                        "email": "anna.delvaux@example.com",
+                        "phone_number": "0499 13 58 55"
+                    },
+                    {
+                        "licence_number": "52547810",
+                        "firstname": "Ethan",
+                        "lastname": "Hermans",
+                        "club": "TT Jette",
+                        "federation_ranking": "C4",
+                        "email": "ethan.hermans@example.com",
+                        "phone_number": "0473 95 22 92"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_7_match_5",
+                "players": [
+                    {
+                        "licence_number": "72812014",
+                        "firstname": "Anna",
+                        "lastname": "Delvaux",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "B0",
+                        "email": "anna.delvaux@example.com",
+                        "phone_number": "0499 13 58 55"
+                    },
+                    {
+                        "licence_number": "91222056",
+                        "firstname": "Juliette",
+                        "lastname": "Renard",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "C0",
+                        "email": "juliette.renard@example.com",
+                        "phone_number": "0496 53 89 64"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_7_match_6",
+                "players": [
+                    {
+                        "licence_number": "52547810",
+                        "firstname": "Ethan",
+                        "lastname": "Hermans",
+                        "club": "TT Jette",
+                        "federation_ranking": "C4",
+                        "email": "ethan.hermans@example.com",
+                        "phone_number": "0473 95 22 92"
+                    },
+                    {
+                        "licence_number": "91222056",
+                        "firstname": "Juliette",
+                        "lastname": "Renard",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "C0",
+                        "email": "juliette.renard@example.com",
+                        "phone_number": "0496 53 89 64"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "players": [
+            {
+                "licence_number": "46924468",
+                "firstname": "Théo",
+                "lastname": "Janssens",
+                "club": "CTT Schaerbeek",
+                "federation_ranking": "B4",
+                "email": "theo.janssens@example.com",
+                "phone_number": "0488 13 80 26"
+            },
+            {
+                "licence_number": "15333027",
+                "firstname": "Lucas",
+                "lastname": "Lenoir",
+                "club": "CTT Ixelles",
+                "federation_ranking": "B6",
+                "email": "lucas.lenoir@example.com",
+                "phone_number": "0472 90 57 24"
+            },
+            {
+                "licence_number": "49107875",
+                "firstname": "Louise",
+                "lastname": "Peeters",
+                "club": "CTT Saint-Gilles",
+                "federation_ranking": "B2",
+                "email": "louise.peeters@example.com",
+                "phone_number": "0497 96 54 49"
+            },
+            {
+                "licence_number": "64919537",
+                "firstname": "Robin",
+                "lastname": "Lecomte",
+                "club": "CTT Ixelles",
+                "federation_ranking": "E6",
+                "email": "robin.lecomte@example.com",
+                "phone_number": "0470 42 78 42"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_8_match_1",
+                "players": [
+                    {
+                        "licence_number": "46924468",
+                        "firstname": "Théo",
+                        "lastname": "Janssens",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "B4",
+                        "email": "theo.janssens@example.com",
+                        "phone_number": "0488 13 80 26"
+                    },
+                    {
+                        "licence_number": "15333027",
+                        "firstname": "Lucas",
+                        "lastname": "Lenoir",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "B6",
+                        "email": "lucas.lenoir@example.com",
+                        "phone_number": "0472 90 57 24"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_8_match_2",
+                "players": [
+                    {
+                        "licence_number": "46924468",
+                        "firstname": "Théo",
+                        "lastname": "Janssens",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "B4",
+                        "email": "theo.janssens@example.com",
+                        "phone_number": "0488 13 80 26"
+                    },
+                    {
+                        "licence_number": "49107875",
+                        "firstname": "Louise",
+                        "lastname": "Peeters",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "B2",
+                        "email": "louise.peeters@example.com",
+                        "phone_number": "0497 96 54 49"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_8_match_3",
+                "players": [
+                    {
+                        "licence_number": "46924468",
+                        "firstname": "Théo",
+                        "lastname": "Janssens",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "B4",
+                        "email": "theo.janssens@example.com",
+                        "phone_number": "0488 13 80 26"
+                    },
+                    {
+                        "licence_number": "64919537",
+                        "firstname": "Robin",
+                        "lastname": "Lecomte",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E6",
+                        "email": "robin.lecomte@example.com",
+                        "phone_number": "0470 42 78 42"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_8_match_4",
+                "players": [
+                    {
+                        "licence_number": "15333027",
+                        "firstname": "Lucas",
+                        "lastname": "Lenoir",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "B6",
+                        "email": "lucas.lenoir@example.com",
+                        "phone_number": "0472 90 57 24"
+                    },
+                    {
+                        "licence_number": "49107875",
+                        "firstname": "Louise",
+                        "lastname": "Peeters",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "B2",
+                        "email": "louise.peeters@example.com",
+                        "phone_number": "0497 96 54 49"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_8_match_5",
+                "players": [
+                    {
+                        "licence_number": "15333027",
+                        "firstname": "Lucas",
+                        "lastname": "Lenoir",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "B6",
+                        "email": "lucas.lenoir@example.com",
+                        "phone_number": "0472 90 57 24"
+                    },
+                    {
+                        "licence_number": "64919537",
+                        "firstname": "Robin",
+                        "lastname": "Lecomte",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E6",
+                        "email": "robin.lecomte@example.com",
+                        "phone_number": "0470 42 78 42"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_8_match_6",
+                "players": [
+                    {
+                        "licence_number": "49107875",
+                        "firstname": "Louise",
+                        "lastname": "Peeters",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "B2",
+                        "email": "louise.peeters@example.com",
+                        "phone_number": "0497 96 54 49"
+                    },
+                    {
+                        "licence_number": "64919537",
+                        "firstname": "Robin",
+                        "lastname": "Lecomte",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E6",
+                        "email": "robin.lecomte@example.com",
+                        "phone_number": "0470 42 78 42"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "players": [
+            {
+                "licence_number": "78344160",
+                "firstname": "Manon",
+                "lastname": "Maes",
+                "club": "TT Jette",
+                "federation_ranking": "B2",
+                "email": "manon.maes@example.com",
+                "phone_number": "0481 87 53 96"
+            },
+            {
+                "licence_number": "78583914",
+                "firstname": "Louise",
+                "lastname": "Mertens",
+                "club": "TTC Etterbeek",
+                "federation_ranking": "B2",
+                "email": "louise.mertens@example.com",
+                "phone_number": "0474 75 33 24"
+            },
+            {
+                "licence_number": "70178078",
+                "firstname": "Clara",
+                "lastname": "Janssens",
+                "club": "TTC Laeken",
+                "federation_ranking": "D4",
+                "email": "clara.janssens@example.com",
+                "phone_number": "0497 50 88 63"
+            },
+            {
+                "licence_number": "62325699",
+                "firstname": "Julien",
+                "lastname": "Lejeune",
+                "club": "CTT Forest",
+                "federation_ranking": "B6",
+                "email": "julien.lejeune@example.com",
+                "phone_number": "0470 32 58 45"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_9_match_1",
+                "players": [
+                    {
+                        "licence_number": "78344160",
+                        "firstname": "Manon",
+                        "lastname": "Maes",
+                        "club": "TT Jette",
+                        "federation_ranking": "B2",
+                        "email": "manon.maes@example.com",
+                        "phone_number": "0481 87 53 96"
+                    },
+                    {
+                        "licence_number": "78583914",
+                        "firstname": "Louise",
+                        "lastname": "Mertens",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "louise.mertens@example.com",
+                        "phone_number": "0474 75 33 24"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_9_match_2",
+                "players": [
+                    {
+                        "licence_number": "78344160",
+                        "firstname": "Manon",
+                        "lastname": "Maes",
+                        "club": "TT Jette",
+                        "federation_ranking": "B2",
+                        "email": "manon.maes@example.com",
+                        "phone_number": "0481 87 53 96"
+                    },
+                    {
+                        "licence_number": "70178078",
+                        "firstname": "Clara",
+                        "lastname": "Janssens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D4",
+                        "email": "clara.janssens@example.com",
+                        "phone_number": "0497 50 88 63"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_9_match_3",
+                "players": [
+                    {
+                        "licence_number": "78344160",
+                        "firstname": "Manon",
+                        "lastname": "Maes",
+                        "club": "TT Jette",
+                        "federation_ranking": "B2",
+                        "email": "manon.maes@example.com",
+                        "phone_number": "0481 87 53 96"
+                    },
+                    {
+                        "licence_number": "62325699",
+                        "firstname": "Julien",
+                        "lastname": "Lejeune",
+                        "club": "CTT Forest",
+                        "federation_ranking": "B6",
+                        "email": "julien.lejeune@example.com",
+                        "phone_number": "0470 32 58 45"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_9_match_4",
+                "players": [
+                    {
+                        "licence_number": "78583914",
+                        "firstname": "Louise",
+                        "lastname": "Mertens",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "louise.mertens@example.com",
+                        "phone_number": "0474 75 33 24"
+                    },
+                    {
+                        "licence_number": "70178078",
+                        "firstname": "Clara",
+                        "lastname": "Janssens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D4",
+                        "email": "clara.janssens@example.com",
+                        "phone_number": "0497 50 88 63"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_9_match_5",
+                "players": [
+                    {
+                        "licence_number": "78583914",
+                        "firstname": "Louise",
+                        "lastname": "Mertens",
+                        "club": "TTC Etterbeek",
+                        "federation_ranking": "B2",
+                        "email": "louise.mertens@example.com",
+                        "phone_number": "0474 75 33 24"
+                    },
+                    {
+                        "licence_number": "62325699",
+                        "firstname": "Julien",
+                        "lastname": "Lejeune",
+                        "club": "CTT Forest",
+                        "federation_ranking": "B6",
+                        "email": "julien.lejeune@example.com",
+                        "phone_number": "0470 32 58 45"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_9_match_6",
+                "players": [
+                    {
+                        "licence_number": "70178078",
+                        "firstname": "Clara",
+                        "lastname": "Janssens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D4",
+                        "email": "clara.janssens@example.com",
+                        "phone_number": "0497 50 88 63"
+                    },
+                    {
+                        "licence_number": "62325699",
+                        "firstname": "Julien",
+                        "lastname": "Lejeune",
+                        "club": "CTT Forest",
+                        "federation_ranking": "B6",
+                        "email": "julien.lejeune@example.com",
+                        "phone_number": "0470 32 58 45"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "players": [
+            {
+                "licence_number": "38959123",
+                "firstname": "Arthur",
+                "lastname": "Mathieu",
+                "club": "TT Anderlecht",
+                "federation_ranking": "E0",
+                "email": "arthur.mathieu@example.com",
+                "phone_number": "0491 93 23 93"
+            },
+            {
+                "licence_number": "93787014",
+                "firstname": "Gabriel",
+                "lastname": "Closset",
+                "club": "CTT Forest",
+                "federation_ranking": "D0",
+                "email": "gabriel.closset@example.com",
+                "phone_number": "0472 96 98 58"
+            },
+            {
+                "licence_number": "61240704",
+                "firstname": "Victor",
+                "lastname": "Jacobs",
+                "club": "CTT Ixelles",
+                "federation_ranking": "E4",
+                "email": "victor.jacobs@example.com",
+                "phone_number": "0486 58 30 97"
+            },
+            {
+                "licence_number": "93794095",
+                "firstname": "Eva",
+                "lastname": "Vandenberghe",
+                "club": "CTT Schaerbeek",
+                "federation_ranking": "E6",
+                "email": "eva.vandenberghe@example.com",
+                "phone_number": "0484 87 50 51"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_10_match_1",
+                "players": [
+                    {
+                        "licence_number": "38959123",
+                        "firstname": "Arthur",
+                        "lastname": "Mathieu",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "E0",
+                        "email": "arthur.mathieu@example.com",
+                        "phone_number": "0491 93 23 93"
+                    },
+                    {
+                        "licence_number": "93787014",
+                        "firstname": "Gabriel",
+                        "lastname": "Closset",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D0",
+                        "email": "gabriel.closset@example.com",
+                        "phone_number": "0472 96 98 58"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_10_match_2",
+                "players": [
+                    {
+                        "licence_number": "38959123",
+                        "firstname": "Arthur",
+                        "lastname": "Mathieu",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "E0",
+                        "email": "arthur.mathieu@example.com",
+                        "phone_number": "0491 93 23 93"
+                    },
+                    {
+                        "licence_number": "61240704",
+                        "firstname": "Victor",
+                        "lastname": "Jacobs",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E4",
+                        "email": "victor.jacobs@example.com",
+                        "phone_number": "0486 58 30 97"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_10_match_3",
+                "players": [
+                    {
+                        "licence_number": "38959123",
+                        "firstname": "Arthur",
+                        "lastname": "Mathieu",
+                        "club": "TT Anderlecht",
+                        "federation_ranking": "E0",
+                        "email": "arthur.mathieu@example.com",
+                        "phone_number": "0491 93 23 93"
+                    },
+                    {
+                        "licence_number": "93794095",
+                        "firstname": "Eva",
+                        "lastname": "Vandenberghe",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "eva.vandenberghe@example.com",
+                        "phone_number": "0484 87 50 51"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_10_match_4",
+                "players": [
+                    {
+                        "licence_number": "93787014",
+                        "firstname": "Gabriel",
+                        "lastname": "Closset",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D0",
+                        "email": "gabriel.closset@example.com",
+                        "phone_number": "0472 96 98 58"
+                    },
+                    {
+                        "licence_number": "61240704",
+                        "firstname": "Victor",
+                        "lastname": "Jacobs",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E4",
+                        "email": "victor.jacobs@example.com",
+                        "phone_number": "0486 58 30 97"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_10_match_5",
+                "players": [
+                    {
+                        "licence_number": "93787014",
+                        "firstname": "Gabriel",
+                        "lastname": "Closset",
+                        "club": "CTT Forest",
+                        "federation_ranking": "D0",
+                        "email": "gabriel.closset@example.com",
+                        "phone_number": "0472 96 98 58"
+                    },
+                    {
+                        "licence_number": "93794095",
+                        "firstname": "Eva",
+                        "lastname": "Vandenberghe",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "eva.vandenberghe@example.com",
+                        "phone_number": "0484 87 50 51"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_10_match_6",
+                "players": [
+                    {
+                        "licence_number": "61240704",
+                        "firstname": "Victor",
+                        "lastname": "Jacobs",
+                        "club": "CTT Ixelles",
+                        "federation_ranking": "E4",
+                        "email": "victor.jacobs@example.com",
+                        "phone_number": "0486 58 30 97"
+                    },
+                    {
+                        "licence_number": "93794095",
+                        "firstname": "Eva",
+                        "lastname": "Vandenberghe",
+                        "club": "CTT Schaerbeek",
+                        "federation_ranking": "E6",
+                        "email": "eva.vandenberghe@example.com",
+                        "phone_number": "0484 87 50 51"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "players": [
+            {
+                "licence_number": "31421621",
+                "firstname": "Lola",
+                "lastname": "Mertens",
+                "club": "TT Jette",
+                "federation_ranking": "E2",
+                "email": "lola.mertens@example.com",
+                "phone_number": "0472 25 74 19"
+            },
+            {
+                "licence_number": "62884292",
+                "firstname": "Camille",
+                "lastname": "Mertens",
+                "club": "TTC Laeken",
+                "federation_ranking": "D2",
+                "email": "camille.mertens@example.com",
+                "phone_number": "0485 24 84 41"
+            },
+            {
+                "licence_number": "21443268",
+                "firstname": "Chloé",
+                "lastname": "Jacobs",
+                "club": "TT Woluwe",
+                "federation_ranking": "E2",
+                "email": "chloe.jacobs@example.com",
+                "phone_number": "0477 56 58 12"
+            },
+            {
+                "licence_number": "49319690",
+                "firstname": "Arthur",
+                "lastname": "Lambert",
+                "club": "TT Woluwe",
+                "federation_ranking": "B2",
+                "email": "arthur.lambert@example.com",
+                "phone_number": "0474 14 81 24"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_11_match_1",
+                "players": [
+                    {
+                        "licence_number": "31421621",
+                        "firstname": "Lola",
+                        "lastname": "Mertens",
+                        "club": "TT Jette",
+                        "federation_ranking": "E2",
+                        "email": "lola.mertens@example.com",
+                        "phone_number": "0472 25 74 19"
+                    },
+                    {
+                        "licence_number": "62884292",
+                        "firstname": "Camille",
+                        "lastname": "Mertens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D2",
+                        "email": "camille.mertens@example.com",
+                        "phone_number": "0485 24 84 41"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_11_match_2",
+                "players": [
+                    {
+                        "licence_number": "31421621",
+                        "firstname": "Lola",
+                        "lastname": "Mertens",
+                        "club": "TT Jette",
+                        "federation_ranking": "E2",
+                        "email": "lola.mertens@example.com",
+                        "phone_number": "0472 25 74 19"
+                    },
+                    {
+                        "licence_number": "21443268",
+                        "firstname": "Chloé",
+                        "lastname": "Jacobs",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E2",
+                        "email": "chloe.jacobs@example.com",
+                        "phone_number": "0477 56 58 12"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_11_match_3",
+                "players": [
+                    {
+                        "licence_number": "31421621",
+                        "firstname": "Lola",
+                        "lastname": "Mertens",
+                        "club": "TT Jette",
+                        "federation_ranking": "E2",
+                        "email": "lola.mertens@example.com",
+                        "phone_number": "0472 25 74 19"
+                    },
+                    {
+                        "licence_number": "49319690",
+                        "firstname": "Arthur",
+                        "lastname": "Lambert",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B2",
+                        "email": "arthur.lambert@example.com",
+                        "phone_number": "0474 14 81 24"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_11_match_4",
+                "players": [
+                    {
+                        "licence_number": "62884292",
+                        "firstname": "Camille",
+                        "lastname": "Mertens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D2",
+                        "email": "camille.mertens@example.com",
+                        "phone_number": "0485 24 84 41"
+                    },
+                    {
+                        "licence_number": "21443268",
+                        "firstname": "Chloé",
+                        "lastname": "Jacobs",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E2",
+                        "email": "chloe.jacobs@example.com",
+                        "phone_number": "0477 56 58 12"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_11_match_5",
+                "players": [
+                    {
+                        "licence_number": "62884292",
+                        "firstname": "Camille",
+                        "lastname": "Mertens",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "D2",
+                        "email": "camille.mertens@example.com",
+                        "phone_number": "0485 24 84 41"
+                    },
+                    {
+                        "licence_number": "49319690",
+                        "firstname": "Arthur",
+                        "lastname": "Lambert",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B2",
+                        "email": "arthur.lambert@example.com",
+                        "phone_number": "0474 14 81 24"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_11_match_6",
+                "players": [
+                    {
+                        "licence_number": "21443268",
+                        "firstname": "Chloé",
+                        "lastname": "Jacobs",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E2",
+                        "email": "chloe.jacobs@example.com",
+                        "phone_number": "0477 56 58 12"
+                    },
+                    {
+                        "licence_number": "49319690",
+                        "firstname": "Arthur",
+                        "lastname": "Lambert",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "B2",
+                        "email": "arthur.lambert@example.com",
+                        "phone_number": "0474 14 81 24"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "players": [
+            {
+                "licence_number": "51268609",
+                "firstname": "Louis",
+                "lastname": "Servais",
+                "club": "TT Woluwe",
+                "federation_ranking": "E0",
+                "email": "louis.servais@example.com",
+                "phone_number": "0496 16 78 22"
+            },
+            {
+                "licence_number": "17372325",
+                "firstname": "Samuel",
+                "lastname": "Jacobs",
+                "club": "TT Molenbeek",
+                "federation_ranking": "D0",
+                "email": "samuel.jacobs@example.com",
+                "phone_number": "0491 18 50 25"
+            },
+            {
+                "licence_number": "19817825",
+                "firstname": "Manon",
+                "lastname": "Laurent",
+                "club": "TT Molenbeek",
+                "federation_ranking": "C0",
+                "email": "manon.laurent@example.com",
+                "phone_number": "0488 97 48 52"
+            },
+            {
+                "licence_number": "54216135",
+                "firstname": "Victor",
+                "lastname": "Delvaux",
+                "club": "CTT Saint-Gilles",
+                "federation_ranking": "C0",
+                "email": "victor.delvaux@example.com",
+                "phone_number": "0474 59 10 10"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_12_match_1",
+                "players": [
+                    {
+                        "licence_number": "51268609",
+                        "firstname": "Louis",
+                        "lastname": "Servais",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E0",
+                        "email": "louis.servais@example.com",
+                        "phone_number": "0496 16 78 22"
+                    },
+                    {
+                        "licence_number": "17372325",
+                        "firstname": "Samuel",
+                        "lastname": "Jacobs",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "D0",
+                        "email": "samuel.jacobs@example.com",
+                        "phone_number": "0491 18 50 25"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_12_match_2",
+                "players": [
+                    {
+                        "licence_number": "51268609",
+                        "firstname": "Louis",
+                        "lastname": "Servais",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E0",
+                        "email": "louis.servais@example.com",
+                        "phone_number": "0496 16 78 22"
+                    },
+                    {
+                        "licence_number": "19817825",
+                        "firstname": "Manon",
+                        "lastname": "Laurent",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "C0",
+                        "email": "manon.laurent@example.com",
+                        "phone_number": "0488 97 48 52"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_12_match_3",
+                "players": [
+                    {
+                        "licence_number": "51268609",
+                        "firstname": "Louis",
+                        "lastname": "Servais",
+                        "club": "TT Woluwe",
+                        "federation_ranking": "E0",
+                        "email": "louis.servais@example.com",
+                        "phone_number": "0496 16 78 22"
+                    },
+                    {
+                        "licence_number": "54216135",
+                        "firstname": "Victor",
+                        "lastname": "Delvaux",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "C0",
+                        "email": "victor.delvaux@example.com",
+                        "phone_number": "0474 59 10 10"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_12_match_4",
+                "players": [
+                    {
+                        "licence_number": "17372325",
+                        "firstname": "Samuel",
+                        "lastname": "Jacobs",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "D0",
+                        "email": "samuel.jacobs@example.com",
+                        "phone_number": "0491 18 50 25"
+                    },
+                    {
+                        "licence_number": "19817825",
+                        "firstname": "Manon",
+                        "lastname": "Laurent",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "C0",
+                        "email": "manon.laurent@example.com",
+                        "phone_number": "0488 97 48 52"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_12_match_5",
+                "players": [
+                    {
+                        "licence_number": "17372325",
+                        "firstname": "Samuel",
+                        "lastname": "Jacobs",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "D0",
+                        "email": "samuel.jacobs@example.com",
+                        "phone_number": "0491 18 50 25"
+                    },
+                    {
+                        "licence_number": "54216135",
+                        "firstname": "Victor",
+                        "lastname": "Delvaux",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "C0",
+                        "email": "victor.delvaux@example.com",
+                        "phone_number": "0474 59 10 10"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_12_match_6",
+                "players": [
+                    {
+                        "licence_number": "19817825",
+                        "firstname": "Manon",
+                        "lastname": "Laurent",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "C0",
+                        "email": "manon.laurent@example.com",
+                        "phone_number": "0488 97 48 52"
+                    },
+                    {
+                        "licence_number": "54216135",
+                        "firstname": "Victor",
+                        "lastname": "Delvaux",
+                        "club": "CTT Saint-Gilles",
+                        "federation_ranking": "C0",
+                        "email": "victor.delvaux@example.com",
+                        "phone_number": "0474 59 10 10"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "players": [
+            {
+                "licence_number": "36051626",
+                "firstname": "Paul",
+                "lastname": "Bertrand",
+                "club": "TT Molenbeek",
+                "federation_ranking": "B2",
+                "email": "paul.bertrand@example.com",
+                "phone_number": "0496 39 31 58"
+            },
+            {
+                "licence_number": "16291112",
+                "firstname": "Robin",
+                "lastname": "Closset",
+                "club": "TT Jette",
+                "federation_ranking": "D2",
+                "email": "robin.closset@example.com",
+                "phone_number": "0494 55 87 10"
+            },
+            {
+                "licence_number": "71857792",
+                "firstname": "Robin",
+                "lastname": "Mertens",
+                "club": "CTT Forest",
+                "federation_ranking": "C6",
+                "email": "robin.mertens@example.com",
+                "phone_number": "0479 46 51 90"
+            },
+            {
+                "licence_number": "45643764",
+                "firstname": "Antoine",
+                "lastname": "Dumont",
+                "club": "TTC Laeken",
+                "federation_ranking": "NC",
+                "email": "antoine.dumont@example.com",
+                "phone_number": "0474 86 26 94"
+            }
+        ],
+        "matches": [
+            {
+                "id": "poule_13_match_1",
+                "players": [
+                    {
+                        "licence_number": "36051626",
+                        "firstname": "Paul",
+                        "lastname": "Bertrand",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "B2",
+                        "email": "paul.bertrand@example.com",
+                        "phone_number": "0496 39 31 58"
+                    },
+                    {
+                        "licence_number": "16291112",
+                        "firstname": "Robin",
+                        "lastname": "Closset",
+                        "club": "TT Jette",
+                        "federation_ranking": "D2",
+                        "email": "robin.closset@example.com",
+                        "phone_number": "0494 55 87 10"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_13_match_2",
+                "players": [
+                    {
+                        "licence_number": "36051626",
+                        "firstname": "Paul",
+                        "lastname": "Bertrand",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "B2",
+                        "email": "paul.bertrand@example.com",
+                        "phone_number": "0496 39 31 58"
+                    },
+                    {
+                        "licence_number": "71857792",
+                        "firstname": "Robin",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "C6",
+                        "email": "robin.mertens@example.com",
+                        "phone_number": "0479 46 51 90"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_13_match_3",
+                "players": [
+                    {
+                        "licence_number": "36051626",
+                        "firstname": "Paul",
+                        "lastname": "Bertrand",
+                        "club": "TT Molenbeek",
+                        "federation_ranking": "B2",
+                        "email": "paul.bertrand@example.com",
+                        "phone_number": "0496 39 31 58"
+                    },
+                    {
+                        "licence_number": "45643764",
+                        "firstname": "Antoine",
+                        "lastname": "Dumont",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "NC",
+                        "email": "antoine.dumont@example.com",
+                        "phone_number": "0474 86 26 94"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_13_match_4",
+                "players": [
+                    {
+                        "licence_number": "16291112",
+                        "firstname": "Robin",
+                        "lastname": "Closset",
+                        "club": "TT Jette",
+                        "federation_ranking": "D2",
+                        "email": "robin.closset@example.com",
+                        "phone_number": "0494 55 87 10"
+                    },
+                    {
+                        "licence_number": "71857792",
+                        "firstname": "Robin",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "C6",
+                        "email": "robin.mertens@example.com",
+                        "phone_number": "0479 46 51 90"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_13_match_5",
+                "players": [
+                    {
+                        "licence_number": "16291112",
+                        "firstname": "Robin",
+                        "lastname": "Closset",
+                        "club": "TT Jette",
+                        "federation_ranking": "D2",
+                        "email": "robin.closset@example.com",
+                        "phone_number": "0494 55 87 10"
+                    },
+                    {
+                        "licence_number": "45643764",
+                        "firstname": "Antoine",
+                        "lastname": "Dumont",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "NC",
+                        "email": "antoine.dumont@example.com",
+                        "phone_number": "0474 86 26 94"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            },
+            {
+                "id": "poule_13_match_6",
+                "players": [
+                    {
+                        "licence_number": "71857792",
+                        "firstname": "Robin",
+                        "lastname": "Mertens",
+                        "club": "CTT Forest",
+                        "federation_ranking": "C6",
+                        "email": "robin.mertens@example.com",
+                        "phone_number": "0479 46 51 90"
+                    },
+                    {
+                        "licence_number": "45643764",
+                        "firstname": "Antoine",
+                        "lastname": "Dumont",
+                        "club": "TTC Laeken",
+                        "federation_ranking": "NC",
+                        "email": "antoine.dumont@example.com",
+                        "phone_number": "0474 86 26 94"
+                    }
+                ],
+                "type": "pool",
+                "scores": [
+                    0,
+                    0
+                ],
+                "winner": null
+            }
+        ]
+    }
+]

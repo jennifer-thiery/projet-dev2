@@ -1,4 +1,3 @@
-from domain.match import Match
 from domain.player import Player
 
 
