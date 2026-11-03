@@ -38,7 +38,7 @@ def form_add_player():
             elif user_rep.upper() == "R":
                 break
             else:
-                print("Entrée invalide")
+                print("Je vous arrête tout de suite, ceci n'est pas une option valide")
 
     print("\n--- Renseignez les informations du joueur ---")
     firstname = required_input("Prénom : ")
@@ -80,7 +80,7 @@ def form_add_player():
         elif confirm == "N":
             return
         else:
-            print("Entrée invalide")
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide")
 
 
 def form_player_manager():
@@ -109,12 +109,14 @@ def form_player_manager():
             else:
                 print("Je vous arrête tout de suite, ceci n'est pas une option valide")
     while True:
+        ct()
+        print(player.player_overview())
         ans = input("Quelle action souhaitez vous effectuer: Modification [M] suppression [S] quitter [Q] : ")[:1]
         if ans.upper() == "M":
             form_edit_player(licence_number, player)
             return
         elif ans.upper() == "S":
-            form_delete_player(licence_number)
+            form_delete_player(licence_number, player)
             return
         elif ans.upper() == "Q":
             print("Rien n'est fait")
@@ -145,7 +147,6 @@ def form_edit_player(pLicence_number, player):
             return
         elif ans == "1":
             while True:
-                ct()
                 print("modification du numéro de licence")
                 lic_ans = required_input("veuillez entrer le nouveau numéro de licence :")
                 if len(lic_ans) != 8 or not lic_ans.isdigit():
@@ -184,5 +185,17 @@ def form_edit_player(pLicence_number, player):
     )
 
 
-def form_delete_player(licence_number):
-    print("delete player")
+def form_delete_player(licence_number, player):
+    while True:
+        ct()
+        print(player.player_overview())
+        ans = required_input("Êtes-vous sûr de supprimer ce joueur? Oui [O] Non [N] : ")
+        if ans.upper() == "O":
+            print("suppression du joueur")
+            PlayerManager().delete_player(licence_number)
+            return
+        elif ans.upper() == "N":
+            print("Suppression annulée")
+            return
+        else:
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide")

@@ -1,14 +1,5 @@
 [
     {
-        "licence_number": "12345678",
-        "firstname": "Chloé",
-        "lastname": "Lejeune",
-        "club": "TTC Etterbeek",
-        "federation_ranking": "D4",
-        "email": "chloe.lejeune@example.com",
-        "phone_number": "0489 86 73 73"
-    },
-    {
         "licence_number": "85688041",
         "firstname": "Victor",
         "lastname": "Servais",
@@ -448,5 +439,14 @@
         "federation_ranking": "NC",
         "email": "antoine.dumont@example.com",
         "phone_number": "0474 86 26 94"
+    },
+    {
+        "licence_number": "12345678",
+        "firstname": "Chloé",
+        "lastname": "Lejeune",
+        "club": "TTC Etterbeek",
+        "federation_ranking": "D4",
+        "email": "chloe.lejeune@example.com",
+        "phone_number": "0489 86 73 73"
     }
 ]

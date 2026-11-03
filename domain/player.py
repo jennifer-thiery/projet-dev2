@@ -1,4 +1,4 @@
-from data.action_db_players import add_player_to_db, get_players_from_db
+from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
 
 
 class Player:
@@ -24,29 +24,57 @@ class Player:
     def licence_number(self) -> str:
         return self.__licence_number
 
+    @licence_number.setter
+    def licence_number(self, licence_number):
+        self.__licence_number = licence_number
+
     @property
     def firstname(self) -> str:
         return self.__firstname
+
+    @firstname.setter
+    def firstname(self, firstname):
+        self.__firstname = firstname
 
     @property
     def lastname(self) -> str:
         return self.__lastname
 
+    @lastname.setter
+    def lastname(self, lastname):
+        self.__lastname = lastname
+
     @property
     def club(self) -> str:
         return self.__club
+
+    @club.setter
+    def club(self, club):
+        self.__club = club
 
     @property
     def federation_ranking(self) -> str:
         return self.__federation_ranking
 
+    @federation_ranking.setter
+    def federation_ranking(self, federation_ranking):
+        self.__federation_ranking = federation_ranking
+
     @property
     def email(self) -> str:
         return self.__email
 
+    @email.setter
+    def email(self, email):
+        self.__email = email
+
     @property
     def phone_number(self) -> str:
         return self.__phone_number
+
+    @phone_number.setter
+    def phone_number(self, phone_number):
+        self.__phone_number = phone_number
 
     def player_overview(self) -> str:
         return (
@@ -98,8 +126,6 @@ class PlayerManager:
             "phone_number": new_player.phone_number,
         }
 
-        self.__all_players.append(new_player)
-
         add_player_to_db(new_player_dict)
 
     def edit_player(
@@ -116,6 +142,7 @@ class PlayerManager:
         # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
         for player in self.__all_players:  # player references the dict Player inside of all_players
             if player.licence_number == pLicence_number:
+                remove_player_from_db(pLicence_number)
                 player.licence_number = licence_number
                 player.firstname = firstname
                 player.lastname = lastname
@@ -123,10 +150,12 @@ class PlayerManager:
                 player.federation_ranking = federation_ranking
                 player.email = email
                 player.phone_number = phone_number
+                self.add_player(player)
                 break
 
     def delete_player(self, licence_number: str) -> None:
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 self.__all_players.remove(player)
+                remove_player_from_db(licence_number)
                 break
