@@ -1,3 +1,5 @@
+from time import sleep
+
 from interface.player.menu import show_player_menu
 from interface.pool_manager import pool_manager
 from lib.tools import ct
@@ -33,5 +35,6 @@ def show_menu() -> None:
                     pool_manager()
                 case _:
                     print("Choix invalide.")
+                    sleep(0.5)
     except KeyboardInterrupt:
         print("\nAu revoir !")

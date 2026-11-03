@@ -1,3 +1,5 @@
+from time import sleep
+
 from interface.player.forms import form_add_player, form_player_manager
 from interface.player.view import show_players
 from lib.tools import ct
@@ -28,3 +30,4 @@ def show_player_menu() -> None:
                 form_player_manager()
             case _:
                 print("Choix invalide.")
+                sleep(0.5)

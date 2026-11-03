@@ -21,6 +21,8 @@ def show_players():
             f"{player.licence_number:<12}{player.lastname:<{w_lastname}}{player.firstname:<{w_firstname}}{player.club:<{w_club}}{player.federation_ranking:<14}{player.email:<{w_email}}{player.phone_number:<20}"
         )
 
+    input("\n[Enter] pour revenir au menu de la gestion des participants")
+
 
 if __name__ == "__main__":
     show_players()

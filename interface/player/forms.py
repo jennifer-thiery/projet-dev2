@@ -10,7 +10,7 @@ def required_input(prompt: str):
         value = input(prompt)
 
         if value == "":
-            print("Veillez introduire une valeur !")
+            print("Veuillez introduire une valeur !")
         else:
             return value
 
@@ -25,7 +25,7 @@ def form_add_player():
         if len(licence_number) != 8 or not licence_number.isdigit():
             print("La licence doit être composée de 8 chiffres.")
         elif PlayerManager().licence_exists(licence_number):
-            print(f"La licence {licence_number} existe déjà dans la liste des participants")
+            print(f"La licence {licence_number} existe déjà dans la liste des participants.")
         else:
             break
 
@@ -38,7 +38,7 @@ def form_add_player():
             elif user_rep.upper() == "R":
                 break
             else:
-                print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+                print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
     print("\n--- Renseignez les informations du joueur ---")
     firstname = required_input("Prénom : ")
@@ -74,13 +74,13 @@ def form_add_player():
         confirm = input("Validez-vous la création de ce joueur ? [O/N] : ")[:1]
         if confirm == "O":
             PlayerManager().add_player(new_player)
-            print(f"Joueur {licence_number} : {firstname} {lastname} ajouté")
+            print(f"Joueur {licence_number} : {firstname} {lastname} ajouté.")
             sleep(1.5)
             break
         elif confirm == "N":
             return
         else:
-            print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
 
 def form_player_manager():
@@ -88,30 +88,30 @@ def form_player_manager():
     player = None
     while True:
         ct()
-        print("\n=== modifier ou supprimer un participant ===")
+        print("\n=== Modifier ou supprimer un participant ===")
         licence_number = required_input("Numéro de licence : ")
         if len(licence_number) != 8 or not licence_number.isdigit():
-            print("La licence doit être composée de 8 chiffres")
+            print("La licence doit être composée de 8 chiffres.")
         elif not PlayerManager().licence_exists(licence_number):
-            print("La licence introduite n'est pas présente dans la liste des joueurs")
+            print("La licence introduite n'est pas présente dans la liste des joueurs.")
         else:
-            print(f"Le joueur avec la licence {licence_number} a bien été trouvé")
+            print(f"Le joueur avec la licence {licence_number} a bien été trouvé.")
             player = PlayerManager().player_pointer(licence_number)
             break
 
         while True:
-            ans = input("Quitter [Q] ou Recommencer [R]: ")[:1]
+            ans = input("Quitter [Q] ou Recommencer [R] : ")[:1]
             if ans.upper() == "Q":
                 print("Modification ou suppression annulée")
                 return
             if ans.upper() == "R":
                 break
             else:
-                print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+                print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
     while True:
         ct()
         print(player.player_overview())
-        ans = input("Quelle action souhaitez vous effectuer: Modification [M] suppression [S] quitter [Q] : ")[:1]
+        ans = input("Quelle action souhaitez-vous effectuer ? Modification [M], Suppression [S] ou Quitter [Q] : ")[:1]
         if ans.upper() == "M":
             form_edit_player(licence_number, player)
             return
@@ -119,10 +119,10 @@ def form_player_manager():
             form_delete_player(licence_number, player)
             return
         elif ans.upper() == "Q":
-            print("Rien n'est fait")
+            print("Rien n'est fait.")
             return
         else:
-            print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
 
 def form_edit_player(pLicence_number, player):
@@ -136,49 +136,50 @@ def form_edit_player(pLicence_number, player):
     while True:
         ct()
         print(
-            f"""Joueur : {firstname} {lastname} ({licence_number})\nClassement : {federation_ranking}\nClub : {club}\nCoordonées : {email} | {phone_number}\n"""
+            f"""Joueur : {firstname} {lastname} ({licence_number})\nClassement : {federation_ranking}\nClub : {club}\nCoordonnées : {email} | {phone_number}\n"""
         )
         print(
-            "Que voulez vous modifier?: \n 1: numéro de licence\n 2: Prénom\n 3: nom de famille\n 4: Club\n 5: classement fédéral\n 6: email\n 7: numéro de téléphone\n Q: Quitter sans sauvegarder\n W: sauvegarder et quitter"
+            "Que voulez-vous modifier ?\n 1 : Numéro de licence\n 2 : Prénom\n 3 : Nom de famille\n 4 : Club\n 5 : Classement fédéral\n 6 : Email\n 7 : Numéro de téléphone\n Q : Quitter sans sauvegarder\n W : Sauvegarder et quitter"
         )
-        ans = input("votre choix : ")
+        ans = input("Votre choix : ")
         if ans.upper() == "Q":
-            print("Soyons précis: aucune de vos modifications ont été sauvegardées")
+            print("Soyons précis : aucune de vos modifications n'a été sauvegardée.")
             return
         elif ans == "1":
             while True:
-                print("modification du numéro de licence")
-                lic_ans = required_input("veuillez entrer le nouveau numéro de licence :")
+                print("Modification du numéro de licence")
+                lic_ans = required_input("Veuillez entrer le nouveau numéro de licence : ")
                 if len(lic_ans) != 8 or not lic_ans.isdigit():
-                    print("La licence doit être composée de 8 chiffres")
+                    print("La licence doit être composée de 8 chiffres.")
                 elif PlayerManager().licence_exists(lic_ans):
-                    print("La licence introduite est déjà présente dans la liste des joueurs")
+                    print("La licence introduite est déjà présente dans la liste des joueurs.")
                 else:
                     licence_number = lic_ans
                     break
         elif ans == "2":
-            print("modification du prénom")
-            firstname = required_input("Veuillez introduire le prénom :")
+            print("Modification du prénom")
+            firstname = required_input("Veuillez introduire le prénom : ")
         elif ans == "3":
-            print("modification du nom de famille")
-            lastname = required_input("Veuillez introduire le nom de famille :")
+            print("Modification du nom de famille")
+            lastname = required_input("Veuillez introduire le nom de famille : ")
         elif ans == "4":
-            print("modification du club")
-            club = required_input("Veuillez introduire le club :")
+            print("Modification du club")
+            club = required_input("Veuillez introduire le club : ")
         elif ans == "5":
-            print("modification du classement fédéral")
-            federation_ranking = required_input("veuillez introduire le classement fédéral :")
+            print("Modification du classement fédéral")
+            federation_ranking = required_input("Veuillez introduire le classement fédéral : ")
         elif ans == "6":
-            print("modification du mail")
-            email = required_input("Veuillez introduire l'email :")
+            print("Modification de l'email")
+            email = required_input("Veuillez introduire l'email : ")
         elif ans == "7":
-            print("modification du numéro de téléphone")
-            phone_number = required_input("Veuillez introduire le numéro de téléphone :")
+            print("Modification du numéro de téléphone")
+            phone_number = required_input("Veuillez introduire le numéro de téléphone : ")
         elif ans.upper() == "W":
-            print("sauvegarde de tout et quitte le menu")
+            print("Modifications enregistrées")
+            sleep(1.5)
             break
         else:
-            print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
     PlayerManager().edit_player(
         pLicence_number, licence_number, firstname, lastname, club, federation_ranking, email, phone_number
@@ -189,13 +190,15 @@ def form_delete_player(licence_number, player):
     while True:
         ct()
         print(player.player_overview())
-        ans = required_input("Êtes-vous sûr de supprimer ce joueur? Oui [O] Non [N] : ")
+        ans = required_input("Êtes-vous sûr de vouloir supprimer ce joueur ? [O/N] : ")
         if ans.upper() == "O":
-            print("suppression du joueur")
+            print(f"Suppression du joueur {licence_number}")
             PlayerManager().delete_player(licence_number)
+            sleep(1.5)
             return
         elif ans.upper() == "N":
             print("Suppression annulée")
+            sleep(1.5)
             return
         else:
-            print("Je vous arrête tout de suite, ceci n'est pas une option valide")
+            print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
