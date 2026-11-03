@@ -3,7 +3,7 @@ from domain.match import Match
 from domain.pool import Pool
 
 
-def sort_classement(elem):
+def sort_classement(elem) -> int:
     return FederationRanking.index(elem.federation_ranking)
 
 
