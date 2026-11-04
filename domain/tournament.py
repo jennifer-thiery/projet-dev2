@@ -19,8 +19,12 @@ class Tournament:
             Braket(BracketType.EXPERT),
         ]
 
+    @property
+    def players(self):
+        return self.__players
+
     def get_state(self) -> bool:
-        return self.__end_date < date.today
+        return self.__end_date < date.today()
 
     def add_player(self, player, bracket) -> None:
         match bracket:
