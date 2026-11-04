@@ -13,7 +13,7 @@
         "target-version": "py312",
         "lint": {
             "select": ["E", "F", "I", "N", "ARG"],
-            "ignore": ["E501"],
+            "ignore": ["E501", "N813"],
             "unfixable": ["F401", "F841"]
         },
         "format": {
