@@ -1,4 +1,3 @@
-from data.action_db_pools import get_pool_from_db, get_pools_from_db
 from lib.tools import ct
 
 
@@ -7,8 +6,8 @@ def pool_manager():
     ct()
     print("Voici la liste des poules disponibles : \n")
 
-    for poule in get_pools_from_db():
-        print(f"ID: {poule['id']}")
+    # for poule in get_pools_from_db():
+    #    print(f"ID: {poule['id']}")
 
     # demande un ID de poule à l'utilisateur et verifie que c'est bien un ID de poule existant
     while True:
@@ -21,7 +20,9 @@ def pool_manager():
         else:
             print("ID de poule invalide. Veuillez réessayer.")
 
-    poule = get_pool_from_db(poule_id)
+    # poule = get_pool_from_db(poule_id)
+
+    poule = 1
 
     while True:
         ct()
