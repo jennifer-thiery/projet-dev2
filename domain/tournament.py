@@ -1,7 +1,7 @@
 from datetime import date
 
 from domain.bracket import Braket
-from domain.enums import BracketType, FederationRanking
+from domain.enums import BracketType
 from domain.player import PlayerManager
 from domain.pool import Pool
 
@@ -49,9 +49,9 @@ class Tournament:
 
     def get_all_pools(self) -> list(Pool):
         all_pool = []
-        for bracket in self.brackets:
+        for bracket in self.__brackets:
             bracket.create_pool()
-            all_pool += bracket.get_pools()
+            all_pool += bracket.get_pools
         return all_pool
 
     def create_brackets(self) -> None:
@@ -61,9 +61,4 @@ class Tournament:
 
 
 if __name__ == "__main__":
-    from domain.bracket import Braket
-    from domain.enums import BracketType, FederationRanking
-    from domain.player import PlayerManager
-    from domain.pool import Pool
-
     Tournament(date.fromisoformat("2019-12-04"), date.fromisoformat("2019-12-06"))

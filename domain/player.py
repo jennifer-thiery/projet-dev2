@@ -103,29 +103,12 @@ class Player:
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
         )
 
-    def get_brackets(self):
+    def get_brackets(self) -> list:
         list_temp = []
-        match self.federation_ranking:
-            case (
-                FederationRanking.NC.value
-                | FederationRanking.E0.value
-                | FederationRanking.E1.value
-                | FederationRanking.E2.value
-                | FederationRanking.E3.value
-                | FederationRanking.E4.value
-                | FederationRanking.E5.value
-                | FederationRanking.E6.value
-            ):
+        match int(FederationRanking[self.federation_ranking]):
+            case x if x <= 7:
                 list_temp.append(BracketType.BEGINNER)
-            case (
-                FederationRanking.D0.value
-                | FederationRanking.D1.value
-                | FederationRanking.D2.value
-                | FederationRanking.D3.value
-                | FederationRanking.D4.value
-                | FederationRanking.D5.value
-                | FederationRanking.D6.value
-            ):
+            case x if x > 7 and x <= 14:
                 list_temp.append(BracketType.INTERMADIATE)
             case _:
                 list_temp.append(BracketType.EXPERT)
