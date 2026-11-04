@@ -37,7 +37,7 @@ def show_menu() -> None:
                     tournament.create_brackets()
                     save_tournament(tournament)
                 case "3":
-                    pool_manager()
+                    pool_manager(tournament)
                 case _:
                     print("Choix invalide.")
                     sleep(0.5)
