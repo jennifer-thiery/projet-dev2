@@ -1,3 +1,4 @@
+from datetime import datetime
 from time import sleep
 
 from domain.enums import FederationRanking
@@ -43,6 +44,8 @@ def form_add_player():
     print("\n--- Renseignez les informations du joueur ---")
     firstname = required_input("Prénom : ")
     lastname = required_input("Nom : ")
+    birthdate = required_input("Date de naissance (JJ/MM/AAAA) : ")
+
     club = required_input("Club : ")
 
     # Check if it's a valid federation ranking
@@ -61,6 +64,7 @@ def form_add_player():
         licence_number=licence_number,
         firstname=firstname,
         lastname=lastname,
+        birthdate=datetime.strptime(birthdate, "%d/%m/%Y"),
         club=club,
         federation_ranking=federation_ranking,
         email=email,
@@ -125,21 +129,20 @@ def form_player_manager():
             print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
 
-def form_edit_player(pLicence_number, player):
+def form_edit_player(p_licence_number, player: Player):
     licence_number = player.licence_number
     firstname = player.firstname
     lastname = player.lastname
+    birthdate = player.birthdate
     club = player.club
     federation_ranking = player.federation_ranking
     email = player.email
     phone_number = player.phone_number
     while True:
         ct()
+        print(player.player_overview())
         print(
-            f"""Joueur : {firstname} {lastname} ({licence_number})\nClassement : {federation_ranking}\nClub : {club}\nCoordonnées : {email} | {phone_number}\n"""
-        )
-        print(
-            "Que voulez-vous modifier ?\n 1 : Numéro de licence\n 2 : Prénom\n 3 : Nom de famille\n 4 : Club\n 5 : Classement fédéral\n 6 : Email\n 7 : Numéro de téléphone\n Q : Quitter sans sauvegarder\n W : Sauvegarder et quitter"
+            "Que voulez-vous modifier ?\n 1 : Numéro de licence\n 2 : Prénom\n 3 : Nom de famille\n 4 : Date de naissance\n 5 : Club\n 6 : Classement fédéral\n 7 : Email\n 8 : Numéro de téléphone\n Q : Quitter sans sauvegarder\n W : Sauvegarder et quitter"
         )
         ans = input("Votre choix : ")
         if ans.upper() == "Q":
@@ -163,15 +166,18 @@ def form_edit_player(pLicence_number, player):
             print("Modification du nom de famille")
             lastname = required_input("Veuillez introduire le nom de famille : ")
         elif ans == "4":
+            print("Modification de la date de naissance")
+            birthdate = required_input("Veuillez introduire la date de naissance : ")
+        elif ans == "5":
             print("Modification du club")
             club = required_input("Veuillez introduire le club : ")
-        elif ans == "5":
+        elif ans == "6":
             print("Modification du classement fédéral")
             federation_ranking = required_input("Veuillez introduire le classement fédéral : ")
-        elif ans == "6":
+        elif ans == "7":
             print("Modification de l'email")
             email = required_input("Veuillez introduire l'email : ")
-        elif ans == "7":
+        elif ans == "8":
             print("Modification du numéro de téléphone")
             phone_number = required_input("Veuillez introduire le numéro de téléphone : ")
         elif ans.upper() == "W":
@@ -182,7 +188,7 @@ def form_edit_player(pLicence_number, player):
             print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
     PlayerManager().edit_player(
-        pLicence_number, licence_number, firstname, lastname, club, federation_ranking, email, phone_number
+        p_licence_number, licence_number, firstname, lastname, birthdate, club, federation_ranking, email, phone_number
     )
 
 
