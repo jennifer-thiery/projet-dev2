@@ -4,21 +4,8 @@ from domain.pool import Pool
 
 
 def sort_classement(elem) -> int:
-    nbr = elem.federation_ranking
-    if nbr == "NC":
-        nbr = 0
-    else:
-        match nbr[0]:
-            case "E":
-                nbr = 10 + 6 - int(nbr[1])
-            case "D":
-                nbr = 20 + 6 - int(nbr[1])
-            case "C":
-                nbr = 30 + 6 - int(nbr[1])
-            case "B":
-                nbr = 40 + 6 - int(nbr[1])
 
-    return nbr
+    return int(FederationRanking[elem.federation_ranking])
 
 
 class Braket:
