@@ -16,11 +16,11 @@ class Pool:
         return self.__id
 
     @property
-    def matches(self) -> list[Match]:
+    def matches(self) -> list(Match):
         return self.__matches
 
     @property
-    def players(self) -> list[Player]:
+    def players(self) -> list(Player):
         return self.__players
 
     """affiche les matchs restants dans une poule"""

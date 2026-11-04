@@ -5,9 +5,9 @@ from interface.tui_mvp import show_menu
 
 def main():
     tournament = Tournament("2019-12-04", "2019-12-06")
-    tournament.players.get_players()
     tournament.create_brackets()
-    tournament.get_all_pools()
+
+    print(tournament.get_all_pools())
     save_tournament(tournament)
     # show_menu()
 

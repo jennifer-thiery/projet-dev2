@@ -126,6 +126,18 @@ class Player:
 class PlayerManager:
     def __init__(self):
         self.__all_players = []
+        for data in get_players_from_db():
+            player = Player(
+                licence_number=data["licence_number"],
+                firstname=data["firstname"],
+                lastname=data["lastname"],
+                birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d"),
+                club=data["club"],
+                federation_ranking=data["federation_ranking"],
+                email=data["email"],
+                phone_number=data["phone_number"],
+            )
+            self.__all_players.append(player)
 
     @property
     def all_players(self) -> list[Player]:
@@ -155,20 +167,6 @@ class PlayerManager:
         }
 
         add_player_to_db(new_player_dict)
-
-    def get_players(self):
-        for data in get_players_from_db():
-            player = Player(
-                licence_number=data["licence_number"],
-                firstname=data["firstname"],
-                lastname=data["lastname"],
-                birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d"),
-                club=data["club"],
-                federation_ranking=data["federation_ranking"],
-                email=data["email"],
-                phone_number=data["phone_number"],
-            )
-            self.__all_players.append(player)
 
     def edit_player(
         self,
