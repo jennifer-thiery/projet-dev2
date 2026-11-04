@@ -1,12 +1,13 @@
-from textual.app import App, ComposeResult
-from textual.screen import Screen
-from textual.widgets import Button,Header,Footer,Label
-from textual.containers import HorizontalGroup, VerticalScroll
 from time import sleep
 
+from textual.app import App, ComposeResult
+from textual.containers import HorizontalGroup, VerticalScroll
+from textual.screen import Screen
+from textual.widgets import Button, Footer, Header, Label
+
 from interface.player.forms import form_add_player, form_player_manager
-from interface.player.view import show_players,AffichageJoueur
-from lib.tools import ct,TempScreen
+from interface.player.view import AffichageJoueur, show_players
+from lib.tools import TempScreen, ct
 
 
 def show_player_options() -> None:
@@ -36,20 +37,23 @@ def show_player_menu() -> None:
                 print("Choix invalide.")
                 sleep(0.5)
 
+
 class PlayerMenu(Screen):
+    BINDINGS = [("escape", "app.pop_screen", "Retour")]
+
     def compose(self) -> ComposeResult:
         yield Header()
         yield VerticalScroll(
             ChoicePlayer("Afficher la liste de tous les participants", 1),
             ChoicePlayer("Ajouter un participant", 2),
             ChoicePlayer("Modifier ou supprimer un participant", 3),
-            ChoicePlayer("Quitter", 0)
         )
         yield Footer()
 
+
 class ChoicePlayer(HorizontalGroup):
-    def __init__(self, text, number, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, text, number):
+        super().__init__()
         self.text = text
         self.number = number
 
@@ -59,8 +63,6 @@ class ChoicePlayer(HorizontalGroup):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
-            case "btn-0":
-                pass
             case "btn-1":  # ici tous ce que veux faire
                 self.app.push_screen(AffichageJoueur())  # <-- afficher un menu
             case "btn-2":

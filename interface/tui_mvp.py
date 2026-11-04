@@ -1,12 +1,12 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button,Header,Footer,Label
-from textual.containers import HorizontalGroup, VerticalScroll
-
 from time import sleep
 
-from interface.player.menu import show_player_menu,PlayerMenu
+from textual.app import App, ComposeResult
+from textual.containers import HorizontalGroup, VerticalScroll
+from textual.widgets import Button, Footer, Header, Label
+
+from interface.player.menu import PlayerMenu, show_player_menu
 from interface.pool_manager import pool_manager
-from lib.tools import ct,TempScreen
+from lib.tools import TempScreen, ct
 
 
 def show_option() -> None:
@@ -43,7 +43,10 @@ def show_menu() -> None:
     except KeyboardInterrupt:
         print("\nAu revoir !")
 
+
 class GestionTennisDeTable(App):
+    BINDINGS = [("escape", "exit_app", "Exit")]
+
     def compose(self) -> ComposeResult:
         yield Header()
         yield VerticalScroll(
@@ -51,13 +54,17 @@ class GestionTennisDeTable(App):
             ChoiceMenu("Répartir les joueurs dans les poules", 2),
             ChoiceMenu("Gestion des scores", 3),
             ChoiceMenu("Gérer les poules", 4),
-            ChoiceMenu("Quitter", 0)
+            ChoiceMenu("exit", 0),
         )
         yield Footer()
 
+    def exit_app(self):
+        self.app.exit()
+
+
 class ChoiceMenu(HorizontalGroup):
-    def __init__(self, text, number, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, text, number):
+        super().__init__()
         self.text = text
         self.number = number
 
@@ -68,7 +75,7 @@ class ChoiceMenu(HorizontalGroup):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "btn-0":
-                pass
+                self.app.exit()
             case "btn-1":  # ici tous ce que veux faire
                 self.app.push_screen(PlayerMenu())  # <-- afficher un menu
             case "btn-2":
