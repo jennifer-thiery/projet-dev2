@@ -1,5 +1,7 @@
 from time import sleep
 
+from data.action_db_tounament import save_tournament
+from domain.tournament import Tournament
 from interface.player.menu import show_player_menu
 from interface.pool_manager import pool_manager
 from lib.tools import ct
@@ -27,7 +29,9 @@ def show_menu() -> None:
                 case "1":
                     show_player_menu()
                 case "2":
-                    print("Gérer la liste des participants : fonctionnalité à venir.")
+                    tournament = Tournament("2019-12-04", "2019-12-06")
+                    tournament.create_brackets()
+                    save_tournament(tournament)
                 case "3":
                     pool_manager()
                 case _:

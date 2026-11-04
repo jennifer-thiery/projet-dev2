@@ -47,17 +47,15 @@ class Tournament:
             case BracketType.EXPERT:
                 self.__brackets[3].remove_player(licence_number)
 
-    def get_all_pools(self) -> list[Pool]:
-        all_pool = []
+    def create_all_pools(self) -> None:
         for bracket in self.__brackets:
             bracket.create_pool()
-            all_pool += bracket.get_pools
-        return all_pool
 
     def create_brackets(self) -> None:
         for player in PlayerManager().all_players:
             for bracket in player.get_brackets():
                 self.add_player(player, bracket)
+        self.create_all_pools()
 
 
 if __name__ == "__main__":
