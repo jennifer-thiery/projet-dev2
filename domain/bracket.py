@@ -38,6 +38,7 @@ class Braket:
                 self.players.remove(i)
 
     def create_pool(self) -> None:
+        self.__pools = []
         nbr_play = len(self.players)
         if nbr_play >= 6:
             if nbr_play % 4 != 0:
