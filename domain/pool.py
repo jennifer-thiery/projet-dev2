@@ -4,7 +4,7 @@ from domain.player import Player
 
 
 class Pool:
-    def __init__(self, id: str, players: list(Player)):
+    def __init__(self, id: str, players: list[Player]):
         self.__id = id
         self.__matches = []
         self.__players = players
@@ -16,11 +16,11 @@ class Pool:
         return self.__id
 
     @property
-    def matches(self) -> list(Match):
+    def matches(self) -> list[Match]:
         return self.__matches
 
     @property
-    def players(self) -> list(Player):
+    def players(self) -> list[Player]:
         return self.__players
 
     """affiche les matchs restants dans une poule"""
