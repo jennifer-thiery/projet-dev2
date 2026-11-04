@@ -1,6 +1,6 @@
 from time import sleep
 
-from data.action_db_tounament import save_tournament
+from data.action_db_tounament import load_tournament, save_tournament
 from domain.tournament import Tournament
 from interface.player.menu import show_player_menu
 from interface.pool_manager import pool_manager
@@ -38,6 +38,9 @@ def show_menu() -> None:
                     save_tournament(tournament)
                 case "3":
                     pool_manager(tournament)
+                case "4":
+                    print(load_tournament())
+                    sleep(20)
                 case _:
                     print("Choix invalide.")
                     sleep(0.5)
