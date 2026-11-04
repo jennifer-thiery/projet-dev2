@@ -35,7 +35,7 @@ class Match:
             f"Poule : {self.__id}\n"
             f"Type : {self.__type}\n"
             f"Scores : {self.__scores}\n"
-            f"Joueurs : {[(player.firstname() + ' ' + player.lastname()) for player in self.__players]}\n"
+            f"Joueurs : {[(player.firstname() + ' ' + player.last_name()) for player in self.__players]}\n"
             f"Gagnant : {self.__winner.player_overview() if self.__winner else 'Aucun gagnant'}\n"
         )
 
