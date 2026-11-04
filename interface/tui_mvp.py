@@ -1,6 +1,6 @@
 from time import sleep
 
-from data.action_db_tounament import save_tournament
+from data.action_db_tounament import load_tournament, save_tournament
 from domain.tournament import Tournament
 from interface.player.menu import show_player_menu
 from interface.pool_manager import pool_manager
@@ -16,6 +16,7 @@ def show_option() -> None:
     print("1. Gérer les participants")
     print("2. Répartir les joueurs dans les poules")
     print("3. Gérer les poules")
+    print("4. Afficher fichier")
     print("0. Quitter")
 
 
@@ -36,7 +37,7 @@ def show_menu() -> None:
                     tournament.create_brackets()
                     save_tournament(tournament)
                 case "3":
-                    pool_manager(tournament)
+                    pool_manager()
                 case _:
                     print("Choix invalide.")
                     sleep(0.5)
