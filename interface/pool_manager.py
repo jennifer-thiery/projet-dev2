@@ -1,6 +1,5 @@
 from data.action_db_pools import get_pool_from_db, get_pools_from_db
 from lib.tools import ct
-from time import sleep
 
 def pool_manager():
 
