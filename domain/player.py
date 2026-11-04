@@ -1,4 +1,5 @@
 from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
+from domain.enums import BracketType, FederationRanking
 
 
 class Player:
@@ -19,6 +20,7 @@ class Player:
         self.__federation_ranking = federation_ranking
         self.__email = email
         self.__phone_number = phone_number
+        self.__two_bracket = False
 
     @property
     def licence_number(self) -> str:
@@ -83,6 +85,42 @@ class Player:
             f"Club : {self.__club}\n"
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
         )
+
+    def get_brackets(self):
+        list_temp = []
+        match self.federation_ranking:
+            case (
+                FederationRanking.NC.value
+                | FederationRanking.E0.value
+                | FederationRanking.E1.value
+                | FederationRanking.E2.value
+                | FederationRanking.E3.value
+                | FederationRanking.E4.value
+                | FederationRanking.E5.value
+                | FederationRanking.E6.value
+            ):
+                list_temp.append(BracketType.BEGINNER)
+            case (
+                FederationRanking.D0.value
+                | FederationRanking.D1.value
+                | FederationRanking.D2.value
+                | FederationRanking.D3.value
+                | FederationRanking.D4.value
+                | FederationRanking.D5.value
+                | FederationRanking.D6.value
+            ):
+                list_temp.append(BracketType.INTERMADIATE)
+            case _:
+                list_temp.append(BracketType.EXPERT)
+        if not self.__two_bracket:
+            match list_temp[0]:
+                case BracketType.BEGINNER:
+                    list_temp.append(BracketType.INTERMADIATE)
+                case BracketType.INTERMADIATE:
+                    list_temp.append(BracketType.EXPERT)
+                case _:
+                    pass
+        return list_temp
 
 
 class PlayerManager:
