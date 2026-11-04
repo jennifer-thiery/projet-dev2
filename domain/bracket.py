@@ -4,7 +4,21 @@ from domain.pool import Pool
 
 
 def sort_classement(elem) -> int:
-    return FederationRanking.index(elem.federation_ranking)
+    nbr = elem.federation_ranking
+    if nbr == "NC":
+        nbr = 0
+    else:
+        match nbr[0]:
+            case "E":
+                nbr = 10 + 6 - int(nbr[1])
+            case "D":
+                nbr = 20 + 6 - int(nbr[1])
+            case "C":
+                nbr = 30 + 6 - int(nbr[1])
+            case "B":
+                nbr = 40 + 6 - int(nbr[1])
+
+    return nbr
 
 
 class Braket:
@@ -42,10 +56,10 @@ class Braket:
         nbr_play = len(self.players)
         if nbr_play >= 6:
             if nbr_play % 4 != 0:
-                nbr_of_3 = 4 - (nbr_play % 4)
+                nbr_of_3 = int(4 - (nbr_play % 4))
             else:
                 nbr_of_3 = 0
-            nbr_of_4 = (nbr_play - (nbr_of_3 * 3)) / 4
+            nbr_of_4 = int((nbr_play - (nbr_of_3 * 3)) / 4)
             self.rank_player_by_ranking()
 
             for i in range(1, nbr_of_3 + nbr_of_4 + 1):
@@ -61,7 +75,7 @@ class Braket:
                         list_temp.append(self.players.pop(0))
                     nbr_of_4 -= 1
                     self.__pools.append(Pool(i, list_temp))
-        else:
+        elif nbr_play != 0:
             list_temp = []
             for j in range(0, nbr_play + 1):
                 list_temp.append(self.players.pop(0))

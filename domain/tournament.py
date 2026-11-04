@@ -49,9 +49,9 @@ class Tournament:
 
     def get_all_pools(self) -> list(Pool):
         all_pool = []
-        for bracket in self.brackets:
+        for bracket in self.__brackets:
             bracket.create_pool()
-            all_pool += bracket.get_pools()
+            all_pool += bracket.get_pools
         return all_pool
 
     def create_brackets(self) -> None:
