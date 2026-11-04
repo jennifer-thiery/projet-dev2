@@ -66,8 +66,7 @@ class Tournament:
                 ):
                     self.add_player(player, BracketType.BEGINNER)
                 case (
-                    F_R.NC.value
-                    | F_R.D0.value
+                    F_R.D0.value
                     | F_R.D1.value
                     | F_R.D2.value
                     | F_R.D3.value
