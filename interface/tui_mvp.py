@@ -9,8 +9,7 @@ def show_option() -> None:
     print("\n=== Gestion du tournoi ===")
     print("1. Gérer les participants")
     print("2. Répartir les joueurs dans les poules")
-    print("3. Gestion des scores")
-    print("4. Gérer les poules")
+    print("3. Gérer les poules")
     print("0. Quitter")
 
 
@@ -30,8 +29,6 @@ def show_menu() -> None:
                 case "2":
                     print("Gérer la liste des participants : fonctionnalité à venir.")
                 case "3":
-                    print("Répartir les joueurs dans les poules : fonctionnalité à venir.")
-                case "4":
                     pool_manager()
                 case _:
                     print("Choix invalide.")

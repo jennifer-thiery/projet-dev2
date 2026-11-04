@@ -1,6 +1,7 @@
 from data.action_db_pools import get_pool_from_db, get_pools_from_db
 from lib.tools import ct
 
+
 def pool_manager():
 
     ct()
@@ -13,7 +14,7 @@ def pool_manager():
     while True:
         poule_id = input("\nEntrez l'ID de la poule que vous souhaitez gérer : ").strip()
 
-        if poule_id == "0" :
+        if poule_id == "0":
             print("ID de poule invalide. Veuillez réessayer.")
         elif poule_id.isdigit():
             break
@@ -21,7 +22,7 @@ def pool_manager():
             print("ID de poule invalide. Veuillez réessayer.")
 
     poule = get_pool_from_db(poule_id)
-    
+
     while True:
         ct()
         print(f"\nVous avez choisi la poule : {poule['id']} (Niveau: faut rajouter un truc pour le niveau de la poule)")
