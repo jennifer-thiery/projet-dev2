@@ -1,9 +1,8 @@
-from interface.tui_mvp import show_menu
+from interface.tui_mvp import GestionTennisDeTable
 
 
 def main():
-
-    show_menu()
+    GestionTennisDeTable().run()
 
 
 if __name__ == "__main__":

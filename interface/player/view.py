@@ -1,3 +1,7 @@
+from textual.app import  ComposeResult
+from textual.screen import Screen
+from textual.widgets import Header,Footer,DataTable
+
 from domain.player import PlayerManager
 
 
@@ -26,3 +30,18 @@ def show_players():
 
 if __name__ == "__main__":
     show_players()
+
+
+class AffichageJoueur(Screen):
+    BINDINGS = [("escape", "app.pop_screen", "Retour")]
+
+    def compose(self) -> ComposeResult:
+        yield Header()
+        yield DataTable()
+        yield Footer()
+
+    def on_mount(self):
+        taby = self.query_one(DataTable)
+        taby.add_columns( "Licence", "Nom","Prénom","Club","Classement","Mail","Numéro",)
+        for player in PlayerManager().all_players:
+            taby.add_row(player.licence_number,player.lastname, player.firstname,player.club,player.federation_ranking,player.email, player.phone_number)
