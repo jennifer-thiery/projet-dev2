@@ -29,6 +29,8 @@ def add_player_to_db(new_player):
 
 
 def remove_player_from_db(player_to_remove):
+    # Fetch the current list of players from the JSON file then removes the player with the specified licence
+    # from the list and write the list back to the JSON
     with open(FILE_PATH, "r", encoding="utf-8") as file:
         player_list = json.load(file)
 

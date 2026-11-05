@@ -180,14 +180,15 @@ class PlayerManager:
         email: str,
         phone_number: str,
     ) -> None:
-        # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
+        # Removes the player in the JSON then updates the player with the edited information
+        # and adds it back to the JSON
         for player in self.__all_players:  # player references the dict Player inside of all_players
             if player.licence_number == p_licence_number:
                 remove_player_from_db(p_licence_number)
                 player.licence_number = licence_number
                 player.firstname = firstname
                 player.lastname = lastname
-                player.birthdate = datetime.strptime(birthdate, "%d/%m/%Y")
+                player.birthdate = birthdate
                 player.club = club
                 player.federation_ranking = federation_ranking
                 player.email = email
@@ -196,6 +197,8 @@ class PlayerManager:
                 break
 
     def delete_player(self, licence_number: str) -> None:
+        # Removes the player from the Player_manager
+        # and then removes it from the JSON thanks to the remove_all_player_from_db function
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 self.__all_players.remove(player)

@@ -152,8 +152,13 @@ def form_edit_player(p_licence_number, player: Player):
     email = player.email
     phone_number = player.phone_number
     while True:
+        #
         ct()
-        print(player.player_overview())
+        print(f"Joueur : {firstname} {lastname} ({licence_number})")
+        print(f"Date de naissance : {birthdate.strftime('%d/%m/%Y')}")
+        print(f"Classement : {federation_ranking}")
+        print(f"Club : {club}")
+        print(f"Coordonées : {email} | {phone_number}")
         print(
             "Que voulez-vous modifier ?\n 1 : Numéro de licence\n 2 : Prénom\n 3 : Nom de famille\n 4 : Date de naissance\n 5 : Club\n 6 : Classement fédéral\n 7 : Email\n 8 : Numéro de téléphone\n Q : Quitter sans sauvegarder\n W : Sauvegarder et quitter"
         )
@@ -179,8 +184,15 @@ def form_edit_player(p_licence_number, player: Player):
             print("Modification du nom de famille")
             lastname = required_input("Veuillez introduire le nom de famille : ")
         elif ans == "4":
+            birthdate_temp = birthdate
             print("Modification de la date de naissance")
-            birthdate = required_input("Veuillez introduire la date de naissance : ")
+            try:
+                birthdate = required_input("Veuillez introduire la date de naissance : ")
+                birthdate = datetime.strptime(birthdate, "%d/%m/%Y")
+            except ValueError:
+                print("Je vous arrête tout de suite, ceci n'est pas une date.")
+                birthdate = birthdate_temp
+                sleep(1)
         elif ans == "5":
             print("Modification du club")
             club = required_input("Veuillez introduire le club : ")
