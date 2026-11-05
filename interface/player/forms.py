@@ -171,9 +171,15 @@ def form_edit_player(p_licence_number, player: Player):
             print("Modification du nom de famille")
             lastname = required_input("Veuillez introduire le nom de famille : ")
         elif ans == "4":
+            birthdate_temp = birthdate
             print("Modification de la date de naissance")
-            birthdate = required_input("Veuillez introduire la date de naissance : ")
-            birthdate = datetime.strptime(birthdate, "%d/%m/%Y")
+            try:
+                birthdate = required_input("Veuillez introduire la date de naissance : ")
+                birthdate = datetime.strptime(birthdate, "%d/%m/%Y")
+            except ValueError:
+                print("Je vous arrête tout de suite, ceci n'est pas une date.")
+                birthdate = birthdate_temp
+                sleep(1)
         elif ans == "5":
             print("Modification du club")
             club = required_input("Veuillez introduire le club : ")
