@@ -83,3 +83,7 @@ class Braket:
 
     def rank_player_by_ranking(self) -> None:
         self.players.sort(key=sort_classement)
+
+
+if __name__ == "__main__":
+    print("hey")

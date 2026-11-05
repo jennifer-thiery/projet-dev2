@@ -13,7 +13,7 @@ def to_json_default(obj):
         return obj.isoformat()
     if hasattr(obj, "__dict__"):
         return obj.__dict__
-    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
 
 def save_tournament(T):
