@@ -52,7 +52,7 @@ class Tournament:
             bracket.create_pool()
 
     def create_brackets(self) -> None:
-        for player in PlayerManager().all_players:
+        for player in self.__players.all_players:
             for bracket in player.get_brackets():
                 self.add_player(player, bracket)
         self.create_all_pools()
