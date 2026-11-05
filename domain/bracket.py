@@ -78,6 +78,8 @@ class Braket:
             for j in range(0, nbr_play + 1):
                 list_temp.append(temp_list.pop(0))
             self.__pools.append(Pool(1, list_temp))
+        for pool in self.__pools:
+            pool.create_matches()
 
     def rank_player_by_ranking(self) -> None:
         self.players.sort(key=sort_classement)

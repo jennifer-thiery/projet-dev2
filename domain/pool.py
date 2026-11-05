@@ -8,8 +8,6 @@ class Pool:
         self.__matches = []
         self.__players = []
 
-        self.create_matches()
-
     @property
     def id(self) -> str:
         return self.__id
