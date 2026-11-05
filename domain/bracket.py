@@ -64,14 +64,12 @@ class Braket:
                     if not (nbr_in_list == all_pools - 1):
                         nbr_in_list += 1
                     else:
-                        nbr_in_list -= 1
                         reverse = True
 
                 else:
                     if not (nbr_in_list == 0):
                         nbr_in_list -= 1
                     else:
-                        nbr_in_list += 1
                         reverse = False
                 self.__pools[nbr_in_list].add_player(self.players[nbr_in_pool])
                 nbr_in_pool += 1

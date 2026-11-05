@@ -1,6 +1,5 @@
 from domain.enums import MatchType
 from domain.match import Match
-from domain.player import Player
 
 
 class Pool:
