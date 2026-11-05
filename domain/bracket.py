@@ -50,19 +50,32 @@ class Braket:
                 nbr_of_3 = 0
             nbr_of_4 = int((nbr_play - (nbr_of_3 * 3)) / 4)
 
-            for i in range(1, nbr_of_3 + nbr_of_4 + 1):
-                if nbr_of_3 != 0:
-                    list_temp = []
-                    for j in range(0, 3):
-                        list_temp.append(temp_list.pop(0))
-                    nbr_of_3 -= 1
-                    self.__pools.append(Pool(i, list_temp))
+            reverse = False
+            all_pools = nbr_of_3 + nbr_of_4
+
+            for i in range(1, all_pools + 1):
+                self.__pools.append(Pool(i))
+
+            nbr_in_pool = 0
+            nbr_in_list = 0
+
+            while nbr_in_pool != len(self.players):
+                if not reverse:
+                    if not (nbr_in_list == all_pools - 1):
+                        nbr_in_list += 1
+                    else:
+                        nbr_in_list -= 1
+                        reverse = True
+
                 else:
-                    list_temp = []
-                    for j in range(0, 4):
-                        list_temp.append(temp_list.pop(0))
-                    nbr_of_4 -= 1
-                    self.__pools.append(Pool(i, list_temp))
+                    if not (nbr_in_list == 0):
+                        nbr_in_list -= 1
+                    else:
+                        nbr_in_list += 1
+                        reverse = False
+                self.__pools[nbr_in_list].add_player(self.players[nbr_in_pool])
+                nbr_in_pool += 1
+
         elif nbr_play != 0:
             list_temp = []
             for j in range(0, nbr_play + 1):
