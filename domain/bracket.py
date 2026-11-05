@@ -1,5 +1,3 @@
-from time import sleep
-
 from domain.enums import BracketType, FederationRanking, MatchType
 from domain.match import Match
 from domain.pool import Pool
