@@ -1,10 +1,11 @@
+from time import sleep
+
 from domain.enums import BracketType, FederationRanking, MatchType
 from domain.match import Match
 from domain.pool import Pool
 
 
 def sort_classement(elem) -> int:
-
     return int(FederationRanking[elem.federation_ranking])
 
 
@@ -60,6 +61,7 @@ class Braket:
             nbr_in_list = 0
 
             while nbr_in_pool != len(self.players):
+                self.__pools[nbr_in_list].add_player(self.players[nbr_in_pool])
                 if not reverse:
                     if not (nbr_in_list == all_pools - 1):
                         nbr_in_list += 1
@@ -71,7 +73,6 @@ class Braket:
                         nbr_in_list -= 1
                     else:
                         reverse = False
-                self.__pools[nbr_in_list].add_player(self.players[nbr_in_pool])
                 nbr_in_pool += 1
 
         elif nbr_play != 0:

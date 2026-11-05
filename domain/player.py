@@ -112,7 +112,7 @@ class Player:
                 list_temp.append(BracketType.INTERMADIATE)
             case _:
                 list_temp.append(BracketType.EXPERT)
-        if not self.__two_bracket:
+        if self.__two_bracket:
             match list_temp[0]:
                 case BracketType.BEGINNER:
                     list_temp.append(BracketType.INTERMADIATE)
