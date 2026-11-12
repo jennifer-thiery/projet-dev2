@@ -7,7 +7,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "C4",
         "email": "victor.servais@example.com",
-        "phone_number": "0473 16 93 30"
+        "phone_number": "0473 16 93 30",
+        "second_bracket": true
     },
     {
         "licence_number": "99288112",
@@ -17,7 +18,8 @@
         "club": "TT Evere",
         "federation_ranking": "C2",
         "email": "raphael.dubois@example.com",
-        "phone_number": "0486 96 47 25"
+        "phone_number": "0486 96 47 25",
+        "second_bracket": true
     },
     {
         "licence_number": "71202897",
@@ -27,7 +29,8 @@
         "club": "CTT Ixelles",
         "federation_ranking": "D2",
         "email": "paul.collin@example.com",
-        "phone_number": "0493 28 18 23"
+        "phone_number": "0493 28 18 23",
+        "second_bracket": true
     },
     {
         "licence_number": "18877198",
@@ -37,7 +40,8 @@
         "club": "CTT Schaerbeek",
         "federation_ranking": "E2",
         "email": "leo.delvaux@example.com",
-        "phone_number": "0499 35 63 88"
+        "phone_number": "0499 35 63 88",
+        "second_bracket": true
     },
     {
         "licence_number": "19972707",
@@ -47,7 +51,8 @@
         "club": "TTC Bruxelles",
         "federation_ranking": "E4",
         "email": "camille.simon@example.com",
-        "phone_number": "0485 79 58 21"
+        "phone_number": "0485 79 58 21",
+        "second_bracket": true
     },
     {
         "licence_number": "30293476",
@@ -57,7 +62,8 @@
         "club": "TT Evere",
         "federation_ranking": "D2",
         "email": "sarah.laurent@example.com",
-        "phone_number": "0480 21 57 18"
+        "phone_number": "0480 21 57 18",
+        "second_bracket": true
     },
     {
         "licence_number": "48983884",
@@ -67,7 +73,8 @@
         "club": "TT Anderlecht",
         "federation_ranking": "D2",
         "email": "lea.dupont@example.com",
-        "phone_number": "0499 26 23 57"
+        "phone_number": "0499 26 23 57",
+        "second_bracket": true
     },
     {
         "licence_number": "16845953",
@@ -77,7 +84,8 @@
         "club": "CTT Forest",
         "federation_ranking": "D4",
         "email": "alice.mertens@example.com",
-        "phone_number": "0481 71 63 40"
+        "phone_number": "0481 71 63 40",
+        "second_bracket": true
     },
     {
         "licence_number": "68579255",
@@ -87,7 +95,8 @@
         "club": "TT Evere",
         "federation_ranking": "D2",
         "email": "oceane.renard@example.com",
-        "phone_number": "0471 98 75 95"
+        "phone_number": "0471 98 75 95",
+        "second_bracket": true
     },
     {
         "licence_number": "37042751",
@@ -97,7 +106,8 @@
         "club": "TTC Bruxelles",
         "federation_ranking": "B2",
         "email": "zoe.janssens@example.com",
-        "phone_number": "0499 69 53 19"
+        "phone_number": "0499 69 53 19",
+        "second_bracket": true
     },
     {
         "licence_number": "45767577",
@@ -107,7 +117,8 @@
         "club": "CTT Ixelles",
         "federation_ranking": "D2",
         "email": "nathan.servais@example.com",
-        "phone_number": "0486 36 67 13"
+        "phone_number": "0486 36 67 13",
+        "second_bracket": false
     },
     {
         "licence_number": "63156012",
@@ -117,7 +128,8 @@
         "club": "TTC Etterbeek",
         "federation_ranking": "D4",
         "email": "louise.jacobs@example.com",
-        "phone_number": "0478 81 95 66"
+        "phone_number": "0478 81 95 66",
+        "second_bracket": false
     },
     {
         "licence_number": "89549796",
@@ -127,7 +139,8 @@
         "club": "CTT Schaerbeek",
         "federation_ranking": "E2",
         "email": "oceane.leclercq@example.com",
-        "phone_number": "0483 22 30 66"
+        "phone_number": "0483 22 30 66",
+        "second_bracket": false
     },
     {
         "licence_number": "33121945",
@@ -137,7 +150,8 @@
         "club": "CTT Saint-Gilles",
         "federation_ranking": "D2",
         "email": "clara.verhaegen@example.com",
-        "phone_number": "0498 56 46 57"
+        "phone_number": "0498 56 46 57",
+        "second_bracket": false
     },
     {
         "licence_number": "93264334",
@@ -147,7 +161,8 @@
         "club": "TT Evere",
         "federation_ranking": "C4",
         "email": "louis.mathieu@example.com",
-        "phone_number": "0486 25 62 48"
+        "phone_number": "0486 25 62 48",
+        "second_bracket": false
     },
     {
         "licence_number": "89321348",
@@ -157,7 +172,8 @@
         "club": "TT Evere",
         "federation_ranking": "B2",
         "email": "clara.mertens@example.com",
-        "phone_number": "0494 38 82 41"
+        "phone_number": "0494 38 82 41",
+        "second_bracket": false
     },
     {
         "licence_number": "48391926",
@@ -167,7 +183,8 @@
         "club": "TT Anderlecht",
         "federation_ranking": "C4",
         "email": "eva.desmet@example.com",
-        "phone_number": "0497 37 29 32"
+        "phone_number": "0497 37 29 32",
+        "second_bracket": false
     },
     {
         "licence_number": "44105402",
@@ -177,7 +194,8 @@
         "club": "TTC Auderghem",
         "federation_ranking": "B4",
         "email": "arthur.claes@example.com",
-        "phone_number": "0497 24 34 99"
+        "phone_number": "0497 24 34 99",
+        "second_bracket": false
     },
     {
         "licence_number": "77717246",
@@ -187,7 +205,8 @@
         "club": "TT Woluwe",
         "federation_ranking": "B4",
         "email": "paul.wouters@example.com",
-        "phone_number": "0471 46 10 43"
+        "phone_number": "0471 46 10 43",
+        "second_bracket": false
     },
     {
         "licence_number": "91466361",
@@ -197,7 +216,8 @@
         "club": "TTC Etterbeek",
         "federation_ranking": "B2",
         "email": "emma.laurent@example.com",
-        "phone_number": "0495 95 78 16"
+        "phone_number": "0495 95 78 16",
+        "second_bracket": false
     },
     {
         "licence_number": "26010739",
@@ -207,7 +227,8 @@
         "club": "CTT Schaerbeek",
         "federation_ranking": "E6",
         "email": "nathan.dupont@example.com",
-        "phone_number": "0480 96 53 59"
+        "phone_number": "0480 96 53 59",
+        "second_bracket": false
     },
     {
         "licence_number": "30834919",
@@ -217,7 +238,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "B0",
         "email": "clara.goossens@example.com",
-        "phone_number": "0499 51 87 26"
+        "phone_number": "0499 51 87 26",
+        "second_bracket": false
     },
     {
         "licence_number": "72812014",
@@ -227,7 +249,8 @@
         "club": "TT Anderlecht",
         "federation_ranking": "B0",
         "email": "anna.delvaux@example.com",
-        "phone_number": "0499 13 58 55"
+        "phone_number": "0499 13 58 55",
+        "second_bracket": false
     },
     {
         "licence_number": "52547810",
@@ -237,7 +260,8 @@
         "club": "TT Jette",
         "federation_ranking": "C4",
         "email": "ethan.hermans@example.com",
-        "phone_number": "0473 95 22 92"
+        "phone_number": "0473 95 22 92",
+        "second_bracket": false
     },
     {
         "licence_number": "91222056",
@@ -247,7 +271,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "C0",
         "email": "juliette.renard@example.com",
-        "phone_number": "0496 53 89 64"
+        "phone_number": "0496 53 89 64",
+        "second_bracket": false
     },
     {
         "licence_number": "46924468",
@@ -257,7 +282,8 @@
         "club": "CTT Schaerbeek",
         "federation_ranking": "B4",
         "email": "theo.janssens@example.com",
-        "phone_number": "0488 13 80 26"
+        "phone_number": "0488 13 80 26",
+        "second_bracket": false
     },
     {
         "licence_number": "15333027",
@@ -267,7 +293,8 @@
         "club": "CTT Ixelles",
         "federation_ranking": "B6",
         "email": "lucas.lenoir@example.com",
-        "phone_number": "0472 90 57 24"
+        "phone_number": "0472 90 57 24",
+        "second_bracket": false
     },
     {
         "licence_number": "49107875",
@@ -277,7 +304,8 @@
         "club": "CTT Saint-Gilles",
         "federation_ranking": "B2",
         "email": "louise.peeters@example.com",
-        "phone_number": "0497 96 54 49"
+        "phone_number": "0497 96 54 49",
+        "second_bracket": false
     },
     {
         "licence_number": "64919537",
@@ -287,7 +315,8 @@
         "club": "CTT Ixelles",
         "federation_ranking": "E6",
         "email": "robin.lecomte@example.com",
-        "phone_number": "0470 42 78 42"
+        "phone_number": "0470 42 78 42",
+        "second_bracket": false
     },
     {
         "licence_number": "78344160",
@@ -297,7 +326,8 @@
         "club": "TT Jette",
         "federation_ranking": "B2",
         "email": "manon.maes@example.com",
-        "phone_number": "0481 87 53 96"
+        "phone_number": "0481 87 53 96",
+        "second_bracket": false
     },
     {
         "licence_number": "78583914",
@@ -307,7 +337,8 @@
         "club": "TTC Etterbeek",
         "federation_ranking": "B2",
         "email": "louise.mertens@example.com",
-        "phone_number": "0474 75 33 24"
+        "phone_number": "0474 75 33 24",
+        "second_bracket": false
     },
     {
         "licence_number": "70178078",
@@ -317,7 +348,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "D4",
         "email": "clara.janssens@example.com",
-        "phone_number": "0497 50 88 63"
+        "phone_number": "0497 50 88 63",
+        "second_bracket": false
     },
     {
         "licence_number": "62325699",
@@ -327,7 +359,8 @@
         "club": "CTT Forest",
         "federation_ranking": "B6",
         "email": "julien.lejeune@example.com",
-        "phone_number": "0470 32 58 45"
+        "phone_number": "0470 32 58 45",
+        "second_bracket": false
     },
     {
         "licence_number": "38959123",
@@ -337,7 +370,8 @@
         "club": "TT Anderlecht",
         "federation_ranking": "E0",
         "email": "arthur.mathieu@example.com",
-        "phone_number": "0491 93 23 93"
+        "phone_number": "0491 93 23 93",
+        "second_bracket": false
     },
     {
         "licence_number": "93787014",
@@ -347,7 +381,8 @@
         "club": "CTT Forest",
         "federation_ranking": "D0",
         "email": "gabriel.closset@example.com",
-        "phone_number": "0472 96 98 58"
+        "phone_number": "0472 96 98 58",
+        "second_bracket": false
     },
     {
         "licence_number": "61240704",
@@ -357,7 +392,8 @@
         "club": "CTT Ixelles",
         "federation_ranking": "E4",
         "email": "victor.jacobs@example.com",
-        "phone_number": "0486 58 30 97"
+        "phone_number": "0486 58 30 97",
+        "second_bracket": false
     },
     {
         "licence_number": "93794095",
@@ -367,7 +403,8 @@
         "club": "CTT Schaerbeek",
         "federation_ranking": "E6",
         "email": "eva.vandenberghe@example.com",
-        "phone_number": "0484 87 50 51"
+        "phone_number": "0484 87 50 51",
+        "second_bracket": false
     },
     {
         "licence_number": "31421621",
@@ -377,7 +414,8 @@
         "club": "TT Jette",
         "federation_ranking": "E2",
         "email": "lola.mertens@example.com",
-        "phone_number": "0472 25 74 19"
+        "phone_number": "0472 25 74 19",
+        "second_bracket": false
     },
     {
         "licence_number": "62884292",
@@ -387,7 +425,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "D2",
         "email": "camille.mertens@example.com",
-        "phone_number": "0485 24 84 41"
+        "phone_number": "0485 24 84 41",
+        "second_bracket": false
     },
     {
         "licence_number": "21443268",
@@ -397,7 +436,8 @@
         "club": "TT Woluwe",
         "federation_ranking": "E2",
         "email": "chloe.jacobs@example.com",
-        "phone_number": "0477 56 58 12"
+        "phone_number": "0477 56 58 12",
+        "second_bracket": false
     },
     {
         "licence_number": "49319690",
@@ -407,7 +447,8 @@
         "club": "TT Woluwe",
         "federation_ranking": "B2",
         "email": "arthur.lambert@example.com",
-        "phone_number": "0474 14 81 24"
+        "phone_number": "0474 14 81 24",
+        "second_bracket": false
     },
     {
         "licence_number": "51268609",
@@ -417,7 +458,8 @@
         "club": "TT Woluwe",
         "federation_ranking": "E0",
         "email": "louis.servais@example.com",
-        "phone_number": "0496 16 78 22"
+        "phone_number": "0496 16 78 22",
+        "second_bracket": false
     },
     {
         "licence_number": "17372325",
@@ -427,7 +469,8 @@
         "club": "TT Molenbeek",
         "federation_ranking": "D0",
         "email": "samuel.jacobs@example.com",
-        "phone_number": "0491 18 50 25"
+        "phone_number": "0491 18 50 25",
+        "second_bracket": false
     },
     {
         "licence_number": "19817825",
@@ -437,7 +480,8 @@
         "club": "TT Molenbeek",
         "federation_ranking": "C0",
         "email": "manon.laurent@example.com",
-        "phone_number": "0488 97 48 52"
+        "phone_number": "0488 97 48 52",
+        "second_bracket": false
     },
     {
         "licence_number": "54216135",
@@ -447,7 +491,8 @@
         "club": "CTT Saint-Gilles",
         "federation_ranking": "C0",
         "email": "victor.delvaux@example.com",
-        "phone_number": "0474 59 10 10"
+        "phone_number": "0474 59 10 10",
+        "second_bracket": false
     },
     {
         "licence_number": "36051626",
@@ -457,7 +502,8 @@
         "club": "TT Molenbeek",
         "federation_ranking": "B2",
         "email": "paul.bertrand@example.com",
-        "phone_number": "0496 39 31 58"
+        "phone_number": "0496 39 31 58",
+        "second_bracket": false
     },
     {
         "licence_number": "16291112",
@@ -467,7 +513,8 @@
         "club": "TT Jette",
         "federation_ranking": "D2",
         "email": "robin.closset@example.com",
-        "phone_number": "0494 55 87 10"
+        "phone_number": "0494 55 87 10",
+        "second_bracket": false
     },
     {
         "licence_number": "71857792",
@@ -477,7 +524,8 @@
         "club": "CTT Forest",
         "federation_ranking": "C6",
         "email": "robin.mertens@example.com",
-        "phone_number": "0479 46 51 90"
+        "phone_number": "0479 46 51 90",
+        "second_bracket": false
     },
     {
         "licence_number": "45643764",
@@ -487,7 +535,8 @@
         "club": "TTC Laeken",
         "federation_ranking": "NC",
         "email": "antoine.dumont@example.com",
-        "phone_number": "0474 86 26 94"
+        "phone_number": "0474 86 26 94",
+        "second_bracket": false
     },
     {
         "licence_number": "12345678",
@@ -497,6 +546,7 @@
         "club": "TTC Etterbeek",
         "federation_ranking": "D4",
         "email": "chloe.lejeune@example.com",
-        "phone_number": "0489 86 73 73"
+        "phone_number": "0489 86 73 73",
+        "second_bracket": false
     }
 ]

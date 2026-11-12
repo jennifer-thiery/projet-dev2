@@ -51,5 +51,5 @@ class PlayerList(Screen):
                 player.federation_ranking,
                 player.email,
                 player.phone_number,
-                2 if not player.second_bracket else 1,
+                2 if player.second_bracket else 1,
             )
