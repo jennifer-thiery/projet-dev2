@@ -155,6 +155,15 @@ class PlayerManager:
                 return player
 
     def add_player(self, new_player: Player) -> None:
+        """Ajoute un nouveau joueur à la liste des joueurs.
+        PRE  :  Le numéro de la licence (licence_number) doit être composé exactement de 8 chiffres.
+                Le numéro de la licence (licence_number) ne doit pas déjà être présent dans la liste des participants.
+                Le classement fédéral (federation_ranking) doit être une valeur valide (RM-01).
+        POST :  Ajoute un nouveau participant dans la liste des joueurs (aussi directement dans la db).
+                Ne revoie rien
+        """
+        self.__all_players.append(new_player)
+
         new_player_dict = {
             "licence_number": new_player.licence_number,
             "firstname": new_player.firstname,
@@ -165,7 +174,6 @@ class PlayerManager:
             "email": new_player.email,
             "phone_number": new_player.phone_number,
         }
-
         add_player_to_db(new_player_dict)
 
     def edit_player(
