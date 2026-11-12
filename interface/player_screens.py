@@ -28,6 +28,8 @@ class PlayerMenu(Screen):
                 self.app.push_screen(PlayerList())
             case "add":
                 self.app.push_screen(AddPlayerForm())
+            case "edit-remove":
+                self.app.push_screen(EditOrRemoveForm())
 
 
 class PlayerList(Screen):
@@ -171,3 +173,6 @@ class AddPlayerForm(Screen):
         self.get_widget_by_id("save").disabled = not all_valid
 
 
+class EditOrRemoveForm(Screen):
+    TITLE = "Modifier ou supprimer un participant"
+    BINDINGS = [("escape", "app.pop_screen", "Retour")]
