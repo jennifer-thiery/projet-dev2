@@ -1,7 +1,6 @@
 from datetime import date, datetime
 
 from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
-from domain.enums import BracketType, FederationRanking
 
 
 class Player:
@@ -15,6 +14,7 @@ class Player:
         federation_ranking: str,
         email: str,
         phone_number: str,
+        second_bracket: bool,
     ):
         self.__licence_number = licence_number
         self.__firstname = firstname
@@ -24,7 +24,7 @@ class Player:
         self.__federation_ranking = federation_ranking
         self.__email = email
         self.__phone_number = phone_number
-        self.__two_bracket = False
+        self.__second_bracket = second_bracket
 
     @property
     def licence_number(self) -> str:
@@ -90,6 +90,14 @@ class Player:
     def phone_number(self, phone_number):
         self.__phone_number = phone_number
 
+    @property
+    def second_bracket(self) -> str:
+        return self.__second_bracket
+
+    @second_bracket.setter
+    def second_bracket(self, second_bracket):
+        self.__second_bracket = second_bracket
+
     def get_age(self):
         current_year = date.today().year
         return current_year - self.__birthdate.year
@@ -103,29 +111,10 @@ class Player:
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
         )
 
-    def get_brackets(self) -> list:
-        list_temp = []
-        match int(FederationRanking[self.federation_ranking]):
-            case x if x <= 7:
-                list_temp.append(BracketType.BEGINNER)
-            case x if x > 7 and x <= 14:
-                list_temp.append(BracketType.INTERMADIATE)
-            case _:
-                list_temp.append(BracketType.EXPERT)
-        if not self.__two_bracket:
-            match list_temp[0]:
-                case BracketType.BEGINNER:
-                    list_temp.append(BracketType.INTERMADIATE)
-                case BracketType.INTERMADIATE:
-                    list_temp.append(BracketType.EXPERT)
-                case _:
-                    pass
-        return list_temp
-
 
 class PlayerManager:
     def __init__(self):
-        self.__all_players = []
+        self.__all_players: list[Player] = []
         for data in get_players_from_db():
             player = Player(
                 licence_number=data["licence_number"],
@@ -136,6 +125,7 @@ class PlayerManager:
                 federation_ranking=data["federation_ranking"],
                 email=data["email"],
                 phone_number=data["phone_number"],
+                second_bracket=data["second_bracket"],
             )
             self.__all_players.append(player)
 
@@ -164,6 +154,7 @@ class PlayerManager:
             "federation_ranking": new_player.federation_ranking,
             "email": new_player.email,
             "phone_number": new_player.phone_number,
+            "second_bracket": new_player.second_bracket,
         }
 
         add_player_to_db(new_player_dict)
@@ -187,7 +178,7 @@ class PlayerManager:
                 player.licence_number = licence_number
                 player.firstname = firstname
                 player.lastname = lastname
-                player.birthdate = datetime.strptime(birthdate, "%d/%m/%Y")
+                player.birthdate = birthdate
                 player.club = club
                 player.federation_ranking = federation_ranking
                 player.email = email

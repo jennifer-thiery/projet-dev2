@@ -3,7 +3,6 @@ from domain.player import Player
 
 class Match:
     def __init__(self, id: str, players: list[Player], type: str):
-
         self.__id = id
         self.__scores = [0, 0]
         self.__players = players
@@ -28,7 +27,7 @@ class Match:
 
     @property
     def winner(self) -> Player:
-        return self.__winner
+        return self.__players[0] if self.__scores[0] > self.__scores[1] else self.__players[1]
 
     def match_overview(self) -> str:
         return (
@@ -38,9 +37,3 @@ class Match:
             f"Joueurs : {[(player.firstname() + ' ' + player.last_name()) for player in self.__players]}\n"
             f"Gagnant : {self.__winner.player_overview() if self.__winner else 'Aucun gagnant'}\n"
         )
-
-    def get_winner(self) -> Player:
-        return self.players[0] if self.scores[0] > self.scores[1] else self.players[1]
-
-    def is_played(self) -> bool:
-        return False if self.scores is None else True

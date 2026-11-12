@@ -3,8 +3,13 @@ from time import sleep
 from data.action_db_tounament import save_tournament
 from domain.tournament import Tournament
 from interface.player.menu import show_player_menu
-from interface.pool_manager import pool_manager
+from interface.pool.manager import pool_manager
+from interface.pool.view import show_pools
 from lib.tools import ct
+
+tournament = Tournament()
+tournament.add_players_to_brackets()
+tournament.create_pools_of_brackets()
 
 
 def show_option() -> None:
@@ -29,11 +34,10 @@ def show_menu() -> None:
                 case "1":
                     show_player_menu()
                 case "2":
-                    tournament = Tournament("2019-12-04", "2019-12-06")
-                    tournament.create_brackets()
+                    show_pools(tournament)
                     save_tournament(tournament)
                 case "3":
-                    pool_manager()
+                    pool_manager(tournament)
                 case _:
                     print("Choix invalide.")
                     sleep(0.5)
