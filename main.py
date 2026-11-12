@@ -1,8 +1,8 @@
-from interface.tui_mvp import show_menu
+from interface.tui_textual import TableTennisTournamentManager
 
 
 def main():
-    show_menu()
+    TableTennisTournamentManager().run()
 
 
 if __name__ == "__main__":
