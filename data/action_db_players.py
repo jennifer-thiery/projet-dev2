@@ -28,7 +28,12 @@ def add_player_to_db(new_player):
         print(f"Le fichier {FILE_NAME} existe pas")
 
 
-def remove_player_from_db(player_to_remove):
+def remove_player_from_db(player_to_remove: str):
+    """Removes player from the JSON
+    PRE: the licence_number of the player.
+    POST: the JSON file is rewritten without
+          player that has been deleted.
+    """
     # Fetch the current list of players from the JSON file then removes the player with the specified licence
     # from the list and write the list back to the JSON
     with open(FILE_PATH, "r", encoding="utf-8") as file:
