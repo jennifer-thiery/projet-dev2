@@ -32,6 +32,13 @@ class Pool:
 
     """affiche les matchs restants dans une poule"""
 
+    def nbr_matches_left(self):
+        nbr = 0
+        for match in self.__matches:
+            if match.scores == [0, 0]:
+                nbr += 1
+        return nbr
+
     def left_matches(self) -> str:
         """Formate la liste des matchs restants à jouer dans la poule.
 

@@ -47,15 +47,17 @@ class Tournament:
             case BracketType.EXPERT:
                 self.__brackets[3].remove_player(licence_number)
 
-    def create_all_pools(self) -> None:
-        for bracket in self.__brackets:
-            bracket.create_pool()
-
     def create_brackets(self) -> None:
+        """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
+
+        PRE : aucune.
+        POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
+        """
         for player in self.__players.all_players:
             for bracket in player.get_brackets():
                 self.add_player(player, bracket)
-        self.create_all_pools()
+        for bracket in self.__brackets:
+            bracket.create_pool()
 
 
 if __name__ == "__main__":
