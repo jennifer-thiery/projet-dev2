@@ -14,6 +14,7 @@ class Braket:
         self.players = []
         self.__pools = []
         self.__type = type
+        self.current_pool = 0
 
     @property
     def get_pools(self) -> list:
@@ -24,10 +25,22 @@ class Braket:
         return self.__type
 
     def get_next_match(self) -> Match:
+        """Renvoie le prochain match à jouer du tableau
+        PRE : aucune.
+        POST : Si on est en phase de poule : renvoie le prochain match de la poule en cour.
+               Si on est en mode tournoi il renvoie le premier match non jouer.
+               Si Il n'y a pas de match ou plus de match à jouer il renvoi l'erreur ValueError
+        """
         if self.current_phase == MatchType.POOL:
-            return self.__pools[0].get_next_match()
+            if self.__pools[self.current_pool].nbr_matches_left() == 0:
+                self.current_pool += 1
+            return self.__pools[self.current_pool].get_next_match()
         else:
-            return self.matches[0]
+            if len(self.matches) != 0:
+                for match in self.matches:
+                    if match.scores == [0, 0]:
+                        return self.matches[0]
+        raise ValueError
 
     def add_player(self, player) -> None:
         self.players.append(player)
@@ -38,6 +51,11 @@ class Braket:
                 self.players.remove(i)
 
     def create_pool(self) -> None:
+        """Crée la poule en serpentin.
+
+        PRE : aucune.
+        POST : Crée le nombre adéquat de poule de 4 et 3 joueurs. Ajoute ensuite les joueurs en fonction de leur niveau en serpentin
+        """
         self.__pools = []
         self.rank_player_by_ranking()
         temp_list = self.players.copy()
