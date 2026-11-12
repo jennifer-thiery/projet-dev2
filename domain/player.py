@@ -104,6 +104,12 @@ class Player:
         )
 
     def get_brackets(self) -> list:
+        """Détermine dans quel(s) tableau(x) le joueur est éligible de jouer en fonction de son classement et du nombre de tableaux qu'il souhaite jouer.
+        PRE  :  Le joueur a un classement fédéral valide.
+                Le joueur a défini s'il voulait jouer dans un deuxième tableau.
+        POST :  Renvoie la liste de types de tableaux (1 ou 2 types) dans lesquels le joueur va jouer.
+                Le choix des tableaux est selon le classement du joueur et/ou l'âge (RM-01).
+        """
         list_temp = []
         match int(FederationRanking[self.federation_ranking]):
             case x if x <= 7:
