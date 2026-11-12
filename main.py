@@ -1,8 +1,8 @@
-from interface.tui_mvp import GestionTennisDeTable
+from interface.tui_textual import TableTennisTournamentManager
 
 
 def main():
-    GestionTennisDeTable().run()
+    TableTennisTournamentManager().run()
 
 
 if __name__ == "__main__":

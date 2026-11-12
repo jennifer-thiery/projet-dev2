@@ -1,20 +1,20 @@
-from enum import StrEnum, auto
+from enum import StrEnum
 
 
 class BracketType(StrEnum):
-    JUNIOR = auto()
-    BEGINNER = auto()
-    INTERMADIATE = auto()
-    EXPERT = auto()
+    JUNIOR = "Jeunes"
+    BEGINNER = "Débutants"
+    INTERMEDIATE = "Intermédiaires"
+    EXPERT = "Confirmés"
 
 
 class MatchType(StrEnum):
-    POOL = auto()
-    ROUND_OF_32 = auto()
-    ROUND_OF_16 = auto()
-    QUARTER = auto()
-    SEMI_FINAL = auto()
-    FINAL = auto()
+    POOL = "Poule"
+    ROUND_OF_32 = "Seizième de finale"
+    ROUND_OF_16 = "Huitième de finale"
+    QUARTER = "Quart de finale"
+    SEMI_FINAL = "Demi-finale"
+    FINAL = "Finale"
 
 
 class FederationRanking(StrEnum):
@@ -47,3 +47,7 @@ class FederationRanking(StrEnum):
     B2 = "B2"
     B1 = "B1"
     B0 = "B0"
+
+    @property
+    def ranking_weight(self) -> int:
+        return list(FederationRanking).index(self)

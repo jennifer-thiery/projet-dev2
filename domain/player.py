@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
 
 
@@ -7,18 +9,22 @@ class Player:
         licence_number: str,
         firstname: str,
         lastname: str,
+        birthdate: date,
         club: str,
         federation_ranking: str,
         email: str,
         phone_number: str,
+        second_bracket: bool,
     ):
         self.__licence_number = licence_number
         self.__firstname = firstname
         self.__lastname = lastname
+        self.__birthdate = birthdate
         self.__club = club
         self.__federation_ranking = federation_ranking
         self.__email = email
         self.__phone_number = phone_number
+        self.__second_bracket = second_bracket
 
     @property
     def licence_number(self) -> str:
@@ -43,6 +49,14 @@ class Player:
     @lastname.setter
     def lastname(self, lastname):
         self.__lastname = lastname
+
+    @property
+    def birthdate(self) -> date:
+        return self.__birthdate
+
+    @birthdate.setter
+    def birthdate(self, birthdate):
+        self.__birthdate = birthdate
 
     @property
     def club(self) -> str:
@@ -76,9 +90,22 @@ class Player:
     def phone_number(self, phone_number):
         self.__phone_number = phone_number
 
+    @property
+    def second_bracket(self) -> str:
+        return self.__second_bracket
+
+    @second_bracket.setter
+    def second_bracket(self, second_bracket):
+        self.__second_bracket = second_bracket
+
+    def get_age(self):
+        current_year = date.today().year
+        return current_year - self.__birthdate.year
+
     def player_overview(self) -> str:
         return (
             f"Joueur : {self.__firstname} {self.__lastname} ({self.__licence_number})\n"
+            f"Date de naissance : {self.__birthdate.strftime('%d/%m/%Y')} ({self.get_age()} ans)\n"
             f"Classement : {self.__federation_ranking}\n"
             f"Club : {self.__club}\n"
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
@@ -87,16 +114,18 @@ class Player:
 
 class PlayerManager:
     def __init__(self):
-        self.__all_players = []
+        self.__all_players: list[Player] = []
         for data in get_players_from_db():
             player = Player(
                 licence_number=data["licence_number"],
                 firstname=data["firstname"],
                 lastname=data["lastname"],
+                birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d"),
                 club=data["club"],
                 federation_ranking=data["federation_ranking"],
                 email=data["email"],
                 phone_number=data["phone_number"],
+                second_bracket=data["second_bracket"],
             )
             self.__all_players.append(player)
 
@@ -120,20 +149,23 @@ class PlayerManager:
             "licence_number": new_player.licence_number,
             "firstname": new_player.firstname,
             "lastname": new_player.lastname,
+            "birthdate": new_player.birthdate.strftime("%Y-%m-%d"),
             "club": new_player.club,
             "federation_ranking": new_player.federation_ranking,
             "email": new_player.email,
             "phone_number": new_player.phone_number,
+            "second_bracket": new_player.second_bracket,
         }
 
         add_player_to_db(new_player_dict)
 
     def edit_player(
         self,
-        pLicence_number: str,  # the current licence number
+        p_licence_number: str,  # the current licence number
         licence_number: str,  # The potentially changed licence number
         firstname: str,
         lastname: str,
+        birthdate: date,
         club: str,
         federation_ranking: str,
         email: str,
@@ -141,11 +173,12 @@ class PlayerManager:
     ) -> None:
         # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
         for player in self.__all_players:  # player references the dict Player inside of all_players
-            if player.licence_number == pLicence_number:
-                remove_player_from_db(pLicence_number)
+            if player.licence_number == p_licence_number:
+                remove_player_from_db(p_licence_number)
                 player.licence_number = licence_number
                 player.firstname = firstname
                 player.lastname = lastname
+                player.birthdate = birthdate
                 player.club = club
                 player.federation_ranking = federation_ranking
                 player.email = email
