@@ -180,8 +180,12 @@ class PlayerManager:
         email: str,
         phone_number: str,
     ) -> None:
-        # Removes the player in the JSON then updates the player with the edited information
-        # and adds it back to the JSON
+        """Modifies the specified player
+        PRE : p_licence_number is the licence number of the player as it is in the player object at the moment of call
+              licence_number is the potentially new licence number (can be the same as p_licence_number)
+              and all the other parameters values can be the same as the value in player.
+        POST : Adds the player into the JSON. Returns nothing.
+        """
         for player in self.__all_players:  # player references the dict Player inside of all_players
             if player.licence_number == p_licence_number:
                 remove_player_from_db(p_licence_number)
@@ -197,8 +201,11 @@ class PlayerManager:
                 break
 
     def delete_player(self, licence_number: str) -> None:
-        # Removes the player from the Player_manager
-        # and then removes it from the JSON thanks to the remove_all_player_from_db function
+        """Deletes a player from the JSON
+        PRE : licence_number as its name implies is the licence
+        number of the player to be deleted
+        POST : The player is deleted from the JSON. Returns nothing
+        """
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 self.__all_players.remove(player)
