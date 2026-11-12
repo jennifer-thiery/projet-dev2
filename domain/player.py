@@ -150,6 +150,10 @@ class PlayerManager:
         return self.__all_players
 
     def licence_exists(self, licence_number: str) -> bool:
+        """Vérifie si la licence est déjà présente dans la liste des participants.
+        PRE  :  La licence introduite doit être composé de 8 chiffres.
+        POST :  Renvoie True si la licence est déjà présente, sinon False.
+        """
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 return True
