@@ -32,7 +32,7 @@ def show_menu() -> None:
                     print("Au revoir !")
                     break
                 case "1":
-                    show_player_menu()
+                    show_player_menu(tournament)
                 case "2":
                     show_pools(tournament)
                     save_tournament(tournament)

@@ -13,7 +13,7 @@ def show_player_options() -> None:
     print("0. Revenir au menu principal")
 
 
-def show_player_menu() -> None:
+def show_player_menu(tournament) -> None:
     while True:
         ct()
         show_player_options()
@@ -23,11 +23,11 @@ def show_player_menu() -> None:
             case "0":
                 break
             case "1":
-                show_players()
+                show_players(tournament)
             case "2":
-                form_add_player()
+                form_add_player(tournament)
             case "3":
-                form_player_manager()
+                form_player_manager(tournament)
             case _:
                 print("Choix invalide.")
                 sleep(0.5)
