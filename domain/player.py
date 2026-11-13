@@ -160,6 +160,10 @@ class PlayerManager:
         return False
 
     def player_pointer(self, licence_number: str) -> Player:
+        """Returns the specified player
+        PRE : The licence_number of the player we want to fetch
+        POST : Returns the player with the specified licence number
+        """
         for player in self.all_players:
             if player.licence_number == licence_number:
                 return player
