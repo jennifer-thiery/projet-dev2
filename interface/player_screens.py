@@ -6,12 +6,17 @@ from textual.screen import Screen
 from textual.validation import ValidationResult, Validator
 from textual.widgets import Button, Checkbox, DataTable, Footer, Header, Input, Label, Static
 
-from domain.player import Player, PlayerManager
+from domain.player import Player
+from domain.tournament import Tournament
 
 
-class PlayerMenu(Screen):
+class PlayerScreen(Screen):
     TITLE = "Gestion des participants"
     BINDINGS = [("escape", "app.pop_screen", "Retour")]
+
+    def __init__(self, tournament: Tournament) -> None:
+        super().__init__()
+        self.__tournament = tournament
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -25,9 +30,9 @@ class PlayerMenu(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "list":
-                self.app.push_screen(PlayerList())
+                self.app.push_screen(PlayerList(tournament=self.__tournament))
             case "add":
-                self.app.push_screen(AddPlayerForm())
+                self.app.push_screen(AddPlayerForm(tournament=self.__tournament))
             case "edit-remove":
                 self.app.push_screen(EditOrRemoveForm())
 
@@ -35,6 +40,10 @@ class PlayerMenu(Screen):
 class PlayerList(Screen):
     TITLE = "Liste des participants"
     BINDINGS = [("escape", "app.pop_screen", "Retour")]
+
+    def __init__(self, tournament: Tournament) -> None:
+        super().__init__()
+        self.__tournament = tournament
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -56,7 +65,7 @@ class PlayerList(Screen):
             "Nombre de tableaux",
         )
 
-        for player in PlayerManager().all_players:
+        for player in self.__tournament.all_players:
             table.add_row(
                 player.licence_number,
                 player.firstname,
@@ -79,10 +88,14 @@ class NotEmpty(Validator):
 
 
 class LicenceNumber(Validator):
+    def __init__(self, tournament: Tournament):
+        super().__init__()
+        self.__tournament = tournament
+
     def validate(self, value: str) -> ValidationResult:
         if len(value) != 8 or not value.isdigit():
             return self.failure("La licence doit être composée de 8 chiffres.")
-        elif PlayerManager().licence_exists(value):
+        elif self.__tournament.licence_exists(value):
             return self.failure(f"La licence {value} existe déjà dans la liste des participants.")
         else:
             return self.success()
@@ -97,27 +110,29 @@ class DateFormat(Validator):
         return self.success()
 
 
-PLAYER_FIELDS = [
-    ("licence_number", "Numéro de licence", [LicenceNumber()]),
-    ("firstname", "Prénom", [NotEmpty()]),
-    ("lastname", "Nom", [NotEmpty()]),
-    ("birthdate", "Date de naissance", [DateFormat()]),
-    ("club", "Club", [NotEmpty()]),
-    ("federation_ranking", "Classement fédéral", [NotEmpty()]),
-    ("email", "Email", [NotEmpty()]),
-    ("phone_number", "Numéro de téléphone", [NotEmpty()]),
-]
-
-
 class AddPlayerForm(Screen):
     TITLE = "Ajouter un participant"
     BINDINGS = [("escape", "app.pop_screen", "Annuler")]
+
+    def __init__(self, tournament: Tournament):
+        super().__init__()
+        self.__tournament = tournament
+        self.__player_fields = [
+            ("licence_number", "Numéro de licence", [LicenceNumber(self.__tournament)]),
+            ("firstname", "Prénom", [NotEmpty()]),
+            ("lastname", "Nom", [NotEmpty()]),
+            ("birthdate", "Date de naissance", [DateFormat()]),
+            ("club", "Club", [NotEmpty()]),
+            ("federation_ranking", "Classement fédéral", [NotEmpty()]),
+            ("email", "Email", [NotEmpty()]),
+            ("phone_number", "Numéro de téléphone", [NotEmpty()]),
+        ]
 
     def compose(self) -> ComposeResult:
         yield Header()
 
         with VerticalScroll():
-            for field, label, validators in PLAYER_FIELDS:
+            for field, label, validators in self.__player_fields:
                 yield Label(label)
                 yield Input(placeholder=label, id=field, validators=validators, validate_on=["blur"])
                 yield Static("", id=f"error_{field}")
@@ -144,7 +159,7 @@ class AddPlayerForm(Screen):
                 second_bracket=self.get_widget_by_id("second_bracket").value,
             )
 
-            PlayerManager().add_player(new_player)
+            self.__tournament.add_player_to_tournament(new_player)
 
             self.app.pop_screen()
             self.notify(
