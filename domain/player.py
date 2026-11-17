@@ -111,7 +111,7 @@ class Player:
                 Le choix des tableaux est selon le classement du joueur et/ou l'âge (RM-01).
         """
         list_temp = []
-        match int(FederationRanking[self.federation_ranking]):
+        match FederationRanking(self.__federation_ranking).ranking_weight:
             case x if x <= 7:
                 list_temp.append(BracketType.BEGINNER)
             case x if x > 7 and x <= 14:

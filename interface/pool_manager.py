@@ -1,5 +1,7 @@
 from lib.tools import ct
 
+debug_poule = False
+
 
 def pool_manager(tournoit):
 
@@ -25,6 +27,11 @@ def pool_manager(tournoit):
 
     for poule in tournoit._Tournament__brackets[niveau].get_pools:
         print(f"ID: {poule._Pool__id} | Niveau: {tournoit._Tournament__brackets[niveau].type}")
+        if debug_poule:
+            liste = []
+            for play in poule.players:
+                liste.append(play.federation_ranking)
+            print(liste)
 
     # demande un ID de poule à l'utilisateur et verifie que c'est bien un ID de poule existant
     while True:

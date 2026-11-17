@@ -51,20 +51,7 @@ def form_add_player():
     # Check if it's a valid federation ranking
     while True:
         federation_ranking = required_input("Classement fédéral : ")
-        is_in = False
-        if federation_ranking[0] in ["E", "D", "C", "B"] and federation_ranking[1] in [
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-        ]:
-            is_in = True
-        if federation_ranking == "NC":
-            is_in = True
-        if not is_in:
+        if federation_ranking in FederationRanking:
             print("Classement invalide")
         else:
             break

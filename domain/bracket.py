@@ -4,7 +4,7 @@ from domain.pool import Pool
 
 
 def sort_classement(elem) -> int:
-    return int(FederationRanking[elem.federation_ranking])
+    return FederationRanking(elem.federation_ranking).ranking_weight
 
 
 class Braket:
