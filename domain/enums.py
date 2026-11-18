@@ -4,7 +4,7 @@ from enum import StrEnum, auto
 class BracketType(StrEnum):
     JUNIOR = auto()
     BEGINNER = auto()
-    INTERMADIATE = auto()
+    INTERMEDIATE = auto()
     EXPERT = auto()
 
 

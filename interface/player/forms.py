@@ -2,7 +2,8 @@ from datetime import datetime
 from time import sleep
 
 from domain.enums import FederationRanking
-from domain.player import Player, PlayerManager
+from domain.player import Player
+from domain.tournament import Tournament
 from lib.tools import ct
 
 
@@ -25,7 +26,7 @@ def form_add_player():
         # Check licence number before asking other informations
         if len(licence_number) != 8 or not licence_number.isdigit():
             print("La licence doit être composée de 8 chiffres.")
-        elif PlayerManager().licence_exists(licence_number):
+        elif Tournament().licence_exists(licence_number):
             print(f"La licence {licence_number} existe déjà dans la liste des participants.")
         else:
             break
@@ -77,7 +78,7 @@ def form_add_player():
     while True:
         confirm = input("Validez-vous la création de ce joueur ? [O/N] : ")[:1]
         if confirm == "O":
-            PlayerManager().add_player(new_player)
+            Tournament().add_player_to_tournament(new_player)
             print(f"Joueur {licence_number} : {firstname} {lastname} ajouté.")
             sleep(1.5)
             break
@@ -96,11 +97,11 @@ def form_player_manager():
         licence_number = required_input("Numéro de licence : ")
         if len(licence_number) != 8 or not licence_number.isdigit():
             print("La licence doit être composée de 8 chiffres.")
-        elif not PlayerManager().licence_exists(licence_number):
+        elif not Tournament().licence_exists(licence_number):
             print("La licence introduite n'est pas présente dans la liste des joueurs.")
         else:
             print(f"Le joueur avec la licence {licence_number} a bien été trouvé.")
-            player = PlayerManager().player_pointer(licence_number)
+            player = Tournament().player_pointer(licence_number)
             break
 
         while True:
@@ -159,7 +160,7 @@ def form_edit_player(p_licence_number, player: Player):
                 lic_ans = required_input("Veuillez entrer le nouveau numéro de licence : ")
                 if len(lic_ans) != 8 or not lic_ans.isdigit():
                     print("La licence doit être composée de 8 chiffres.")
-                elif PlayerManager().licence_exists(lic_ans):
+                elif Tournament().licence_exists(lic_ans):
                     print("La licence introduite est déjà présente dans la liste des joueurs.")
                 else:
                     licence_number = lic_ans
@@ -199,7 +200,7 @@ def form_edit_player(p_licence_number, player: Player):
         else:
             print("Je vous arrête tout de suite, ceci n'est pas une option valide.")
 
-    PlayerManager().edit_player(
+    Tournament().edit_player(
         p_licence_number, licence_number, firstname, lastname, birthdate, club, federation_ranking, email, phone_number
     )
 
@@ -211,7 +212,7 @@ def form_delete_player(licence_number, player):
         ans = required_input("Êtes-vous sûr de vouloir supprimer ce joueur ? [O/N] : ")
         if ans.upper() == "O":
             print(f"Suppression du joueur {licence_number}")
-            PlayerManager().delete_player(licence_number)
+            Tournament().delete_player_from_tournament(licence_number)
             sleep(1.5)
             return
         elif ans.upper() == "N":

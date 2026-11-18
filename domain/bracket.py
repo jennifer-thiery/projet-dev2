@@ -7,7 +7,7 @@ def sort_classement(elem) -> int:
     return FederationRanking(elem.federation_ranking).ranking_weight
 
 
-class Braket:
+class Bracket:
     def __init__(self, type: BracketType):
         self.current_phase = MatchType.POOL
         self.matches = []
@@ -50,7 +50,7 @@ class Braket:
             if player.licence_number == licence_number:
                 self.players.remove(i)
 
-    def create_pool(self) -> None:
+    def create_pools(self) -> None:
         """Crée la poule en serpentin.
 
         PRE : aucune.

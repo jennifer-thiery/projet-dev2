@@ -1,8 +1,8 @@
-from domain.player import PlayerManager
+from domain.tournament import Tournament
 
 
 def show_players():
-    all_players = PlayerManager().all_players
+    all_players = Tournament().all_players
 
     # Have length of longest element of each attribut
     w_firstname = max(len(p.firstname) for p in all_players) + 4

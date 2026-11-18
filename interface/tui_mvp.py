@@ -6,8 +6,8 @@ from interface.player.menu import show_player_menu
 from interface.pool_manager import pool_manager
 from lib.tools import ct
 
-tournament = Tournament("2019-12-04", "2019-12-06")
-tournament.create_brackets()
+tournament = Tournament()
+tournament.generate_brackets()
 save_tournament(tournament)
 
 
@@ -34,7 +34,7 @@ def show_menu() -> None:
                 case "1":
                     show_player_menu()
                 case "2":
-                    tournament.create_brackets()
+                    tournament.generate_brackets()
                     save_tournament(tournament)
                 case "3":
                     pool_manager(tournament)
