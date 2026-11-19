@@ -96,10 +96,9 @@ class Bracket:
                 nbr_in_pool += 1
 
         elif nbr_play != 0:
-            list_temp = []
-            for _ in range(0, nbr_play + 1):
-                list_temp.append(temp_list.pop(0))
-            self.__pools.append(Pool(1, list_temp))
+            self.__pools.append(Pool(1))
+            while len(temp_list) > 0:
+                self.__pools[0].add_player(temp_list.pop(0))
 
         self.create_matches_of_pools()
 
