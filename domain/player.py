@@ -122,7 +122,7 @@ class Player:
         max_itermadiate = FederationRanking("D0").ranking_weight
 
         list_temp = []
-        if self.get_age <= 15:
+        if self.get_age() <= 15:
             list_temp.append(BracketType.JUNIOR)
         else:
             match FederationRanking(self.__federation_ranking).ranking_weight:
