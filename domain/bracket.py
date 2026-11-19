@@ -1,3 +1,5 @@
+from datetime import date
+
 from domain.enums import BracketType
 from domain.enums import FederationRanking as FR
 from domain.player import Player
@@ -25,7 +27,7 @@ class Bracket:
     def accepts_player(self, player: Player) -> bool:
         p_ranking_weight = FR(player.federation_ranking).ranking_weight
 
-        is_junior = player.get_age() <= 15
+        is_junior = player.get_age(date.today().year) <= 15
         is_beginner = FR.NC.ranking_weight <= p_ranking_weight <= FR.E0.ranking_weight
         is_intermediate = FR.D6.ranking_weight <= p_ranking_weight <= FR.D0.ranking_weight
         is_expert = p_ranking_weight >= FR.C6.ranking_weight

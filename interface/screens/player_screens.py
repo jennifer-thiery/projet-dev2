@@ -1,3 +1,5 @@
+from datetime import date
+
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
 from textual.screen import Screen
@@ -67,7 +69,7 @@ class PlayerList(Screen):
                 player.licence_number,
                 player.firstname,
                 player.lastname,
-                f"{player.birthdate.strftime('%d/%m/%Y')} ({player.get_age()} ans)",
+                f"{player.birthdate.strftime('%d/%m/%Y')} ({player.get_age(date.today().year)} ans)",
                 player.club,
                 player.federation_ranking,
                 player.email,

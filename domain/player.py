@@ -96,14 +96,13 @@ class Player:
     def second_bracket(self, second_bracket):
         self.__second_bracket = second_bracket
 
-    def get_age(self):
-        current_year = date.today().year
+    def get_age(self, current_year: int) -> int:
         return current_year - self.__birthdate.year
 
     def player_overview(self) -> str:
         return (
             f"Joueur : {self.__firstname} {self.__lastname} ({self.__licence_number})\n"
-            f"Date de naissance : {self.__birthdate.strftime('%d/%m/%Y')} ({self.get_age()} ans)\n"
+            f"Date de naissance : {self.__birthdate.strftime('%d/%m/%Y')} ({self.get_age(date.today().year)} ans)\n"
             f"Classement : {self.__federation_ranking}\n"
             f"Club : {self.__club}\n"
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
