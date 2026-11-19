@@ -30,24 +30,17 @@ class Pool:
         """
         self.__players.append(player)
 
-    """affiche les matchs restants dans une poule"""
-
-    def nbr_matches_left(self):
-        nbr = 0
-        for match in self.__matches:
-            if match.scores == [0, 0]:
-                nbr += 1
-        return nbr
+    def nbr_matches_left(self) -> int:
+        return sum(not match.is_played() for match in self.__matches)
 
     def left_matches(self) -> str:
         """Formate la liste des matchs restants à jouer dans la poule.
 
-        Un match est considéré comme restant à jouer tant que son score
-        est égal à [0, 0].
+        Un match reste à jouer tant qu'aucun résultat n'a été enregistré.
 
         PRE : aucune.
-        POST : renvoie une chaîne de caractères listant les matchs de la
-               poule dont le score vaut [0, 0] (un par ligne, au format
+        POST : renvoie une chaîne de caractères listant les matchs restants
+               (un par ligne, au format
                "  - <prénom1> <nom1> vs <prénom2> <nom2> \n"), ou une
                chaîne vide s'il n'y a aucun match restant. Ne modifie rien.
         """
@@ -55,7 +48,7 @@ class Pool:
         string = ""
 
         for match in self.__matches:
-            if match.scores == [0, 0]:
+            if not match.is_played():
                 string += f"  - {match.players[0].firstname} {match.players[0].lastname} vs {match.players[1].firstname} {match.players[1].lastname} \n"
         return string
 
