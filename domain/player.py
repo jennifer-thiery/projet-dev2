@@ -118,20 +118,34 @@ class Player:
         POST :  Renvoie la liste de types de tableaux (1 ou 2 types) dans lesquels le joueur va jouer.
                 Le choix des tableaux est selon le classement du joueur et/ou l'âge (RM-01).
         """
+        max_beginner = FederationRanking("E0").ranking_weight
+        max_itermadiate = FederationRanking("D0").ranking_weight
+
         list_temp = []
-        match FederationRanking(self.__federation_ranking).ranking_weight:
-            case x if x <= 7:
-                list_temp.append(BracketType.BEGINNER)
-            case x if x > 7 and x <= 14:
-                list_temp.append(BracketType.INTERMEDIATE)
-            case _:
-                list_temp.append(BracketType.EXPERT)
+        if self.get_age <= 15:
+            list_temp.append(BracketType.JUNIOR)
+        else:
+            match FederationRanking(self.__federation_ranking).ranking_weight:
+                case x if x <= max_beginner:
+                    list_temp.append(BracketType.BEGINNER)
+                case x if x > max_beginner and x <= max_itermadiate:
+                    list_temp.append(BracketType.INTERMEDIATE)
+                case _:
+                    list_temp.append(BracketType.EXPERT)
         if self.__second_bracket:
             match list_temp[0]:
                 case BracketType.BEGINNER:
                     list_temp.append(BracketType.INTERMEDIATE)
                 case BracketType.INTERMEDIATE:
                     list_temp.append(BracketType.EXPERT)
+                case BracketType.JUNIOR:
+                    match FederationRanking(self.__federation_ranking).ranking_weight:
+                        case x if x <= max_beginner:
+                            list_temp.append(BracketType.BEGINNER)
+                        case x if x > max_beginner and x <= max_itermadiate:
+                            list_temp.append(BracketType.INTERMEDIATE)
+                        case _:
+                            list_temp.append(BracketType.EXPERT)
                 case _:
                     pass
         return list_temp
