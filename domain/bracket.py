@@ -28,25 +28,28 @@ class Bracket:
         is_junior = player.get_age() <= 15
         is_beginner = FR.NC.ranking_weight <= p_ranking_weight <= FR.E0.ranking_weight
         is_intermediate = FR.D6.ranking_weight <= p_ranking_weight <= FR.D0.ranking_weight
-        is_expert = FR.C6.ranking_weight <= p_ranking_weight
+        is_expert = p_ranking_weight >= FR.C6.ranking_weight
+
+        if is_junior:
+            match self.type:
+                case BracketType.JUNIOR:
+                    return True
+                case BracketType.BEGINNER:
+                    return player.second_bracket and is_beginner
+                case BracketType.INTERMEDIATE:
+                    return player.second_bracket and is_intermediate
+                case BracketType.EXPERT:
+                    return player.second_bracket and is_expert
+                case _:
+                    return False
 
         match self.type:
-            case BracketType.JUNIOR:
-                return is_junior
             case BracketType.BEGINNER:
-                return is_beginner or (is_junior and player.second_bracket and is_beginner)
+                return is_beginner
             case BracketType.INTERMEDIATE:
-                return (
-                    is_intermediate
-                    or (player.second_bracket and is_beginner)
-                    or (is_junior and player.second_bracket and is_intermediate)
-                )
+                return is_intermediate or (player.second_bracket and is_beginner)
             case BracketType.EXPERT:
-                return (
-                    is_expert
-                    or (player.second_bracket and is_intermediate)
-                    or (is_junior and player.second_bracket and is_expert)
-                )
+                return is_expert or (player.second_bracket and is_intermediate)
             case _:
                 return False
 

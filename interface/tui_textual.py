@@ -1,12 +1,15 @@
 from textual.app import App, ComposeResult
-from textual.widgets import Button, Footer, Header
+from textual.widgets import Footer, Header, TabbedContent, TabPane
 
 from domain.tournament import Tournament
-from interface.player_screens import PlayerScreen
+from interface.tabs.bracket_tab import BracketTab
+from interface.tabs.general_tab import GeneralTab
 
 
 class TableTennisTournamentManager(App):
     BINDINGS = [("q", "quit", "Quitter")]
+
+    CSS_PATH = "style.tcss"
 
     def __init__(self, tournament: Tournament) -> None:
         super().__init__()
@@ -14,10 +17,12 @@ class TableTennisTournamentManager(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Button("Gérer les participants", id="players")
-        yield Footer()
 
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        match event.button.id:
-            case "players":
-                self.app.push_screen(PlayerScreen(tournament=self.__tournament))
+        with TabbedContent(initial="tab-general"):
+            with TabPane("Général", id="tab-general"):
+                yield GeneralTab(id="container-general", tournament=self.__tournament)
+            for bracket in self.__tournament.brackets:
+                with TabPane(id=f"tab-{bracket.type.name.lower()}", title=bracket.type.value):
+                    yield BracketTab(id=f"container-{bracket.type.name.lower()}", bracket=bracket)
+
+        yield Footer()

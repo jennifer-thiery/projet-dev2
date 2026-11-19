@@ -89,7 +89,7 @@ class Player:
         self.__phone_number = phone_number
 
     @property
-    def second_bracket(self) -> str:
+    def second_bracket(self) -> bool:
         return self.__second_bracket
 
     @second_bracket.setter
