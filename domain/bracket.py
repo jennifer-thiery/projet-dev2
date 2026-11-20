@@ -1,7 +1,4 @@
-from datetime import date
-
-from domain.enums import BracketType
-from domain.enums import FederationRanking as FR
+from domain.enums import BracketType, FederationRanking
 from domain.player import Player
 from domain.pool import Pool
 
@@ -24,45 +21,18 @@ class Bracket:
     def pools(self) -> list[Pool]:
         return self.__pools
 
-    def accepts_player(self, player: Player) -> bool:
-        p_ranking_weight = FR(player.federation_ranking).ranking_weight
-
-        is_junior = player.get_age(date.today().year) <= 15
-        is_beginner = FR.NC.ranking_weight <= p_ranking_weight <= FR.E0.ranking_weight
-        is_intermediate = FR.D6.ranking_weight <= p_ranking_weight <= FR.D0.ranking_weight
-        is_expert = p_ranking_weight >= FR.C6.ranking_weight
-
-        if is_junior:
-            match self.type:
-                case BracketType.JUNIOR:
-                    return True
-                case BracketType.BEGINNER:
-                    return player.second_bracket and is_beginner
-                case BracketType.INTERMEDIATE:
-                    return player.second_bracket and is_intermediate
-                case BracketType.EXPERT:
-                    return player.second_bracket and is_expert
-                case _:
-                    return False
-
-        match self.type:
-            case BracketType.BEGINNER:
-                return is_beginner
-            case BracketType.INTERMEDIATE:
-                return is_intermediate or (player.second_bracket and is_beginner)
-            case BracketType.EXPERT:
-                return is_expert or (player.second_bracket and is_intermediate)
-            case _:
-                return False
-
     def add_player(self, player: Player) -> None:
-        if self.accepts_player(player):
-            self.__players.append(player)
+        self.__players.append(player)
 
     def create_pools(self) -> None:
+        """Crée la poule en serpentin.
+
+        PRE : aucune.
+        POST : Crée le nombre adéquat de poule de 4 et 3 joueurs. Ajoute ensuite les joueurs en fonction de leur niveau en serpentin
+        """
         self.__pools = []
 
-        self.__players.sort(key=lambda p: FR(p.federation_ranking).ranking_weight, reverse=True)
+        self.__players.sort(key=lambda p: FederationRanking(p.federation_ranking).ranking_weight, reverse=True)
         temp_list = self.__players.copy()
 
         nbr_play = len(temp_list)

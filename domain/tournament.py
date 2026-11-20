@@ -97,14 +97,30 @@ class Tournament:
                 remove_player_from_db(licence_number)
                 break
 
+    # Bracket/Pool Manager
     @property
     def brackets(self):
         return self.__brackets
 
     def add_players_to_brackets(self) -> None:
+        """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
+
+        PRE : aucune.
+        POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
+        """
         for player in self.__all_players:
-            for bracket in self.__brackets:
-                bracket.add_player(player)
+            for bracket in player.get_brackets():
+                match bracket:
+                    case BracketType.JUNIOR:
+                        self.__brackets[0].add_player(player)
+                    case BracketType.BEGINNER:
+                        self.__brackets[1].add_player(player)
+                    case BracketType.INTERMEDIATE:
+                        self.__brackets[2].add_player(player)
+                    case BracketType.EXPERT:
+                        self.__brackets[3].add_player(player)
+
+        self.create_pools_of_brackets()
 
     def create_pools_of_brackets(self) -> None:
         for bracket in self.__brackets:

@@ -1,5 +1,7 @@
 from datetime import date
 
+from domain.enums import BracketType, FederationRanking
+
 
 class Player:
     def __init__(
@@ -98,6 +100,46 @@ class Player:
 
     def get_age(self, current_year: int) -> int:
         return current_year - self.__birthdate.year
+
+    def get_brackets(self) -> list:
+        """Détermine dans quel(s) tableau(x) le joueur est éligible de jouer en fonction de son classement et du nombre de tableaux qu'il souhaite jouer.
+        PRE  :  Le joueur a un classement fédéral valide.
+                Le joueur a défini s'il voulait jouer dans un deuxième tableau.
+        POST :  Renvoie la liste de types de tableaux (1 ou 2 types) dans lesquels le joueur va jouer.
+                Le choix des tableaux est selon le classement du joueur et/ou l'âge (RM-01).
+        """
+        max_beginner = FederationRanking.E0.ranking_weight
+        max_itermediate = FederationRanking.D0.ranking_weight
+
+        brackets_list = []
+        if self.get_age(date.today().year) <= 15:
+            brackets_list.append(BracketType.JUNIOR)
+        else:
+            match FederationRanking(self.__federation_ranking).ranking_weight:
+                case x if x <= max_beginner:
+                    brackets_list.append(BracketType.BEGINNER)
+                case x if x > max_beginner and x <= max_itermediate:
+                    brackets_list.append(BracketType.INTERMEDIATE)
+                case _:
+                    brackets_list.append(BracketType.EXPERT)
+
+        if self.__second_bracket:
+            match brackets_list[0]:
+                case BracketType.BEGINNER:
+                    brackets_list.append(BracketType.INTERMEDIATE)
+                case BracketType.INTERMEDIATE:
+                    brackets_list.append(BracketType.EXPERT)
+                case BracketType.JUNIOR:
+                    match FederationRanking(self.__federation_ranking).ranking_weight:
+                        case x if x <= max_beginner:
+                            brackets_list.append(BracketType.BEGINNER)
+                        case x if x > max_beginner and x <= max_itermediate:
+                            brackets_list.append(BracketType.INTERMEDIATE)
+                        case _:
+                            brackets_list.append(BracketType.EXPERT)
+                case _:
+                    pass
+        return brackets_list
 
     def player_overview(self) -> str:
         return (
