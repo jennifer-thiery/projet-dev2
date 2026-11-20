@@ -36,17 +36,32 @@ class Tournament:
         return self.__all_players
 
     def licence_exists(self, licence_number: str) -> bool:
+        """Vérifie si la licence est déjà présente dans la liste des participants.
+        PRE  :  La licence introduite doit être composé de 8 chiffres.
+        POST :  Renvoie True si la licence est déjà présente, sinon False.
+        """
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 return True
         return False
 
     def player_pointer(self, licence_number: str) -> Player:
+        """Returns the specified player
+        PRE : The licence_number of the player we want to fetch
+        POST : Returns the player with the specified licence number
+        """
         for player in self.all_players:
             if player.licence_number == licence_number:
                 return player
 
     def add_player_to_tournament(self, new_player: Player) -> None:
+        """Ajoute un nouveau joueur à la liste des joueurs.
+        PRE  :  Le numéro de la licence (licence_number) doit être composé  de 8 chiffres.
+                Le numéro de la licence (licence_number) ne doit pas déjà présente dans la liste des participants.
+                Le classement fédéral (federation_ranking) doit être une valeur valide (RM-01).
+        POST :  Ajoute un nouveau participant dans la liste des joueurs (aussi directement dans la db).
+                Ne revoie rien
+        """
         self.__all_players.append(new_player)
 
         # Add player to db
@@ -75,6 +90,12 @@ class Tournament:
         email: str,
         phone_number: str,
     ) -> None:
+        """Modifies the specified player
+        PRE : p_licence_number is the licence number of the player as it is in the player object at the moment of call
+              licence_number is the potentially new licence number (can be the same as p_licence_number)
+              and all the other parameters values can be the same as the value in player.
+        POST : Adds the player into the JSON. Returns nothing.
+        """
         # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
         for player in self.__all_players:  # player references the dict Player inside of all_players
             if player.licence_number == p_licence_number:
@@ -91,6 +112,11 @@ class Tournament:
                 break
 
     def delete_player_from_tournament(self, licence_number: str) -> None:
+        """Deletes a player from the JSON
+        PRE : licence_number as its name implies is the licence
+        number of the player to be deleted
+        POST : The player is deleted from the JSON. Returns nothing
+        """
         for player in self.__all_players:
             if player.licence_number == licence_number:
                 self.__all_players.remove(player)

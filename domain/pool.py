@@ -22,9 +22,29 @@ class Pool:
         return self.__matches
 
     def add_player(self, player: Player):
+        """Ajoute un joueur à la poule.
+
+        PRE : player est une instance de joueur valide (possédant au moins
+              les attributs firstname et lastname).
+        POST : ajoute player à la fin de la liste des joueurs de la poule
+               (self.__players). Ne renvoie rien.
+        """
         self.__players.append(player)
 
     def create_matches(self):
+        """Génère les matchs de la poule pour toutes les paires de joueurs.
+
+        Chaque joueur de la poule affronte une unique fois chacun des
+        autres joueurs inscrits (tournoi toutes rondes).
+
+        PRE : aucune.
+        POST : crée et ajoute à self.__matches une instance de Match de
+               type MatchType.POOL pour chaque paire unique de joueurs de
+               self.__players, avec un identifiant séquentiel de la forme
+               "poule_<id>_match_<n>" (où n commence à 1). Si moins de
+               2 joueurs sont inscrits, aucun match n'est ajouté.
+               Ne renvoie rien.
+        """
         player_done = 0
         id_nbr = 1
         while player_done != len(self.__players):
@@ -34,12 +54,3 @@ class Pool:
                 id_nbr += 1
 
             player_done += 1
-
-    def left_matches(self) -> str:
-        """affiche les matchs restants dans une poule"""
-        string = ""
-
-        for match in self.__matches:
-            if match.scores == [0, 0]:
-                string += f"  - {match.players[0].firstname} {match.players[0].lastname} vs {match.players[1].firstname} {match.players[1].lastname} \n"
-        return string
