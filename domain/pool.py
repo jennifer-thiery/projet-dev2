@@ -84,7 +84,8 @@ class Pool:
             winner = match.winner
             if winner is None:
                 continue
-            loser = match.players[0] if winner is match.players[1] else match.players[0]
+
+            loser = match.players[1] if winner == match.players[0] else match.players[1]
 
             winner_stats = stats[winner.licence_number]
             loser_stats = stats[loser.licence_number]

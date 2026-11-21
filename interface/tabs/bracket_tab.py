@@ -20,6 +20,13 @@ class BracketTab(Container):
         yield Select(pools)
         yield VerticalScroll(id="content_container")
 
+    def generate_player_table(self, table: DataTable):
+        table.clear()
+        for rank, (player, played, wins, losses, points) in enumerate(self.__pool.ranking()):
+            table.add_row(
+                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses, points
+            )
+
     async def on_select_changed(self, event: Select.Changed) -> None:
         content_container = self.query_one("#content_container", VerticalScroll)
 
@@ -32,10 +39,7 @@ class BracketTab(Container):
 
         players_table = DataTable(cursor_type="row", id="players")
         players_table.add_columns("#", "Licence", "Joueur", "J", "V", "D", "pts")
-        for rank, (player, played, wins, losses, points) in enumerate(self.__pool.ranking()):
-            players_table.add_row(
-                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses, points
-            )
+        self.generate_player_table(players_table)
 
         matches_table = DataTable(cursor_type="row", id="matches")
         matches_table.add_column("Joueur 1")
@@ -60,5 +64,7 @@ class BracketTab(Container):
         def update_score(saved: bool | None) -> None:
             if saved:
                 event.data_table.update_cell(event.row_key, "score", f"{match.scores[0]} - {match.scores[1]}")
+                players_table = self.query_one("#players", DataTable)
+                self.generate_player_table(players_table)
 
         self.app.push_screen(ScoreModal(match), update_score)
