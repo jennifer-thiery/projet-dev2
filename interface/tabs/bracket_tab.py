@@ -31,10 +31,11 @@ class BracketTab(Container):
         self.__pool = self.__bracket.pools[event.value]
 
         players_table = DataTable(cursor_type="row", id="players")
-        players_table.add_columns("#", "Licence", "Joueur")
-        for i, player in enumerate(self.__pool.players):
-            # TODO : sort players by ranking EF-04.2
-            players_table.add_row(i + 1, player.licence_number, f"{player.firstname} {player.lastname}")
+        players_table.add_columns("#", "Licence", "Joueur", "J", "V", "D", "pts")
+        for rank, (player, played, wins, losses, points) in enumerate(self.__pool.ranking()):
+            players_table.add_row(
+                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses, points
+            )
 
         matches_table = DataTable(cursor_type="row", id="matches")
         matches_table.add_column("Joueur 1")
