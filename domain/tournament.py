@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from time import sleep
 
 from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
 from domain.bracket import Bracket
@@ -102,20 +103,22 @@ class Tournament:
     def brackets(self):
         return self.__brackets
 
-    def add_player_to_bracket(self, player, bracket) -> None:
-        match bracket:
-            case BracketType.JUNIOR:
-                self.__brackets[0].add_player(player)
-            case BracketType.BEGINNER:
-                self.__brackets[1].add_player(player)
-            case BracketType.INTERMEDIATE:
-                self.__brackets[2].add_player(player)
-            case BracketType.EXPERT:
-                self.__brackets[3].add_player(player)
-
     def create_pools_of_brackets(self) -> None:
+        self.check_enough_players()
         for bracket in self.__brackets:
-            bracket.create_pools()
+            if len(bracket.players) > 6:
+                bracket.create_pools()
+                print
+
+    def check_enough_players(self):
+        for bracket in self.__brackets:
+            if len(bracket.players) <= 6:
+                new_index = bracket.type.bracket_index + 1
+                if new_index == len(self.__brackets):
+                    new_index -= 2
+                for player in bracket.players:
+                    if self.__brackets[new_index].is_player_in(player.licence_number) >= 0:
+                        self.__brackets[new_index].add_player()
 
     def generate_brackets(self) -> None:
         """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
@@ -125,6 +128,5 @@ class Tournament:
         """
         for player in self.__all_players:
             for bracket in player.get_brackets():
-                self.add_player_to_bracket(player, bracket)
-        for bracket in self.__brackets:
-            bracket.create_pools()
+                self.__brackets[bracket.bracket_index].add_player(player)
+        self.create_pools_of_brackets()

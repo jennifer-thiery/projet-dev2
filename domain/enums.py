@@ -7,6 +7,10 @@ class BracketType(StrEnum):
     INTERMEDIATE = auto()
     EXPERT = auto()
 
+    @property
+    def bracket_index(self) -> int:
+        return int(list(BracketType).index(self))
+
 
 class MatchType(StrEnum):
     POOL = auto()

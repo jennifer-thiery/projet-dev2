@@ -45,10 +45,16 @@ class Bracket:
     def add_player(self, player) -> None:
         self.players.append(player)
 
-    def remove_player(self, licence_number) -> None:
+    def is_player_in(self, licence_number):
         for i, player in enumerate(self.players):
             if player.licence_number == licence_number:
-                self.players.remove(i)
+                return i
+        return -1
+
+    def remove_player(self, licence_number) -> None:
+        index = self.is_player_in(licence_number)
+        if index != -1:
+            self.players.remove(index)
 
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
