@@ -21,6 +21,17 @@ class Bracket:
     def pools(self) -> list[Pool]:
         return self.__pools
 
+    def is_player_in(self, licence_number):
+        for i, player in enumerate(self.players):
+            if player.licence_number == licence_number:
+                return i
+        return -1
+
+    def remove_player(self, licence_number) -> None:
+        index = self.is_player_in(licence_number)
+        if index != -1:
+            self.players.remove(index)
+
     def add_player(self, player: Player) -> None:
         self.__players.append(player)
 
