@@ -78,7 +78,7 @@ class Pool:
     def ranking(self) -> list[tuple]:
         stats = {}
         for player in self.__players:
-            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0}
+            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0, "points": 0}
 
         for match in self.__matches:
             winner = match.winner
@@ -96,12 +96,18 @@ class Pool:
             loser_stats["played"] += 1
             loser_stats["losses"] += 1
 
-        ranking1 = sorted(stats.values(), key=lambda p: p["played"])
-        final_ranking = sorted(ranking1, key=lambda p: p["wins"], reverse=True)
+            if winner == match.players[0]:
+                winner_stats["points"] += match.scores[0]
+                loser_stats["points"] += match.scores[1]
+            else:
+                winner_stats["points"] += match.scores[1]
+                loser_stats["points"] += match.scores[0]
+
+        final_ranking = sorted(stats.values(), key=lambda p: p["points"], reverse=True)
         p_list = []
 
         for p in final_ranking:
-            p_list.append((p["player"], p["played"], p["wins"], p["losses"]))
+            p_list.append((p["player"], p["played"], p["wins"], p["losses"], p["points"]))
 
         return p_list
 
