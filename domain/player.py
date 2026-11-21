@@ -98,18 +98,8 @@ class Player:
     def second_bracket(self, second_bracket):
         self.__second_bracket = second_bracket
 
-    def get_age(self):
-        current_year = date.today().year
+    def get_age(self, current_year: int) -> int:
         return current_year - self.__birthdate.year
-
-    def player_overview(self) -> str:
-        return (
-            f"Joueur : {self.__firstname} {self.__lastname} ({self.__licence_number})\n"
-            f"Date de naissance : {self.__birthdate.strftime('%d/%m/%Y')} ({self.get_age()} ans)\n"
-            f"Classement : {self.__federation_ranking}\n"
-            f"Club : {self.__club}\n"
-            f"Coordonées : {self.__email} | {self.__phone_number}\n"
-        )
 
     def get_brackets(self) -> list:
         """Détermine dans quel(s) tableau(x) le joueur est éligible de jouer en fonction de son classement et du nombre de tableaux qu'il souhaite jouer.
@@ -118,34 +108,44 @@ class Player:
         POST :  Renvoie la liste de types de tableaux (1 ou 2 types) dans lesquels le joueur va jouer.
                 Le choix des tableaux est selon le classement du joueur et/ou l'âge (RM-01).
         """
-        max_beginner = FederationRanking("E0").ranking_weight
-        max_itermadiate = FederationRanking("D0").ranking_weight
+        max_beginner = FederationRanking.E0.ranking_weight
+        max_itermediate = FederationRanking.D0.ranking_weight
 
-        list_temp = []
-        if self.get_age() <= 15:
-            list_temp.append(BracketType.JUNIOR)
+        brackets_list = []
+        if self.get_age(date.today().year) <= 15:
+            brackets_list.append(BracketType.JUNIOR)
         else:
             match FederationRanking(self.__federation_ranking).ranking_weight:
                 case x if x <= max_beginner:
-                    list_temp.append(BracketType.BEGINNER)
-                case x if x > max_beginner and x <= max_itermadiate:
-                    list_temp.append(BracketType.INTERMEDIATE)
+                    brackets_list.append(BracketType.BEGINNER)
+                case x if x > max_beginner and x <= max_itermediate:
+                    brackets_list.append(BracketType.INTERMEDIATE)
                 case _:
-                    list_temp.append(BracketType.EXPERT)
+                    brackets_list.append(BracketType.EXPERT)
+
         if self.__second_bracket:
-            match list_temp[0]:
+            match brackets_list[0]:
                 case BracketType.BEGINNER:
-                    list_temp.append(BracketType.INTERMEDIATE)
+                    brackets_list.append(BracketType.INTERMEDIATE)
                 case BracketType.INTERMEDIATE:
-                    list_temp.append(BracketType.EXPERT)
+                    brackets_list.append(BracketType.EXPERT)
                 case BracketType.JUNIOR:
                     match FederationRanking(self.__federation_ranking).ranking_weight:
                         case x if x <= max_beginner:
-                            list_temp.append(BracketType.BEGINNER)
-                        case x if x > max_beginner and x <= max_itermadiate:
-                            list_temp.append(BracketType.INTERMEDIATE)
+                            brackets_list.append(BracketType.BEGINNER)
+                        case x if x > max_beginner and x <= max_itermediate:
+                            brackets_list.append(BracketType.INTERMEDIATE)
                         case _:
-                            list_temp.append(BracketType.EXPERT)
+                            brackets_list.append(BracketType.EXPERT)
                 case _:
                     pass
-        return list_temp
+        return brackets_list
+
+    def player_overview(self) -> str:
+        return (
+            f"Joueur : {self.__firstname} {self.__lastname} ({self.__licence_number})\n"
+            f"Date de naissance : {self.__birthdate.strftime('%d/%m/%Y')} ({self.get_age(date.today().year)} ans)\n"
+            f"Classement : {self.__federation_ranking}\n"
+            f"Club : {self.__club}\n"
+            f"Coordonées : {self.__email} | {self.__phone_number}\n"
+        )

@@ -1,49 +1,25 @@
-from domain.enums import BracketType, FederationRanking, MatchType
-from domain.match import Match
+from domain.enums import BracketType, FederationRanking
+from domain.player import Player
 from domain.pool import Pool
-
-
-def sort_classement(elem) -> int:
-    return FederationRanking(elem.federation_ranking).ranking_weight
 
 
 class Bracket:
     def __init__(self, type: BracketType):
-        self.current_phase = MatchType.POOL
-        self.matches = []
-        self.players = []
-        self.__pools = []
         self.__type = type
-        self.current_pool = 0
+        self.__players: list[Player] = []
+        self.__pools: list[Pool] = []
 
     @property
-    def get_pools(self) -> list:
-        return self.__pools
-
-    @property
-    def type(self) -> str:
+    def type(self):
         return self.__type
 
-    def get_next_match(self) -> Match:
-        """Renvoie le prochain match à jouer du tableau
-        PRE : aucune.
-        POST : Si on est en phase de poule : renvoie le prochain match de la poule en cour.
-               Si on est en mode tournoi il renvoie le premier match non jouer.
-               Si Il n'y a pas de match ou plus de match à jouer il renvoi l'erreur ValueError
-        """
-        if self.current_phase == MatchType.POOL:
-            if self.__pools[self.current_pool].nbr_matches_left() == 0:
-                self.current_pool += 1
-            return self.__pools[self.current_pool].get_next_match()
-        else:
-            if len(self.matches) != 0:
-                for match in self.matches:
-                    if match.scores == [0, 0]:
-                        return self.matches[0]
-        raise ValueError
+    @property
+    def players(self):
+        return self.__players
 
-    def add_player(self, player) -> None:
-        self.players.append(player)
+    @property
+    def pools(self) -> list[Pool]:
+        return self.__pools
 
     def is_player_in(self, licence_number):
         for i, player in enumerate(self.players):
@@ -56,6 +32,9 @@ class Bracket:
         if index != -1:
             self.players.remove(index)
 
+    def add_player(self, player: Player) -> None:
+        self.__players.append(player)
+
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
 
@@ -63,8 +42,10 @@ class Bracket:
         POST : Crée le nombre adéquat de poule de 4 et 3 joueurs. Ajoute ensuite les joueurs en fonction de leur niveau en serpentin
         """
         self.__pools = []
-        self.rank_player_by_ranking()
-        temp_list = self.players.copy()
+
+        self.__players.sort(key=lambda p: FederationRanking(p.federation_ranking).ranking_weight, reverse=True)
+        temp_list = self.__players.copy()
+
         nbr_play = len(temp_list)
         if nbr_play >= 6:
             if nbr_play % 4 != 0:
@@ -82,8 +63,8 @@ class Bracket:
             nbr_in_pool = 0
             nbr_in_list = 0
 
-            while nbr_in_pool != len(self.players):
-                self.__pools[nbr_in_list].add_player(self.players[nbr_in_pool])
+            while nbr_in_pool != len(self.__players):
+                self.__pools[nbr_in_list].add_player(self.__players[nbr_in_pool])
                 if not reverse:
                     if not (nbr_in_list == all_pools - 1):
                         nbr_in_list += 1
@@ -102,12 +83,8 @@ class Bracket:
             while len(temp_list) > 0:
                 self.__pools[0].add_player(temp_list.pop(0))
 
+        self.create_matches_of_pools()
+
+    def create_matches_of_pools(self):
         for pool in self.__pools:
             pool.create_matches()
-
-    def rank_player_by_ranking(self) -> None:
-        self.players.sort(key=sort_classement)
-
-
-if __name__ == "__main__":
-    print("hey")
