@@ -1,8 +1,9 @@
+from domain.enums import MatchType
 from domain.player import Player
 
 
 class Match:
-    def __init__(self, id: str, players: list[Player], type: str):
+    def __init__(self, id: str, players: list[Player], type: MatchType):
 
         self.__id = id
         self.__scores = [0, 0]
@@ -74,7 +75,7 @@ class Match:
 
     def match_overview(self) -> str:
         return (
-            f"Poule : {self.__id}\n"
+            f"ID : {self.__id}\n"
             f"Type : {self.__type}\n"
             f"Scores : {self.__scores}\n"
             f"Joueurs : {[(player.firstname() + ' ' + player.last_name()) for player in self.__players]}\n"

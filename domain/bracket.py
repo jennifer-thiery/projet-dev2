@@ -1,4 +1,4 @@
-from domain.enums import BracketType, FederationRanking
+from domain.enums import BracketType, FederationRanking, MatchType
 from domain.player import Player
 from domain.pool import Pool
 
@@ -8,6 +8,8 @@ class Bracket:
         self.__type = type
         self.__players: list[Player] = []
         self.__pools: list[Pool] = []
+        self.__matches = []
+        self.__current_state = MatchType.POOL
 
     @property
     def type(self):
@@ -20,6 +22,10 @@ class Bracket:
     @property
     def pools(self) -> list[Pool]:
         return self.__pools
+
+    @property
+    def matches(self):
+        return self.__matches
 
     def is_player_in(self, licence_number):
         for i, player in enumerate(self.players):
