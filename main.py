@@ -1,8 +1,12 @@
-from interface.tui_mvp import show_menu
+from domain.tournament import Tournament
+from interface.tui_textual import TableTennisTournamentManager
 
 
 def main():
-    show_menu()
+    tournament = Tournament()
+    tournament.add_players_to_brackets()
+
+    TableTennisTournamentManager(tournament=tournament).run()
 
 
 if __name__ == "__main__":
