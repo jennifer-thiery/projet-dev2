@@ -145,7 +145,7 @@ class Tournament:
                     if self.__brackets[new_index].is_player_in(player.licence_number) >= 0:
                         self.__brackets[new_index].add_player()
 
-    def generate_brackets(self) -> None:
+    def add_player_to_bracket(self) -> None:
         """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
 
         PRE : aucune.
