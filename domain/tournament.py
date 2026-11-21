@@ -128,8 +128,19 @@ class Tournament:
     def brackets(self):
         return self.__brackets
 
-    def create_pools_of_brackets(self) -> None:
+    def add_players_to_brackets(self) -> None:
+        """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
+
+        PRE : aucune.
+        POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
+        """
+        for player in self.__all_players:
+            for bracket in player.get_brackets():
+                self.__brackets[bracket.bracket_index].add_player(player)
         self.check_enough_players()
+        self.create_pools_of_brackets()
+
+    def create_pools_of_brackets(self) -> None:
         for bracket in self.__brackets:
             if len(bracket.players) > 6:
                 bracket.create_pools()
@@ -144,14 +155,3 @@ class Tournament:
                 for player in bracket.players:
                     if self.__brackets[new_index].is_player_in(player.licence_number) >= 0:
                         self.__brackets[new_index].add_player()
-
-    def add_player_to_bracket(self) -> None:
-        """Ajoute chaque joueur dans les tableaux où il est inscrit et les poules de chaque tableau sont créée.
-
-        PRE : aucune.
-        POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
-        """
-        for player in self.__all_players:
-            for bracket in player.get_brackets():
-                self.__brackets[bracket.bracket_index].add_player(player)
-        self.create_pools_of_brackets()
