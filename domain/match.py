@@ -9,7 +9,6 @@ class Match:
         self.__sets: tuple[tuple[int, int], ...] = ()
         self.__players = players
         self.__type = type
-        self.__winner = None
 
     @property
     def id(self) -> str:
@@ -33,7 +32,11 @@ class Match:
 
     @property
     def winner(self) -> Player | None:
-        return self.__winner
+        s1, s2 = self.__scores
+
+        if s1 == s2:
+            return None
+        return self.__players[0] if s1 > s2 else self.__players[1]
 
     # La liste contient un tuple (points du joueur 1, points du joueur 2) par set.
     def record_result(self, sets: list[tuple[int, int]]) -> None:
@@ -68,7 +71,6 @@ class Match:
         if 3 not in wins:
             raise ValueError("Un joueur doit avoir gagné trois sets.")
 
-        self.__winner = self.players[wins.index(3)]
         self.__scores = wins
         self.__sets = tuple(validated_sets)
 
@@ -80,9 +82,6 @@ class Match:
             f"Joueurs : {[(player.firstname() + ' ' + player.last_name()) for player in self.__players]}\n"
             f"Gagnant : {self.__winner.player_overview() if self.__winner else 'Aucun gagnant'}\n"
         )
-
-    def get_winner(self) -> Player | None:
-        return self.winner
 
     def is_played(self) -> bool:
         return self.winner is not None

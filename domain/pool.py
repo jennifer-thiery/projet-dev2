@@ -75,6 +75,35 @@ class Pool:
                 )
                 id_nbr += 1
 
+    def ranking(self) -> list[tuple]:
+        stats = {}
+        for player in self.__players:
+            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0, "points": 0}
+
+        for match in self.__matches:
+            winner = match.winner
+            if winner is None:
+                continue
+            loser = match.players[0] if winner is match.players[1] else match.players[0]
+
+            winner_stats = stats[winner.licence_number]
+            loser_stats = stats[loser.licence_number]
+
+            winner_stats["played"] += 1
+            winner_stats["wins"] += 1
+            winner_stats["points"] += 1
+
+            loser_stats["played"] += 1
+            loser_stats["losses"] += 1
+
+        ranked = sorted(stats.values(), key=lambda p: p["points"], reverse=True)
+        p_list = []
+
+        for p in ranked:
+            p_list.append((p["player"], p["played"], p["wins"], p["losses"], p["points"]))
+
+        return p_list
+
     def nbr_matches_left(self):
         nbr = 0
         for match in self.__matches:
