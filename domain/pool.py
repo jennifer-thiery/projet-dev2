@@ -73,12 +73,32 @@ class Pool:
                2 joueurs sont inscrits, aucun match n'est ajouté.
                Ne renvoie rien.
         """
-        player_done = 0
         id_nbr = 1
-        while player_done != len(self.__players):
-            for i in range(player_done, len(self.__players) - 1):
-                list_temp = [self.__players[player_done], self.__players[i + 1]]
-                self.__matches.append(Match(f"poule_{self.__id}_match_{id_nbr}", list_temp, MatchType.POOL))
+        if len(self.__players) == 4:  # 4 joueurs dans la poule
+            for i in range(3):
+                a = i % 2
+                b = 1 + int(i / 2)
+                c = -1 - a * 2 - b
+                self.__matches.append(
+                    Match(
+                        f"poule_{self.__id}_match_{id_nbr}", [self.__players[a], self.__players[a + b]], MatchType.POOL
+                    )
+                )
                 id_nbr += 1
-
-            player_done += 1
+                self.__matches.append(
+                    Match(
+                        f"poule_{self.__id}_match_{id_nbr}",
+                        [self.__players[c], self.__players[3]],
+                        MatchType.POOL,
+                    )
+                )
+                id_nbr += 1
+                # Si vous comprenez pas la logique tkt c'est des maths
+        elif len(self.__players) == 3:  # 3 joueurs dans la poule
+            for i in range(3):
+                self.__matches.append(
+                    Match(
+                        f"poule_{self.__id}_match_{id_nbr}", [self.__players[-1 + i], self.__players[i]], MatchType.POOL
+                    )
+                )
+                id_nbr += 1
