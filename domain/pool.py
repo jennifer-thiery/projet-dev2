@@ -78,30 +78,30 @@ class Pool:
     def ranking(self) -> list[tuple]:
         stats = {}
         for player in self.__players:
-            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0, "points": 0}
+            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0}
 
         for match in self.__matches:
             winner = match.winner
             if winner is None:
                 continue
 
-            loser = match.players[1] if winner == match.players[0] else match.players[1]
+            loser = match.players[0] if winner == match.players[1] else match.players[1]
 
             winner_stats = stats[winner.licence_number]
             loser_stats = stats[loser.licence_number]
 
             winner_stats["played"] += 1
             winner_stats["wins"] += 1
-            winner_stats["points"] += 1
 
             loser_stats["played"] += 1
             loser_stats["losses"] += 1
 
-        ranked = sorted(stats.values(), key=lambda p: p["points"], reverse=True)
+        ranking1 = sorted(stats.values(), key=lambda p: p["played"])
+        final_ranking = sorted(ranking1, key=lambda p: p["wins"], reverse=True)
         p_list = []
 
-        for p in ranked:
-            p_list.append((p["player"], p["played"], p["wins"], p["losses"], p["points"]))
+        for p in final_ranking:
+            p_list.append((p["player"], p["played"], p["wins"], p["losses"]))
 
         return p_list
 

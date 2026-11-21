@@ -22,9 +22,9 @@ class BracketTab(Container):
 
     def generate_player_table(self, table: DataTable):
         table.clear()
-        for rank, (player, played, wins, losses, points) in enumerate(self.__pool.ranking()):
+        for rank, (player, played, wins, losses) in enumerate(self.__pool.ranking()):
             table.add_row(
-                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses, points
+                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses
             )
 
     async def on_select_changed(self, event: Select.Changed) -> None:
@@ -38,7 +38,7 @@ class BracketTab(Container):
         self.__pool = self.__bracket.pools[event.value]
 
         players_table = DataTable(cursor_type="row", id="players")
-        players_table.add_columns("#", "Licence", "Joueur", "J", "V", "D", "pts")
+        players_table.add_columns("#", "Licence", "Joueur", "J", "V", "D")
         self.generate_player_table(players_table)
 
         matches_table = DataTable(cursor_type="row", id="matches")
