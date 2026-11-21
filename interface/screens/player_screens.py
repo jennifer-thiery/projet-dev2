@@ -33,16 +33,19 @@ class PlayerScreen(Screen):
             case "add":
                 self.app.push_screen(AddPlayerForm(tournament=self.__tournament))
             case "edit-remove":
-                self.app.push_screen(EditOrRemoveForm())
+                self.app.push_screen(PlayerList(tournament=self.__tournament, editable=True))
 
 
 class PlayerList(Screen):
     TITLE = "Liste des participants"
     BINDINGS = [("escape", "app.pop_screen", "Retour")]
 
-    def __init__(self, tournament: Tournament) -> None:
+    def __init__(self, tournament: Tournament, editable: bool = False) -> None:
         super().__init__()
         self.__tournament = tournament
+        self.__editable = editable
+        if editable:
+            self.title = "Sélectionnez un participant à modifier ou supprimer"
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -63,7 +66,13 @@ class PlayerList(Screen):
             "Numéro de téléphone",
             "Nombre de tableaux",
         )
+        self.update_players()
 
+    def update_players(self, changed: bool | None = True) -> None:
+        if not changed:
+            return
+        table = self.query_one(DataTable)
+        table.clear()
         for player in self.__tournament.all_players:
             table.add_row(
                 player.licence_number,
@@ -75,4 +84,11 @@ class PlayerList(Screen):
                 player.email,
                 player.phone_number,
                 2 if player.second_bracket else 1,
+                key=player.licence_number,
             )
+
+    def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
+        if self.__editable:
+            player = self.__tournament.player_pointer(event.row_key.value)
+            if player is not None:
+                self.app.push_screen(EditOrRemoveForm(self.__tournament, player), self.update_players)

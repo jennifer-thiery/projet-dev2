@@ -1,6 +1,11 @@
 from datetime import date, datetime
 
-from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
+from data.action_db_players import (
+    add_player_to_db,
+    get_players_from_db,
+    remove_player_from_db,
+    update_player_in_db,
+)
 from domain.bracket import Bracket
 from domain.enums import BracketType
 from domain.player import Player
@@ -9,7 +14,18 @@ from domain.player import Player
 class Tournament:
     def __init__(self):
         self.__all_players: list[Player] = []
+        self.__brackets = [
+            Bracket(BracketType.JUNIOR),
+            Bracket(BracketType.BEGINNER),
+            Bracket(BracketType.INTERMEDIATE),
+            Bracket(BracketType.EXPERT),
+        ]
+        self.load_players()
+
+    def load_players(self) -> None:
         for data in get_players_from_db():
+            if self.licence_exists(data["licence_number"]):
+                continue
             player = Player(
                 licence_number=data["licence_number"],
                 firstname=data["firstname"],
@@ -23,12 +39,11 @@ class Tournament:
             )
             self.__all_players.append(player)
 
-        self.__brackets = [
-            Bracket(BracketType.JUNIOR),
-            Bracket(BracketType.BEGINNER),
-            Bracket(BracketType.INTERMEDIATE),
-            Bracket(BracketType.EXPERT),
-        ]
+    def clear(self) -> None:
+        self.__all_players.clear()
+        for bracket in self.__brackets:
+            bracket.players.clear()
+            bracket.pools.clear()
 
     # PlayerManager
     @property
@@ -62,8 +77,6 @@ class Tournament:
         POST :  Ajoute un nouveau participant dans la liste des joueurs (aussi directement dans la db).
                 Ne revoie rien
         """
-        self.__all_players.append(new_player)
-
         # Add player to db
         new_player_dict = {
             "licence_number": new_player.licence_number,
@@ -77,6 +90,7 @@ class Tournament:
             "second_bracket": new_player.second_bracket,
         }
         add_player_to_db(new_player_dict)
+        self.__all_players.append(new_player)
 
     def edit_player(
         self,
@@ -94,12 +108,24 @@ class Tournament:
         PRE : p_licence_number is the licence number of the player as it is in the player object at the moment of call
               licence_number is the potentially new licence number (can be the same as p_licence_number)
               and all the other parameters values can be the same as the value in player.
-        POST : Adds the player into the JSON. Returns nothing.
+        POST : Met à jour le joueur dans la base. Ne renvoie rien.
         """
         # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
         for player in self.__all_players:  # player references the dict Player inside of all_players
             if player.licence_number == p_licence_number:
-                remove_player_from_db(p_licence_number)
+                update_player_in_db(
+                    p_licence_number,
+                    {
+                        "licence_number": licence_number,
+                        "firstname": firstname,
+                        "lastname": lastname,
+                        "birthdate": birthdate.strftime("%Y-%m-%d"),
+                        "club": club,
+                        "federation_ranking": federation_ranking,
+                        "email": email,
+                        "phone_number": phone_number,
+                    },
+                )
                 player.licence_number = licence_number
                 player.firstname = firstname
                 player.lastname = lastname
@@ -108,19 +134,18 @@ class Tournament:
                 player.federation_ranking = federation_ranking
                 player.email = email
                 player.phone_number = phone_number
-                self.add_player(player)
                 break
 
     def delete_player_from_tournament(self, licence_number: str) -> None:
-        """Deletes a player from the JSON
+        """Supprime un joueur de la base.
         PRE : licence_number as its name implies is the licence
         number of the player to be deleted
-        POST : The player is deleted from the JSON. Returns nothing
+        POST : Le joueur est supprimé de la base. Ne renvoie rien.
         """
         for player in self.__all_players:
             if player.licence_number == licence_number:
-                self.__all_players.remove(player)
                 remove_player_from_db(licence_number)
+                self.__all_players.remove(player)
                 break
 
     # Bracket/Pool Manager
@@ -134,6 +159,9 @@ class Tournament:
         PRE : aucune.
         POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
         """
+        for bracket in self.__brackets:
+            bracket.players.clear()
+            bracket.pools.clear()
         for player in self.__all_players:
             for bracket in player.get_brackets():
                 self.__brackets[bracket.bracket_index].add_player(player)
@@ -144,7 +172,6 @@ class Tournament:
         for bracket in self.__brackets:
             if len(bracket.players) > 6:
                 bracket.create_pools()
-                print
 
     def check_enough_players(self):
         for bracket in self.__brackets:
@@ -153,5 +180,5 @@ class Tournament:
                 if new_index == len(self.__brackets):
                     new_index -= 2
                 for player in bracket.players:
-                    if self.__brackets[new_index].is_player_in(player.licence_number) >= 0:
-                        self.__brackets[new_index].add_player()
+                    if self.__brackets[new_index].is_player_in(player.licence_number) == -1:
+                        self.__brackets[new_index].add_player(player)

@@ -13,6 +13,7 @@ class BracketTab(Container):
         self.__pool = None
 
     def compose(self) -> ComposeResult:
+        self.__pool = None
         yield Static(self.__bracket.type.value)
 
         pools = [(f"Poule {pool.id}", pool.id - 1) for pool in self.__bracket.pools]
@@ -36,7 +37,9 @@ class BracketTab(Container):
             players_table.add_row(i + 1, player.licence_number, f"{player.firstname} {player.lastname}")
 
         matches_table = DataTable(cursor_type="row", id="matches")
-        matches_table.add_columns("Joueur 1", "Score", "Joueur 2")
+        matches_table.add_column("Joueur 1")
+        matches_table.add_column("Score", key="score")
+        matches_table.add_column("Joueur 2")
         for i, match in enumerate(self.__pool.matches):
             matches_table.add_row(
                 f"{match.players[0].firstname} {match.players[0].lastname}",
@@ -52,4 +55,9 @@ class BracketTab(Container):
             return
 
         match = self.__pool.matches[int(event.row_key.value)]
-        self.app.push_screen(ScoreModal(match))
+
+        def update_score(saved: bool | None) -> None:
+            if saved:
+                event.data_table.update_cell(event.row_key, "score", f"{match.scores[0]} - {match.scores[1]}")
+
+        self.app.push_screen(ScoreModal(match), update_score)
