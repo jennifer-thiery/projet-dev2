@@ -175,7 +175,7 @@ class Tournament:
 
     def check_enough_players(self):
         for bracket in self.__brackets:
-            if len(bracket.players) <= 6:
+            if len(bracket.players) < 6:
                 new_index = bracket.type.bracket_index + 1
                 if new_index == len(self.__brackets):
                     new_index -= 2
