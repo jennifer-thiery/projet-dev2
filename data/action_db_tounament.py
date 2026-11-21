@@ -1,33 +1,28 @@
 import json
-from datetime import date, datetime
-from pathlib import Path
+from datetime import date
 
-from domain.tournament import Tournament
-
-FILE_NAME = "tournament.json"
-FILE_PATH = Path(__file__).resolve().parent / FILE_NAME
+from data.database import connect_db
 
 
 def to_json_default(obj):
-    if isinstance(obj, (datetime, date)):
-        return obj.isoformat()
-    if hasattr(obj, "__dict__"):
-        return obj.__dict__
-    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
+    return obj.isoformat() if isinstance(obj, date) else vars(obj)
 
 
 def save_tournament(T):
+    # shortcut: une seule sauvegarde complète, séparer les tables si des requêtes par match sont nécessaires.
+    snapshot = json.dumps(T, ensure_ascii=False, default=to_json_default)
+    db = connect_db()
     try:
-        with open(FILE_PATH, "w", encoding="utf-8") as file:
-            json.dump(T, file, indent=4, ensure_ascii=False, default=to_json_default)
-    except FileNotFoundError:
-        print(f"Le fichier {FILE_NAME} existe pas")
+        db.execute("REPLACE INTO tournament (id, snapshot) VALUES (1, ?)", (snapshot,))
+        db.commit()
+    finally:
+        db.close()
 
 
 def load_tournament():
+    db = connect_db()
     try:
-        with open(FILE_PATH, "r", encoding="utf-8") as file:
-            jason = json.load(file)
-            return jason
-    except FileNotFoundError:
-        print(f"Le fichier {FILE_NAME} existe pas")
+        row = db.execute("SELECT snapshot FROM tournament WHERE id = 1").fetchone()
+    finally:
+        db.close()
+    return json.loads(row[0]) if row is not None else None

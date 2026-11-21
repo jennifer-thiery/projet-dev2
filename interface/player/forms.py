@@ -17,6 +17,14 @@ def required_input(prompt: str):
             return value
 
 
+def required_ranking():
+    while True:
+        ranking = required_input("Classement fédéral : ")
+        if ranking in list(FederationRanking):
+            return ranking
+        print("Classement invalide.")
+
+
 def form_add_player():
     while True:
         ct()
@@ -49,13 +57,7 @@ def form_add_player():
 
     club = required_input("Club : ")
 
-    # Check if it's a valid federation ranking
-    while True:
-        federation_ranking = required_input("Classement fédéral : ")
-        if federation_ranking in FederationRanking:
-            print("Classement invalide")
-        else:
-            break
+    federation_ranking = required_ranking()
 
     email = required_input("Email : ")
     phone_number = required_input("Numéro de téléphone : ")
@@ -70,6 +72,7 @@ def form_add_player():
         federation_ranking=federation_ranking,
         email=email,
         phone_number=phone_number,
+        second_bracket=False,
     )
     print("\n--- Aperçu du joueur ---")
     print(new_player.player_overview())
@@ -186,7 +189,7 @@ def form_edit_player(p_licence_number, player: Player):
             club = required_input("Veuillez introduire le club : ")
         elif ans == "6":
             print("Modification du classement fédéral")
-            federation_ranking = required_input("Veuillez introduire le classement fédéral : ")
+            federation_ranking = required_ranking()
         elif ans == "7":
             print("Modification de l'email")
             email = required_input("Veuillez introduire l'email : ")

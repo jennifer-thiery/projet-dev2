@@ -3,6 +3,9 @@ from domain.tournament import Tournament
 
 def show_players():
     all_players = Tournament().all_players
+    if not all_players:
+        input("Aucun participant. Appuyez sur Entrée pour revenir au menu.")
+        return
 
     # Have length of longest element of each attribut
     w_firstname = max(len(p.firstname) for p in all_players) + 4

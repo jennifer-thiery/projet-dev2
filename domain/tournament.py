@@ -1,6 +1,11 @@
 from datetime import date, datetime
 
-from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
+from data.action_db_players import (
+    add_player_to_db,
+    get_players_from_db,
+    remove_player_from_db,
+    update_player_in_db,
+)
 from domain.bracket import Bracket
 from domain.enums import BracketType
 from domain.player import Player
@@ -47,8 +52,6 @@ class Tournament:
                 return player
 
     def add_player_to_tournament(self, new_player: Player) -> None:
-        self.__all_players.append(new_player)
-
         # Add player to db
         new_player_dict = {
             "licence_number": new_player.licence_number,
@@ -62,6 +65,7 @@ class Tournament:
             "second_bracket": new_player.second_bracket,
         }
         add_player_to_db(new_player_dict)
+        self.__all_players.append(new_player)
 
     def edit_player(
         self,
@@ -75,26 +79,31 @@ class Tournament:
         email: str,
         phone_number: str,
     ) -> None:
-        # Loop in all_players to find the player with the wanted licence_number and modify each of the informations
-        for player in self.__all_players:  # player references the dict Player inside of all_players
+        for player in self.__all_players:
             if player.licence_number == p_licence_number:
-                remove_player_from_db(p_licence_number)
-                player.licence_number = licence_number
-                player.firstname = firstname
-                player.lastname = lastname
-                player.birthdate = birthdate
-                player.club = club
-                player.federation_ranking = federation_ranking
-                player.email = email
-                player.phone_number = phone_number
-                self.add_player(player)
+                changes = {
+                    "licence_number": licence_number,
+                    "firstname": firstname,
+                    "lastname": lastname,
+                    "birthdate": birthdate,
+                    "club": club,
+                    "federation_ranking": federation_ranking,
+                    "email": email,
+                    "phone_number": phone_number,
+                }
+                update_player_in_db(
+                    p_licence_number,
+                    {**changes, "birthdate": birthdate.strftime("%Y-%m-%d")},
+                )
+                for field, value in changes.items():
+                    setattr(player, field, value)
                 break
 
     def delete_player_from_tournament(self, licence_number: str) -> None:
         for player in self.__all_players:
             if player.licence_number == licence_number:
-                self.__all_players.remove(player)
                 remove_player_from_db(licence_number)
+                self.__all_players.remove(player)
                 break
 
     # Bracket/Pool Manager
