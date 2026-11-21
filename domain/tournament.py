@@ -1,5 +1,4 @@
 from datetime import date, datetime
-from time import sleep
 
 from data.action_db_players import add_player_to_db, get_players_from_db, remove_player_from_db
 from domain.bracket import Bracket
