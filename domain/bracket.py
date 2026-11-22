@@ -98,6 +98,9 @@ class Bracket:
             pool.create_matches()
 
     def create_matches_from_pools(self):
+        pass
+
+    def change_state(self):
         if self.__current_state == MatchType.POOL:
             all_done = True
             for pool in self.__pools:
@@ -107,5 +110,7 @@ class Bracket:
                         break
                 if not all_done:
                     break
-            if all_done and len(self.__players) <= 32:
-                self.__current_state = MatchType.get_type_from_index(-int(log2(len(self.__players))))
+            if all_done and len(self.__pools) * 2 <= 32:
+                self.__current_state = MatchType.get_type_from_index(-int(log2(len(self.__pools) * 2)))
+        else:
+            self.__current_state = MatchType.get_type_from_index(self.__current_state.index)
