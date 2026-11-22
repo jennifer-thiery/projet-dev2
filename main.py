@@ -1,12 +1,11 @@
 from domain.tournament import Tournament
-from interface.tui_textual import TableTennisTournamentManager
+from interface.menu import menu
 
 
 def main():
     tournament = Tournament()
     tournament.add_players_to_brackets()
-
-    TableTennisTournamentManager(tournament=tournament).run()
+    menu()
 
 
 if __name__ == "__main__":
