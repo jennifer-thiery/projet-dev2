@@ -48,6 +48,12 @@ class Bracket:
     def add_player(self, player: Player) -> None:
         self.__players.append(player)
 
+    def clear(self) -> None:
+        self.__players.clear()
+        self.__pools.clear()
+        self.__matches.clear()
+        self.__current_state = MatchType.POOL
+
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
 

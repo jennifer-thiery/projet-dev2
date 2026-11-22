@@ -42,8 +42,7 @@ class Tournament:
     def clear(self) -> None:
         self.__all_players.clear()
         for bracket in self.__brackets:
-            bracket.players.clear()
-            bracket.pools.clear()
+            bracket.clear()
 
     # PlayerManager
     @property
@@ -160,8 +159,7 @@ class Tournament:
         POST : les participants on été ajouter à leur bracket. Ensuite chaque tableau crée ses poules.
         """
         for bracket in self.__brackets:
-            bracket.players.clear()
-            bracket.pools.clear()
+            bracket.clear()
         for player in self.__all_players:
             for bracket in player.get_brackets():
                 self.__brackets[bracket.bracket_index].add_player(player)

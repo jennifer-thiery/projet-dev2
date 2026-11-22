@@ -46,6 +46,24 @@ def load_tournament():
         db.close()
 
 
+def load_saved_brackets(current_players: list[Player]) -> dict[BracketType, Bracket]:
+    """Relit les tableaux sauvegardés pour reprendre le tournoi."""
+    db = connect_db()
+    try:
+        with db:
+            db.execute("BEGIN")
+            read_player = _player_reader(db, current_players)
+            brackets = {}
+            for row in db.execute(
+                "SELECT * FROM brackets WHERE tournament_id = 1 ORDER BY id"
+            ):
+                bracket = _bracket_from_row(db, row, read_player)
+                brackets[bracket.type] = bracket
+            return brackets
+    finally:
+        db.close()
+
+
 def get_tournament_player_from_db(player_id: int) -> Player | None:
     """Renvoie le profil sauvegardé correspondant à tournament_players.id."""
     db = connect_db()
@@ -88,19 +106,28 @@ def _get_saved_object(query, object_id, from_row):
             if row is None:
                 return None
 
-            players = {None: None}
-
-            def read_player(player_id):
-                if player_id not in players:
-                    player = db.execute(
-                        "SELECT * FROM tournament_players WHERE id = ?", (player_id,)
-                    ).fetchone()
-                    players[player_id] = player_from_row(player)
-                return players[player_id]
-
-            return from_row(db, row, read_player)
+            return from_row(db, row, _player_reader(db))
     finally:
         db.close()
+
+
+def _player_reader(db, current_players=()):
+    by_licence = {player.licence_number: player for player in current_players}
+    players = {None: None}
+
+    def read_player(player_id):
+        if player_id not in players:
+            row = db.execute(
+                "SELECT * FROM tournament_players WHERE id = ?", (player_id,)
+            ).fetchone()
+            player = player_from_row(row)
+            current = by_licence.get(player.licence_number)
+            if current is not None and vars(current) == vars(player):
+                player = current
+            players[player_id] = player
+        return players[player_id]
+
+    return read_player
 
 
 def _bracket_from_row(db, row, read_player):
