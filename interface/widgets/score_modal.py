@@ -1,3 +1,6 @@
+from copy import copy
+from sqlite3 import Error
+
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
 from textual.screen import ModalScreen
@@ -9,9 +12,10 @@ from domain.match import Match
 class ScoreModal(ModalScreen[bool]):
     BINDINGS = [("escape", "app.pop_screen", "Annuler")]
 
-    def __init__(self, match: Match):
+    def __init__(self, match: Match, save_result=None) -> None:
         super().__init__()
         self.__match = match
+        self.__save_result = save_result
 
     def compose(self) -> ComposeResult:
         with VerticalScroll(id="modal-content"):
@@ -39,8 +43,15 @@ class ScoreModal(ModalScreen[bool]):
             return
 
         try:
+            if self.__save_result is not None:
+                result = copy(self.__match)
+                result.record_result(sets)
+                self.__save_result(result)
             self.__match.record_result(sets)
         except ValueError as validation_error:
             error.update(str(validation_error))
+            return
+        except Error as save_error:
+            error.update(f"Sauvegarde impossible ({save_error}).")
             return
         self.dismiss(True)
