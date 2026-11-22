@@ -19,37 +19,7 @@ class PlayerScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield VerticalScroll(
-            Button("Afficher la liste des participants", id="list"),
-            Button("Ajouter un participant", id="add"),
-            Button("Modifier ou supprimer un participant", id="edit-remove"),
-        )
-        yield Footer()
-
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        match event.button.id:
-            case "list":
-                self.app.push_screen(PlayerList(tournament=self.__tournament))
-            case "add":
-                self.app.push_screen(AddPlayerForm(tournament=self.__tournament))
-            case "edit-remove":
-                self.app.push_screen(PlayerList(tournament=self.__tournament, editable=True))
-
-
-class PlayerList(Screen):
-    TITLE = "Liste des participants"
-    BINDINGS = [("escape", "app.pop_screen", "Retour")]
-
-    def __init__(self, tournament: Tournament, editable: bool = False) -> None:
-        super().__init__()
-        self.__tournament = tournament
-        self.__editable = editable
-        if editable:
-            self.title = "Sélectionnez un participant à modifier ou supprimer"
-
-    def compose(self) -> ComposeResult:
-        yield Header()
-        yield DataTable(cursor_type="row")
+        yield VerticalScroll(Button("Ajouter un participant", id="add"), DataTable(cursor_type="row"))
         yield Footer()
 
     def on_mount(self) -> None:
@@ -88,7 +58,11 @@ class PlayerList(Screen):
             )
 
     def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
-        if self.__editable:
-            player = self.__tournament.player_pointer(event.row_key.value)
-            if player is not None:
-                self.app.push_screen(EditOrRemoveForm(self.__tournament, player), self.update_players)
+        player = self.__tournament.player_pointer(event.row_key.value)
+        if player is not None:
+            self.app.push_screen(EditOrRemoveForm(self.__tournament, player), self.update_players)
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        match event.button.id:
+            case "add":
+                self.app.push_screen(AddPlayerForm(tournament=self.__tournament))
