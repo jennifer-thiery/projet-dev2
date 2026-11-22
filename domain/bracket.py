@@ -1,6 +1,7 @@
 from math import log2
 
 from domain.enums import BracketType, FederationRanking, MatchType
+from domain.match import Match
 from domain.player import Player
 from domain.pool import Pool
 
@@ -28,6 +29,10 @@ class Bracket:
     @property
     def matches(self):
         return self.__matches
+
+    @property
+    def current_state(self):
+        return self.__current_state
 
     def is_player_in(self, licence_number):
         for i, player in enumerate(self.players):
@@ -97,8 +102,63 @@ class Bracket:
         for pool in self.__pools:
             pool.create_matches()
 
-    def create_matches_from_pools(self):
-        pass
+    def create_matches_from_qualified(self):
+
+        qualified_players = self.get_all_qualified()
+        nbr_matches = len(qualified_players) / 2
+        self.change_state()
+
+        all_matches = []
+        i = 1
+        while len(qualified_players) > 0:
+            if self.__current_state == MatchType.get_type_from_index(-1):
+                self.__matches.append(
+                    Match(
+                        f"{self.__current_state.name.lower()}-match-1",
+                        [qualified_players.pop(0), qualified_players.pop(0)],
+                        self.__current_state,
+                    )
+                )
+                return
+            else:
+                all_matches.insert(
+                    0,
+                    Match(
+                        f"{self.__current_state.name.lower()}-match-{i}",
+                        [qualified_players.pop(0), qualified_players.pop(2)],
+                        self.__current_state,
+                    ),
+                )
+                all_matches.insert(
+                    -1,
+                    Match(
+                        f"{self.__current_state.name.lower()}-match-{nbr_matches - i + 1}",
+                        [qualified_players.pop(0), qualified_players.pop(0)],
+                        self.__current_state,
+                    ),
+                )
+                i += 2
+        self.__matches += all_matches
+
+    def get_all_qualified(self):
+        if self.__current_state == MatchType.POOL:
+            qualified_players = []
+            for pool in self.__pools:
+                taby = pool.ranking()
+                qualified_players += [taby[0][0], taby[1][0]]
+        else:
+            qualified_players = []
+            for match in self.get_all_matches_from_type(self.__current_state):
+                qualified_players.append(match.winner)
+
+        return qualified_players
+
+    def get_all_matches_from_type(self, match_type):
+        all_matches_from_type = []
+        for match in self.__matches:
+            if match.type == match_type:
+                all_matches_from_type.append(match)
+        return all_matches_from_type
 
     def change_state(self):
         if self.__current_state == MatchType.POOL:
@@ -113,4 +173,4 @@ class Bracket:
             if all_done and len(self.__pools) * 2 <= 32:
                 self.__current_state = MatchType.get_type_from_index(-int(log2(len(self.__pools) * 2)))
         else:
-            self.__current_state = MatchType.get_type_from_index(self.__current_state.index)
+            self.__current_state = MatchType.get_type_from_index(self.__current_state.index - 1)
