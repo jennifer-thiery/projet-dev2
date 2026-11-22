@@ -2,7 +2,9 @@ from textual.app import ComposeResult
 from textual.containers import Container, VerticalScroll
 from textual.widgets import DataTable, Select, Static
 
+from data.action_db_write import save_pool_match_result
 from domain.bracket import Bracket
+from domain.match import Match
 from interface.widgets.score_modal import ScoreModal
 
 
@@ -59,7 +61,11 @@ class BracketTab(Container):
         if event.data_table.id != "matches" or self.__pool is None:
             return
 
-        match = self.__pool.matches[int(event.row_key.value)]
+        pool = self.__pool
+        match = pool.matches[int(event.row_key.value)]
+
+        def save_result(result: Match) -> None:
+            save_pool_match_result(self.__bracket, pool, result)
 
         def update_score(saved: bool | None) -> None:
             if saved:
@@ -67,4 +73,4 @@ class BracketTab(Container):
                 players_table = self.query_one("#players", DataTable)
                 self.generate_player_table(players_table)
 
-        self.app.push_screen(ScoreModal(match), update_score)
+        self.app.push_screen(ScoreModal(match, save_result), update_score)
