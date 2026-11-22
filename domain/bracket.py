@@ -111,7 +111,7 @@ class Bracket:
         all_matches = []
         i = 1
         while len(qualified_players) > 0:
-            if self.__current_state == MatchType.get_type_from_index(-1):
+            if self.__current_state == MatchType.get_type_from_index(index=-1):
                 self.__matches.append(
                     Match(
                         f"{self.__current_state.name.lower()}-match-1",
@@ -171,6 +171,6 @@ class Bracket:
                 if not all_done:
                     break
             if all_done and len(self.__pools) * 2 <= 32:
-                self.__current_state = MatchType.get_type_from_index(-int(log2(len(self.__pools) * 2)))
+                self.__current_state = MatchType.get_type_from_index(index=-int(log2(len(self.__pools) * 2)))
         else:
-            self.__current_state = MatchType.get_type_from_index(self.__current_state.index - 1)
+            self.__current_state = MatchType.get_type_from_index(index=self.__current_state.index - 1)
