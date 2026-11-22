@@ -20,6 +20,13 @@ class MatchType(StrEnum):
     SEMI_FINAL = "Demi-finale"
     FINAL = "Finale"
 
+    @property
+    def index(self):
+        return int(list(BracketType).index(self))
+
+    def get_type_from_index(self, index):
+        return list(BracketType)[index]
+
 
 class FederationRanking(StrEnum):
     NC = "NC"
