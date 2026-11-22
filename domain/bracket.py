@@ -146,6 +146,8 @@ class Bracket:
             for pool in self.__pools:
                 taby = pool.ranking()
                 qualified_players += [taby[0][0], taby[1][0]]
+            return qualified_players[0 : 2 ** int(log2(len(self.__pools) * 2))]
+
         else:
             qualified_players = []
             for match in self.get_all_matches_from_type(self.__current_state):

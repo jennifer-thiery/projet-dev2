@@ -24,7 +24,8 @@ class MatchType(StrEnum):
     def index(self):
         return int(list(MatchType).index(self))
 
-    def get_type_from_index(self, index):
+    @staticmethod
+    def get_type_from_index(index):
         return list(MatchType)[index]
 
 
