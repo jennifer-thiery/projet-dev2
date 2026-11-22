@@ -22,10 +22,10 @@ class MatchType(StrEnum):
 
     @property
     def index(self):
-        return int(list(BracketType).index(self))
+        return int(list(MatchType).index(self))
 
     def get_type_from_index(self, index):
-        return list(BracketType)[index]
+        return list(MatchType)[index]
 
 
 class FederationRanking(StrEnum):
