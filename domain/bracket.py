@@ -1,3 +1,5 @@
+from math import log2
+
 from domain.enums import BracketType, FederationRanking, MatchType
 from domain.player import Player
 from domain.pool import Pool
@@ -94,3 +96,16 @@ class Bracket:
     def create_matches_of_pools(self):
         for pool in self.__pools:
             pool.create_matches()
+
+    def create_matches_from_pools(self):
+        if self.__current_state == MatchType.POOL:
+            all_done = True
+            for pool in self.__pools:
+                for match in self.__matches:
+                    if not match.is_played():
+                        all_done = False
+                        break
+                if not all_done:
+                    break
+            if all_done and len(self.__players) <= 32:
+                self.__current_state = MatchType.get_type_from_index(-int(log2(len(self.__players))))
