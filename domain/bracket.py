@@ -109,11 +109,11 @@ class Bracket:
         for pool in self.__pools:
             pool.create_matches()
 
-    def temp(self):
-        self.__matches = []
-        self.__players_waiting = []
-        self.__current_state = MatchType.POOL
-        self.create_matches_from_qualified()
+    # def temp(self):
+    #     self.__matches = []
+    #     self.__players_waiting = []
+    #     self.__current_state = MatchType.POOL
+    #     self.create_matches_from_qualified()
 
     def create_matches_from_qualified(self) -> None:
         from data.action_db_write import save_bracket_matches
@@ -123,8 +123,6 @@ class Bracket:
         previous_match_count = len(self.__matches)
         self.change_state()
 
-        all_matches = []
-        i = 1
         while len(qualified_players) > 0:
             self.__matches.append(
                 Match(
@@ -133,8 +131,7 @@ class Bracket:
                     self.__current_state,
                 )
             )
-            i += 1
-        self.__matches += all_matches
+
         # raise ValueError(f"{self.__matches} {self.__players_waiting}")
         if len(self.__matches) > previous_match_count:
             try:
@@ -144,13 +141,16 @@ class Bracket:
                 self.__current_state = previous_state
                 raise
 
-    def get_all_qualified(self) -> list[Player]:
+    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | None]:
         if self.__current_state == MatchType.POOL:
             all_players = []
             for pool in self.__pools:
                 if pool.nbr_matches_left() == 0:
                     taby = pool.ranking()
-                    all_players.append((taby[0][0], taby[1][0], taby[0][2]))
+                    all_players.append((taby[0][0], taby[1][0], taby[0][4]))
+                    # (first player, second player, points of first player)
+                elif preview_pool_qualified:
+                    all_players.append((None, None, -1))
 
             nbr_player = len(self.__pools) * 2
             nbr_magic = int(log2(nbr_player))
@@ -163,50 +163,57 @@ class Bracket:
 
             left = True
             qualified_players = []
+            waiting_players = []
+
             for pool_players in all_players:
                 if put_2_first:
                     if left:
                         if nbr_in_wait > 0:
-                            self.__players_waiting.insert(0, pool_players[0])
+                            waiting_players.insert(0, pool_players[0])
                             qualified_players.insert(-1, pool_players[1])
                         else:
-                            self.__players_waiting.insert(0, pool_players[0])
-                            self.__players_waiting.insert(-1, pool_players[1])
+                            waiting_players.insert(0, pool_players[0])
+                            waiting_players.insert(-1, pool_players[1])
                     else:
                         if nbr_in_wait > 0:
                             qualified_players.insert(0, pool_players[1])
-                            self.__players_waiting.insert(-1, pool_players[0])
+                            waiting_players.insert(-1, pool_players[0])
                         else:
-                            self.__players_waiting.insert(0, pool_players[1])
-                            self.__players_waiting.insert(-1, pool_players[0])
+                            waiting_players.insert(0, pool_players[1])
+                            waiting_players.insert(-1, pool_players[0])
                 else:
                     if left:
                         if nbr_in_wait > 0:
-                            self.__players_waiting.insert(0, pool_players[0])
+                            waiting_players.insert(0, pool_players[0])
                             qualified_players.insert(-1, pool_players[1])
                         else:
                             qualified_players.insert(0, pool_players[0])
                             qualified_players.insert(-1, pool_players[1])
                     else:
                         if nbr_in_wait > 0:
+                            waiting_players.insert(-1, pool_players[0])
                             qualified_players.insert(0, pool_players[1])
-                            self.__players_waiting.insert(-1, pool_players[0])
                         else:
-                            qualified_players.insert(0, pool_players[1])
                             qualified_players.insert(-1, pool_players[0])
+                            qualified_players.insert(0, pool_players[1])
                 nbr_in_wait -= 1
                 left = not left
 
+            if not preview_pool_qualified:
+                self.__players_waiting = waiting_players
+
         else:
-            if self.__players_waiting == []:
+            if not self.__players_waiting:
                 qualified_players = []
             else:
                 qualified_players = self.__players_waiting
                 self.__players_waiting = []
-            all_match = self.get_all_matches_from_type(self.__current_state)
-            for i in range(int(len(all_match) / 2)):
-                qualified_players.insert(0, all_match[i])
+
+            all_matches = self.get_all_matches_from_type(self.__current_state)
+            for i in range(len(all_matches) // 2):
+                qualified_players.insert(0, all_matches[i])
                 qualified_players.insert(-1, [-(1 + i)])
+
         return qualified_players
 
     def get_all_matches_from_type(self, match_type) -> list[Match]:
@@ -217,15 +224,8 @@ class Bracket:
         return all_matches_from_type
 
     def change_state(self) -> None:
-        all_done = True
+        all_done = all(pool.nbr_matches_left() == 0 for pool in self.__pools)
         if self.__current_state == MatchType.POOL:
-            for pool in self.__pools:
-                for match in pool.matches:
-                    if not match.is_played():
-                        all_done = False
-                        break
-                if not all_done:
-                    break
             if all_done and len(self.__pools) * 2 <= 32:
                 self.__current_state = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools))))
         else:
