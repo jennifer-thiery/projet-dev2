@@ -98,7 +98,6 @@ class Bracket:
                     else:
                         reverse = False
                 nbr_in_pool += 1
-
         elif nbr_play != 0:
             self.__pools.append(Pool(1))
             while len(temp_list) > 0:
@@ -114,7 +113,6 @@ class Bracket:
         from data.action_db_write import save_bracket_matches
 
         qualified_players = self.get_all_qualified()
-        nbr_matches = len(qualified_players) / 2
         previous_state = self.__current_state
         previous_match_count = len(self.__matches)
         self.change_state()
