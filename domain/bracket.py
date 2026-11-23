@@ -160,8 +160,9 @@ class Bracket:
         if self.__current_state == MatchType.POOL:
             qualified_players = []
             for pool in self.__pools:
-                taby = pool.ranking()
-                qualified_players += [taby[0][0], taby[1][0]]
+                if pool.nbr_matches_left == 0:
+                    taby = pool.ranking()
+                    qualified_players += [taby[0][0], taby[1][0]]
             return qualified_players[0 : 2 ** int(log2(len(self.__pools) * 2))]
 
         else:
@@ -179,8 +180,8 @@ class Bracket:
         return all_matches_from_type
 
     def change_state(self):
+        all_done = True
         if self.__current_state == MatchType.POOL:
-            all_done = True
             for pool in self.__pools:
                 for match in self.__matches:
                     if not match.is_played():
@@ -191,4 +192,9 @@ class Bracket:
             if all_done and len(self.__pools) * 2 <= 32:
                 self.__current_state = MatchType.get_type_from_index(index=-int(log2(len(self.__pools) * 2)))
         else:
-            self.__current_state = MatchType.get_type_from_index(index=self.__current_state.index - 1)
+            for match in self.__matches:
+                if match.type == self.__current_state and not match.is_played():
+                    all_done = False
+                    break
+            if all_done:
+                self.__current_state = MatchType.get_type_from_index(index=self.__current_state.index - 1)
