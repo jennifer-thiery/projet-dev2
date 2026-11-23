@@ -145,11 +145,12 @@ class Bracket:
                     taby = pool.ranking()
                     all_players.appen((taby[0][0], taby[1][0], taby[0][2]))
 
-            nbr_magic = int(log2(len(all_players)))
-            nbr_in_wait = (len(all_players) - (2**nbr_magic)) * 2
-            put_2_first = len(all_players) / 2 > nbr_in_wait
+            nbr_player = len(self.__pools) * 2
+            nbr_magic = int(log2(nbr_player))
+            nbr_in_wait = (nbr_player - (2**nbr_magic)) * 2
+            put_2_first = nbr_player / 2 > nbr_in_wait
             if put_2_first:
-                nbr_in_wait = len(all_players) - nbr_in_wait
+                nbr_in_wait = nbr_player - nbr_in_wait
 
             all_players.sort(key=lambda p: p[2], reverse=put_2_first)
 
@@ -196,7 +197,7 @@ class Bracket:
                 qualified_players = self.__players_waiting
                 self.__players_waiting = []
             all_match = self.get_all_matches_from_type(self.__current_state)
-            for i in range(len(all_match) / 2):
+            for i in range(int(len(all_match) / 2)):
                 qualified_players.insert(0, all_match[i])
                 qualified_players.insert(-1, [-(1 + i)])
 
@@ -213,7 +214,7 @@ class Bracket:
         all_done = True
         if self.__current_state == MatchType.POOL:
             for pool in self.__pools:
-                for match in self.__matches:
+                for match in pool.matches:
                     if not match.is_played():
                         all_done = False
                         break
