@@ -137,7 +137,7 @@ class Bracket:
                 self.__current_state = previous_state
                 raise
 
-    def get_all_qualified(self) -> list:
+    def get_all_qualified(self) -> list[Player]:
         if self.__current_state == MatchType.POOL:
             all_players = []
             for pool in self.__pools:
