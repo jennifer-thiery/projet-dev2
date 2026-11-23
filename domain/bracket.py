@@ -170,31 +170,31 @@ class Bracket:
                     if left:
                         if nbr_in_wait > 0:
                             waiting_players.insert(0, pool_players[0])
-                            qualified_players.insert(-1, pool_players[1])
+                            qualified_players.append(pool_players[1])
                         else:
                             waiting_players.insert(0, pool_players[0])
-                            waiting_players.insert(-1, pool_players[1])
+                            waiting_players.append(pool_players[1])
                     else:
                         if nbr_in_wait > 0:
+                            waiting_players.append(pool_players[0])
                             qualified_players.insert(0, pool_players[1])
-                            waiting_players.insert(-1, pool_players[0])
                         else:
+                            waiting_players.append(pool_players[0])
                             waiting_players.insert(0, pool_players[1])
-                            waiting_players.insert(-1, pool_players[0])
                 else:
                     if left:
                         if nbr_in_wait > 0:
                             waiting_players.insert(0, pool_players[0])
-                            qualified_players.insert(-1, pool_players[1])
+                            qualified_players.append(pool_players[1])
                         else:
                             qualified_players.insert(0, pool_players[0])
-                            qualified_players.insert(-1, pool_players[1])
+                            qualified_players.append(pool_players[1])
                     else:
                         if nbr_in_wait > 0:
-                            waiting_players.insert(-1, pool_players[0])
+                            waiting_players.append(pool_players[0])
                             qualified_players.insert(0, pool_players[1])
                         else:
-                            qualified_players.insert(-1, pool_players[0])
+                            qualified_players.append(pool_players[0])
                             qualified_players.insert(0, pool_players[1])
                 nbr_in_wait -= 1
                 left = not left
@@ -212,7 +212,7 @@ class Bracket:
             all_matches = self.get_all_matches_from_type(self.__current_state)
             for i in range(len(all_matches) // 2):
                 qualified_players.insert(0, all_matches[i])
-                qualified_players.insert(-1, [-(1 + i)])
+                qualified_players.append([-(1 + i)])
 
         return qualified_players
 
