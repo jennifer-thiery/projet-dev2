@@ -104,11 +104,11 @@ class Bracket:
 
         self.create_matches_of_pools()
 
-    def create_matches_of_pools(self):
+    def create_matches_of_pools(self) -> None:
         for pool in self.__pools:
             pool.create_matches()
 
-    def create_matches_from_qualified(self):
+    def create_matches_from_qualified(self) -> None:
         from data.action_db_write import save_bracket_matches
 
         qualified_players = self.get_all_qualified()
@@ -156,7 +156,7 @@ class Bracket:
                 self.__current_state = previous_state
                 raise
 
-    def get_all_qualified(self):
+    def get_all_qualified(self) -> list:
         if self.__current_state == MatchType.POOL:
             qualified_players = []
             for pool in self.__pools:
@@ -172,14 +172,15 @@ class Bracket:
 
         return qualified_players
 
-    def get_all_matches_from_type(self, match_type):
+    def get_all_matches_from_type(self, match_type) -> list[Match]:
         all_matches_from_type = []
         for match in self.__matches:
             if match.type == match_type:
                 all_matches_from_type.append(match)
         return all_matches_from_type
 
-    def change_state(self):
+    def change_state(self) -> None:
+        x = log2(len(self.__pools) * 2)
         all_done = True
         if self.__current_state == MatchType.POOL:
             for pool in self.__pools:
@@ -190,7 +191,7 @@ class Bracket:
                 if not all_done:
                     break
             if all_done and len(self.__pools) * 2 <= 32:
-                self.__current_state = MatchType.get_type_from_index(index=-int(log2(len(self.__pools) * 2)))
+                self.__current_state = MatchType.get_type_from_index(index=-int(x))
         else:
             for match in self.__matches:
                 if match.type == self.__current_state and not match.is_played():

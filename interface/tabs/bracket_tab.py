@@ -22,7 +22,7 @@ class BracketTab(Container):
         yield Select(pools)
         yield VerticalScroll(id="content_container")
 
-    def generate_player_table(self, table: DataTable):
+    def generate_player_table(self, table: DataTable) -> None:
         table.clear()
         for rank, (player, played, wins, losses, points) in enumerate(self.__pool.ranking()):
             table.add_row(

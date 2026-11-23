@@ -21,7 +21,7 @@ class Pool:
     def matches(self) -> list[Match]:
         return self.__matches
 
-    def add_player(self, player: Player):
+    def add_player(self, player: Player) -> None:
         """Ajoute un joueur à la poule.
 
         PRE : player est une instance de joueur valide (possédant au moins
@@ -31,7 +31,7 @@ class Pool:
         """
         self.__players.append(player)
 
-    def create_matches(self):
+    def create_matches(self) -> None:
         """Génère les matchs de la poule pour toutes les paires de joueurs.
 
         Chaque joueur de la poule affronte une unique fois chacun des
@@ -111,7 +111,7 @@ class Pool:
 
         return p_list
 
-    def nbr_matches_left(self):
+    def nbr_matches_left(self) -> int:
         nbr = 0
         for match in self.__matches:
             if match.scores == [0, 0]:

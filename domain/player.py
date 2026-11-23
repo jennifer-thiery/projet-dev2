@@ -31,7 +31,7 @@ class Player:
         return self.__licence_number
 
     @licence_number.setter
-    def licence_number(self, licence_number):
+    def licence_number(self, licence_number) -> None:
         self.__licence_number = licence_number
 
     @property
@@ -39,7 +39,7 @@ class Player:
         return self.__firstname
 
     @firstname.setter
-    def firstname(self, firstname):
+    def firstname(self, firstname) -> None:
         self.__firstname = firstname
 
     @property
@@ -47,7 +47,7 @@ class Player:
         return self.__lastname
 
     @lastname.setter
-    def lastname(self, lastname):
+    def lastname(self, lastname) -> None:
         self.__lastname = lastname
 
     @property
@@ -55,7 +55,7 @@ class Player:
         return self.__birthdate
 
     @birthdate.setter
-    def birthdate(self, birthdate):
+    def birthdate(self, birthdate) -> None:
         self.__birthdate = birthdate
 
     @property
@@ -63,7 +63,7 @@ class Player:
         return self.__club
 
     @club.setter
-    def club(self, club):
+    def club(self, club) -> None:
         self.__club = club
 
     @property
@@ -71,7 +71,7 @@ class Player:
         return self.__federation_ranking
 
     @federation_ranking.setter
-    def federation_ranking(self, federation_ranking):
+    def federation_ranking(self, federation_ranking) -> None:
         self.__federation_ranking = federation_ranking
 
     @property
@@ -79,7 +79,7 @@ class Player:
         return self.__email
 
     @email.setter
-    def email(self, email):
+    def email(self, email) -> None:
         self.__email = email
 
     @property
@@ -95,7 +95,7 @@ class Player:
         return self.__second_bracket
 
     @second_bracket.setter
-    def second_bracket(self, second_bracket):
+    def second_bracket(self, second_bracket) -> None:
         self.__second_bracket = second_bracket
 
     def get_age(self, current_year: int) -> int:
