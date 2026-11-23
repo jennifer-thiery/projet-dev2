@@ -149,7 +149,7 @@ class Tournament:
 
     # Bracket/Pool Manager
     @property
-    def brackets(self):
+    def brackets(self) -> list[Bracket]:
         return self.__brackets
 
     def add_players_to_brackets(self) -> None:
@@ -171,7 +171,7 @@ class Tournament:
             if len(bracket.players) > 6:
                 bracket.create_pools()
 
-    def check_enough_players(self):
+    def check_enough_players(self) -> None:
         for bracket in self.__brackets:
             if len(bracket.players) < 6:
                 new_index = bracket.type.bracket_index + 1

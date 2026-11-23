@@ -21,6 +21,7 @@ class BracketTab(Container):
         yield Static("")
         yield VerticalScroll(id="content_container")
 
+<<<<<<< HEAD
     async def on_select_changed(self, event: Select.Changed):
         if event.select.id != "view-select":
             return
@@ -50,6 +51,9 @@ class PoolsContent(Vertical):
         self.__selected_pool = None
 
     def generate_player_table(self, table: DataTable):
+=======
+    def generate_player_table(self, table: DataTable) -> None:
+>>>>>>> 80fe4b4 (Add info for functions)
         table.clear()
         for rank, (player, played, wins, losses, points) in enumerate(self.__selected_pool.ranking()):
             table.add_row(
