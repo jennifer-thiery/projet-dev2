@@ -6,7 +6,6 @@ from data.action_db_write import save_pool_match_result
 from domain.bracket import Bracket
 from domain.enums import MatchType
 from domain.match import Match
-from domain.pool import Pool
 from interface.widgets.final_phase_tree import FinalPhaseTree
 from interface.widgets.score_modal import ScoreModal
 
@@ -21,7 +20,6 @@ class BracketTab(Container):
         yield Static("")
         yield VerticalScroll(id="content_container")
 
-<<<<<<< HEAD
     async def on_select_changed(self, event: Select.Changed):
         if event.select.id != "view-select":
             return
@@ -30,7 +28,7 @@ class BracketTab(Container):
         await content_container.remove_children()
 
         if event.value == "pools":
-            content_container.mount(PoolsContent(self.__bracket.pools))
+            content_container.mount(PoolsContent(self.__bracket))
 
         elif event.value == "final-phase":
             # Look if final matches have already been created
@@ -45,15 +43,13 @@ class BracketTab(Container):
 
 
 class PoolsContent(Vertical):
-    def __init__(self, pools: list[Pool]):
+    def __init__(self, bracket: Bracket):
         super().__init__()
-        self.__pools = pools
+        self.__bracket = bracket
+        self.__pools = self.__bracket.pools
         self.__selected_pool = None
 
-    def generate_player_table(self, table: DataTable):
-=======
     def generate_player_table(self, table: DataTable) -> None:
->>>>>>> 80fe4b4 (Add info for functions)
         table.clear()
         for rank, (player, played, wins, losses, points) in enumerate(self.__selected_pool.ranking()):
             table.add_row(
