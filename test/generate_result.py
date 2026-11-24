@@ -31,7 +31,7 @@ def result_random(match: Match) -> None:
     match.record_result(sets)
 
 
-def generate_for_pools(tournament: Tournament) -> None:
+async def generate_for_pools(tournament: Tournament) -> None:
     for bracket in tournament.brackets:
         for pool in bracket.pools:
             for match in pool.matches:
