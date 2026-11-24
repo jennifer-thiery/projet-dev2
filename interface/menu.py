@@ -6,8 +6,6 @@ from interface.tournament.tournament import tournament_form
 
 
 def menu(tournament: Tournament):
-    if not tournament.all_players:
-        print("vide")
 
     @ui.page("/playerform")
     def gerer_participants():

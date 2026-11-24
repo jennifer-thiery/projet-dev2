@@ -48,6 +48,12 @@ class Bracket:
     def add_player(self, player: Player) -> None:
         self.__players.append(player)
 
+    def clear(self) -> None:
+        self.__players.clear()
+        self.__pools.clear()
+        self.__matches.clear()
+        self.__current_state = MatchType.POOL
+
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
 
@@ -103,9 +109,12 @@ class Bracket:
             pool.create_matches()
 
     def create_matches_from_qualified(self):
+        from data.action_db_write import save_bracket_matches
 
         qualified_players = self.get_all_qualified()
         nbr_matches = len(qualified_players) / 2
+        previous_state = self.__current_state
+        previous_match_count = len(self.__matches)
         self.change_state()
 
         all_matches = []
@@ -119,7 +128,7 @@ class Bracket:
                         self.__current_state,
                     )
                 )
-                return
+                break
             else:
                 all_matches.insert(
                     0,
@@ -139,6 +148,13 @@ class Bracket:
                 )
                 i += 2
         self.__matches += all_matches
+        if len(self.__matches) > previous_match_count:
+            try:
+                save_bracket_matches(None, self)
+            except Exception:
+                del self.__matches[previous_match_count:]
+                self.__current_state = previous_state
+                raise
 
     def get_all_qualified(self):
         if self.__current_state == MatchType.POOL:
