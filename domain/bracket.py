@@ -1,4 +1,4 @@
-from math import log2
+from math import ceil, log2
 
 from domain.enums import BracketType, FederationRanking, MatchType
 from domain.match import Match
@@ -111,61 +111,70 @@ class Bracket:
     def create_matches_from_qualified(self) -> bool:
         from data.action_db_tournament import save_final_phase
 
-        qualified_players = self.get_all_qualified()
         phase = self.next_phase()
-        if not qualified_players or phase == self.__current_state:
+        if phase == self.__current_state:
             return False
-        nbr_matches = len(qualified_players) // 2
+        players = self.get_all_qualified()
+        if not players or len(players) % 2 or None in players:
+            return False
 
-        all_matches = []
-        i = 1
-        while len(qualified_players) > 0:
-            if phase == MatchType.FINAL:
-                all_matches.append(
-                    Match(
-                        f"{phase.name.lower()}-match-1",
-                        [qualified_players.pop(0), qualified_players.pop(0)],
-                        phase,
-                    )
-                )
-                break
-            else:
-                all_matches.insert(
-                    0,
-                    Match(
-                        f"{phase.name.lower()}-match-{i}",
-                        [qualified_players.pop(0), qualified_players.pop(2)],
-                        phase,
-                    ),
-                )
-                all_matches.insert(
-                    -1,
-                    Match(
-                        f"{phase.name.lower()}-match-{nbr_matches - i + 1}",
-                        [qualified_players.pop(0), qualified_players.pop(0)],
-                        phase,
-                    ),
-                )
-                i += 2
-        save_final_phase(self, phase, all_matches)
+        matches = []
+        for i in range(0, len(players), 2):
+            matches.append(Match(f"{phase.name.lower()}-match-{i // 2 + 1}", players[i : i + 2], phase))
+        save_final_phase(self, phase, matches)
         return True
 
-    def get_all_qualified(self) -> list:
+    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | None]:
         if self.__current_state == MatchType.POOL:
-            if not self.__pools or any(pool.nbr_matches_left() for pool in self.__pools):
-                return []
-            qualified_players = []
-            for pool in self.__pools:
+            qualified, _ = self.pool_qualifiers(preview_pool_qualified)
+            return qualified
+
+        matches = self.get_all_matches_from_type(self.__current_state)
+        winners = [match.winner for match in matches]
+        if self.__current_state == self.first_final_round():
+            _, waiting = self.pool_qualifiers()
+            middle = len(winners) // 2
+            return winners[:middle] + waiting + winners[middle:]
+        return winners
+
+    def pool_qualifiers(self, preview: bool = False) -> tuple[list[Player | None], list[Player | None]]:
+        pool_results = []
+        for pool in self.__pools:
+            if pool.nbr_matches_left() == 0:
                 ranking = pool.ranking()
-                qualified_players += [ranking[0][0], ranking[1][0]]
-            return qualified_players[0 : 2 ** int(log2(len(self.__pools) * 2))]
+                pool_results.append((ranking[0][0], ranking[1][0], ranking[0][4]))
+            elif preview:
+                pool_results.append((None, None, -1))
+            else:
+                return [], []
 
-        else:
-            qualified_players = []
-            for match in self.get_all_matches_from_type(self.__current_state):
-                qualified_players.append(match.winner)
+        if not pool_results:
+            return [], []
 
-        return qualified_players
+        player_count = len(pool_results) * 2
+        full_round_size = 2 ** int(log2(player_count))
+        # Chaque match préliminaire retire un joueur du tour suivant.
+        waiting_count = 2 * full_round_size - player_count if player_count != full_round_size else 0
+        both_can_wait = waiting_count > len(pool_results)
+        split_pools = player_count - waiting_count if both_can_wait else waiting_count
+        pool_results.sort(key=lambda result: result[2], reverse=both_can_wait)
+
+        qualified = []
+        waiting = []
+        for index, (first, second, _) in enumerate(pool_results):
+            if index < split_pools:
+                first_list, second_list = waiting, qualified
+            elif both_can_wait:
+                first_list = second_list = waiting
+            else:
+                first_list = second_list = qualified
+            if index % 2 == 0:
+                first_list.insert(0, first)
+                second_list.append(second)
+            else:
+                first_list.append(first)
+                second_list.insert(0, second)
+        return qualified, waiting
 
     def get_all_matches_from_type(self, match_type) -> list[Match]:
         all_matches_from_type = []
@@ -174,11 +183,17 @@ class Bracket:
                 all_matches_from_type.append(match)
         return all_matches_from_type
 
+    def first_final_round(self) -> MatchType | None:
+        qualifiers = len(self.__pools) * 2
+        if 0 < qualifiers <= 32:
+            return MatchType.get_type_from_index(index=-ceil(log2(qualifiers)))
+        return None
+
     def next_phase(self) -> MatchType:
         if self.__current_state == MatchType.POOL:
-            qualifiers = len(self.__pools) * 2
-            if 0 < qualifiers <= 32 and all(pool.nbr_matches_left() == 0 for pool in self.__pools):
-                return MatchType.get_type_from_index(index=-int(log2(qualifiers)))
+            first_round = self.first_final_round()
+            if first_round is not None and all(pool.nbr_matches_left() == 0 for pool in self.__pools):
+                return first_round
         elif self.__current_state != MatchType.FINAL:
             matches = self.get_all_matches_from_type(self.__current_state)
             if matches and all(match.is_played() for match in matches):
