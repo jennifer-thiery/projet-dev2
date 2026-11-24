@@ -137,6 +137,21 @@ class Bracket:
             return winners[:middle] + waiting + winners[middle:]
         return winners
 
+    def get_preview_qualified(self, phase: MatchType) -> list[Player | None]:
+        if self.__current_state == MatchType.POOL:
+            first_round = self.first_final_round()
+            if phase == first_round:
+                return self.get_all_qualified(preview_pool_qualified=True)
+            if first_round is not None and phase.index == first_round.index + 1:
+                qualified, waiting = self.pool_qualifiers(preview=True)
+                winner_count = len(qualified) // 2
+                middle = winner_count // 2
+                return [None] * middle + waiting + [None] * (winner_count - middle)
+        elif phase.index == self.__current_state.index + 1:
+            return self.get_all_qualified()
+
+        return [None] * 2 ** (MatchType.FINAL.index - phase.index + 1)
+
     def pool_qualifiers(self, preview: bool = False) -> tuple[list[Player | None], list[Player | None]]:
         pool_results = []
         for pool in self.__pools:

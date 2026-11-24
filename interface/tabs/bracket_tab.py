@@ -21,28 +21,24 @@ class BracketTab(Container):
         yield VerticalScroll(id="content_container")
 
     async def on_select_changed(self, event: Select.Changed):
-        if event.select.id != "view-select":
-            return
-
-        if event.value == "final-phase":
-            bracket = self.app.tournament.brackets[self.__bracket_type.bracket_index]
-            if not bracket.matches:
-                try:
-                    if bracket.create_matches_from_qualified():
-                        self.app.reload_tournament()
-                        return
-                except (Error, ValueError) as error:
-                    self.notify(f"Phase finale impossible ({error}).", severity="error")
-
-        await self.refresh_view()
+        if event.select.id == "view-select":
+            await self.refresh_view()
 
     async def refresh_view(self) -> None:
         view = self.query_one("#view-select", Select).value
+        bracket = self.app.tournament.brackets[self.__bracket_type.bracket_index]
+        if view == "final-phase":
+            try:
+                if bracket.create_matches_from_qualified():
+                    self.app.reload_tournament()
+                    return
+            except (Error, ValueError) as error:
+                self.notify(f"Phase finale impossible ({error}).", severity="error")
+
         content_container = self.query_one("#content_container", VerticalScroll)
         previous_pools = next(iter(content_container.query(PoolsContent)), None)
         pool_index = previous_pools.query_one(Select).value if previous_pools else Select.NULL
         await content_container.remove_children()
-        bracket = self.app.tournament.brackets[self.__bracket_type.bracket_index]
 
         if view == "pools":
             await content_container.mount(PoolsContent(bracket, pool_index))
