@@ -21,7 +21,7 @@ class MatchType(StrEnum):
     FINAL = "Finale"
 
     @property
-    def index(self):
+    def index(self) -> int:
         return int(list(MatchType).index(self))
 
     @staticmethod

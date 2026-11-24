@@ -1,33 +1,19 @@
-import json
-from pathlib import Path
+from sqlite3 import Error
 
-from data.action_db_players import import_players_to_db
-from data.action_db_tounament import load_saved_brackets
-from domain.tournament import Tournament
-from interface.gui_menu import menu
-
-PROJECT_ROOT = Path(__file__).resolve().parent
-
-
-def seed_players_from_json() -> None:
-    matches = list(PROJECT_ROOT.rglob("all_players.json"))
-    if not matches:
-        raise FileNotFoundError(f"all_players.json not found under {PROJECT_ROOT}")
-    with matches[0].open(encoding="utf-8") as file:
-        import_players_to_db(json.load(file))
+from data.action_db_tournament import load_tournament
+from interface.tui_textual import TableTennisTournamentManager
 
 
 def main():
-    seed_players_from_json()
-    tournament = Tournament()
-    print(f"Loaded {len(tournament.all_players)} players from database.")
+    try:
+        tournament = load_tournament()
+    except Error as error:
+        raise SystemExit(
+            f"Impossible d'ouvrir la base du tournoi ({error})."
+        ) from error
 
-    saved = load_saved_brackets(tournament.all_players)
-    if any(bracket.type not in saved for bracket in tournament.brackets):
-        tournament.add_players_to_brackets()
-    tournament.brackets[:] = [saved.get(bracket.type, bracket) for bracket in tournament.brackets]
-    menu(tournament)
+    TableTennisTournamentManager(tournament=tournament).run()
 
 
-if __name__ in {"__main__", "__mp_main__"}:
+if __name__ == "__main__":
     main()

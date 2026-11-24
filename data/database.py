@@ -1,8 +1,86 @@
-import json
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 
-FILE_PATH = Path(__file__).resolve().with_name("tournament.sqlite3")
+FILE_PATH = Path(__file__).with_name("tournament.sqlite3")
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS players (
+    licence_number TEXT PRIMARY KEY,
+    position INTEGER NOT NULL UNIQUE,
+    firstname TEXT NOT NULL,
+    lastname TEXT NOT NULL,
+    birthdate TEXT NOT NULL,
+    club TEXT NOT NULL,
+    federation_ranking TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    second_bracket INTEGER NOT NULL CHECK (second_bracket IN (0, 1))
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS brackets (
+    type TEXT PRIMARY KEY,
+    phase TEXT NOT NULL
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS bracket_players (
+    bracket_type TEXT NOT NULL REFERENCES brackets(type) ON DELETE CASCADE,
+    position INTEGER NOT NULL,
+    licence_number TEXT NOT NULL REFERENCES players(licence_number)
+        ON UPDATE CASCADE,
+    PRIMARY KEY (bracket_type, licence_number),
+    UNIQUE (bracket_type, position)
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS pools (
+    bracket_type TEXT NOT NULL REFERENCES brackets(type) ON DELETE CASCADE,
+    number INTEGER NOT NULL,
+    PRIMARY KEY (bracket_type, number)
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS pool_players (
+    bracket_type TEXT NOT NULL,
+    pool_number INTEGER NOT NULL,
+    position INTEGER NOT NULL,
+    licence_number TEXT NOT NULL,
+    PRIMARY KEY (bracket_type, pool_number, licence_number),
+    UNIQUE (bracket_type, pool_number, position),
+    FOREIGN KEY (bracket_type, pool_number) REFERENCES pools(bracket_type, number)
+        ON DELETE CASCADE,
+    FOREIGN KEY (bracket_type, licence_number) REFERENCES bracket_players(bracket_type, licence_number)
+        ON UPDATE CASCADE
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS matches (
+    bracket_type TEXT NOT NULL REFERENCES brackets(type) ON DELETE CASCADE,
+    label TEXT NOT NULL,
+    position INTEGER NOT NULL,
+    pool_number INTEGER,
+    type TEXT NOT NULL,
+    first_licence TEXT NOT NULL,
+    second_licence TEXT NOT NULL,
+    PRIMARY KEY (bracket_type, label),
+    FOREIGN KEY (bracket_type, pool_number) REFERENCES pools(bracket_type, number)
+        ON DELETE CASCADE,
+    FOREIGN KEY (bracket_type, first_licence) REFERENCES bracket_players(bracket_type, licence_number)
+        ON UPDATE CASCADE,
+    FOREIGN KEY (bracket_type, second_licence) REFERENCES bracket_players(bracket_type, licence_number)
+        ON UPDATE CASCADE,
+    CHECK (first_licence != second_licence),
+    CHECK ((type = 'POOL') = (pool_number IS NOT NULL))
+) WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS match_sets (
+    bracket_type TEXT NOT NULL,
+    match_label TEXT NOT NULL,
+    position INTEGER NOT NULL,
+    first_points INTEGER NOT NULL CHECK (first_points >= 0),
+    second_points INTEGER NOT NULL CHECK (second_points >= 0),
+    PRIMARY KEY (bracket_type, match_label, position),
+    FOREIGN KEY (bracket_type, match_label) REFERENCES matches(bracket_type, label)
+        ON DELETE CASCADE
+) WITHOUT ROWID;
+"""
 
 
 def connect_db():
@@ -10,113 +88,21 @@ def connect_db():
     try:
         db.row_factory = sqlite3.Row
         db.execute("PRAGMA foreign_keys = ON")
-        if db.execute("PRAGMA user_version").fetchone()[0] == 0:
-            initialize_database(db)
-    except BaseException:
+        version = db.execute("PRAGMA user_version").fetchone()[0]
+        if version == 0 and db.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' LIMIT 1").fetchone() is None:
+            db.executescript("BEGIN IMMEDIATE;\n" + SCHEMA + "PRAGMA user_version = 5; COMMIT;")
+        elif version not in (3, 4, 5):
+            raise sqlite3.DatabaseError("Ce fichier de tournoi utilise un schéma incompatible.")
+        elif version == 3 and db.execute("SELECT 1 FROM players WHERE active = 0 LIMIT 1").fetchone():
+            raise sqlite3.DatabaseError("Cette ancienne base contient des joueurs retirés.")
+    except sqlite3.Error:
         db.close()
         raise
     return db
 
 
-def initialize_database(db):
-    with db:
-        db.executescript("""
-            BEGIN IMMEDIATE;
-            CREATE TABLE IF NOT EXISTS players (
-                licence_number TEXT PRIMARY KEY NOT NULL,
-                firstname TEXT NOT NULL,
-                lastname TEXT NOT NULL,
-                birthdate TEXT NOT NULL,
-                club TEXT NOT NULL,
-                federation_ranking TEXT NOT NULL,
-                email TEXT NOT NULL,
-                phone_number TEXT NOT NULL,
-                second_bracket INTEGER NOT NULL CHECK (second_bracket IN (0, 1))
-            );
-            CREATE TABLE IF NOT EXISTS tournaments (
-                id INTEGER PRIMARY KEY CHECK (id = 1)
-            );
-            CREATE TABLE IF NOT EXISTS tournament_players (
-                id INTEGER PRIMARY KEY,
-                tournament_id INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
-                roster_position INTEGER,
-                licence_number TEXT NOT NULL,
-                firstname TEXT NOT NULL,
-                lastname TEXT NOT NULL,
-                birthdate TEXT NOT NULL,
-                club TEXT NOT NULL,
-                federation_ranking TEXT NOT NULL,
-                email TEXT NOT NULL,
-                phone_number TEXT NOT NULL,
-                second_bracket INTEGER NOT NULL CHECK (second_bracket IN (0, 1)),
-                UNIQUE (tournament_id, roster_position)
-            );
-            CREATE TABLE IF NOT EXISTS brackets (
-                id INTEGER PRIMARY KEY,
-                tournament_id INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
-                type TEXT NOT NULL,
-                current_state TEXT,
-                legacy_current_pool INTEGER
-            );
-            CREATE TABLE IF NOT EXISTS bracket_players (
-                bracket_id INTEGER NOT NULL REFERENCES brackets(id) ON DELETE CASCADE,
-                position INTEGER NOT NULL,
-                player_id INTEGER NOT NULL REFERENCES tournament_players(id) ON DELETE CASCADE,
-                PRIMARY KEY (bracket_id, position)
-            );
-            CREATE TABLE IF NOT EXISTS pools (
-                id INTEGER PRIMARY KEY,
-                bracket_id INTEGER NOT NULL REFERENCES brackets(id) ON DELETE CASCADE,
-                label NOT NULL,
-                UNIQUE (bracket_id, id)
-            );
-            CREATE TABLE IF NOT EXISTS pool_players (
-                pool_id INTEGER NOT NULL REFERENCES pools(id) ON DELETE CASCADE,
-                position INTEGER NOT NULL,
-                player_id INTEGER NOT NULL REFERENCES tournament_players(id) ON DELETE CASCADE,
-                PRIMARY KEY (pool_id, position)
-            );
-            CREATE TABLE IF NOT EXISTS matches (
-                id INTEGER PRIMARY KEY,
-                bracket_id INTEGER NOT NULL REFERENCES brackets(id) ON DELETE CASCADE,
-                pool_id INTEGER,
-                label TEXT NOT NULL,
-                type TEXT NOT NULL,
-                first_player_id INTEGER REFERENCES tournament_players(id),
-                second_player_id INTEGER REFERENCES tournament_players(id),
-                first_score INTEGER NOT NULL,
-                second_score INTEGER NOT NULL,
-                has_legacy_winner INTEGER NOT NULL CHECK (has_legacy_winner IN (0, 1)),
-                legacy_winner_id INTEGER REFERENCES tournament_players(id),
-                FOREIGN KEY (bracket_id, pool_id) REFERENCES pools(bracket_id, id) ON DELETE CASCADE
-            );
-            CREATE INDEX IF NOT EXISTS matches_by_bracket_and_pool ON matches (bracket_id, pool_id);
-            CREATE TABLE IF NOT EXISTS match_sets (
-                match_id INTEGER NOT NULL REFERENCES matches(id) ON DELETE CASCADE,
-                position INTEGER NOT NULL,
-                first_points INTEGER NOT NULL,
-                second_points INTEGER NOT NULL,
-                PRIMARY KEY (match_id, position)
-            );
-        """)
-        legacy_table = db.execute(
-            "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'tournament'"
-        ).fetchone()
-        if legacy_table is not None:
-            from data.action_db_tounament import write_tournament
-
-            row = db.execute("SELECT snapshot FROM tournament WHERE id = 1").fetchone()
-            if row is not None:
-                write_tournament(db, json.loads(row["snapshot"]))
-            db.execute("DROP TABLE tournament")
-        db.execute("PRAGMA user_version = 1")
-
-
 def reset_database():
-    db = connect_db()
-    try:
-        db.execute("DELETE FROM tournaments")
+    with closing(connect_db()) as db, db:
+        # SQLite efface les poules, les matchs et les sets liés aux tableaux.
+        db.execute("DELETE FROM brackets")
         db.execute("DELETE FROM players")
-        db.commit()
-    finally:
-        db.close()

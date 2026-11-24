@@ -1,0 +1,57 @@
+/***** All modals *****/
+ModalScreen {
+    align: center middle;
+}
+
+ModalScreen > #modal-content {
+    width: 100;
+    height: auto;
+    padding: 1 2;
+    background: $surface;
+}
+
+ModalScreen > #modal-content > * {
+    height: auto;
+}
+
+/***** FinalPhaseTree *****/
+FinalPhaseTree {
+    layout: horizontal;
+    width: 100%;
+    height: 1fr;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+FinalPhaseTree > Vertical {
+    width: auto;
+    height: auto;
+    min-width: 28;
+    margin-right: 2;
+    padding: 1 0;
+}
+
+MatchCard {
+    border: round $primary;
+    width: 28;
+    height: 4;
+    padding: 0 1;
+}
+
+.player-row {
+    height: 1;
+    width: 100%;
+}
+
+.name {
+    width: 1fr;
+}
+
+.player-row .name.tbd {
+    color: $text-muted;
+    text-style: italic;
+}
+
+.score {
+    width: auto;
+}
