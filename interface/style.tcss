@@ -47,6 +47,11 @@ MatchCard {
     width: 1fr;
 }
 
+.player-row .name.tbd {
+    color: $text-muted;
+    text-style: italic;
+}
+
 .score {
     width: auto;
 }

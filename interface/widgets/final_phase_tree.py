@@ -20,23 +20,21 @@ class MatchCard(Static):
 
     def compose(self) -> ComposeResult:
         with Horizontal(classes="player-row"):
-            player_1 = (
-                f"{self.__player_1.firstname} {self.__player_1.lastname}"
-                if self.__player_1 is not None
-                else "À déterminer"
-            )
+            if self.__player_1 is not None:
+                yield Label(f"{self.__player_1.firstname} {self.__player_1.lastname}", classes="name")
+            else:
+                yield Label("À déterminer", classes="name tbd")
+
             sets_1 = self.__sets_1 if self.__sets_1 is not None else 0
-            yield Label(player_1, classes="name")
             yield Label(str(sets_1), classes="score")
 
         with Horizontal(classes="player-row"):
-            player_2 = (
-                f"{self.__player_2.firstname} {self.__player_2.lastname}"
-                if self.__player_2 is not None
-                else "À déterminer"
-            )
+            if self.__player_2 is not None:
+                yield Label(f"{self.__player_2.firstname} {self.__player_2.lastname}", classes="name")
+            else:
+                yield Label("À déterminer", classes="name tbd")
+
             sets_2 = self.__sets_2 if self.__sets_2 is not None else 0
-            yield Label(player_2, classes="name")
             yield Label(str(sets_2), classes="score")
 
 
