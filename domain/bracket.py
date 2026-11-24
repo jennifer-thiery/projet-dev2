@@ -118,10 +118,22 @@ class Bracket:
     def create_matches_from_qualified(self) -> None:
         from data.action_db_write import save_bracket_matches
 
-        qualified_players = self.get_all_qualified()
+        qualified_players, waiting_players = self.get_all_qualified()
         previous_state = self.__current_state
+        previous_waiting = list(self.__players_waiting)
         previous_match_count = len(self.__matches)
         self.change_state()
+
+        if self.__current_state == previous_state:
+            return
+
+        if previous_state == MatchType.POOL:
+            self.__players_waiting = waiting_players
+        else:
+            qualified_players = self.__arrange_phase(
+                qualified_players, waiting_players, len(qualified_players) + len(waiting_players)
+            )
+            self.__players_waiting = []
 
         while len(qualified_players) > 0:
             self.__matches.append(
@@ -132,16 +144,19 @@ class Bracket:
                 )
             )
 
-        # raise ValueError(f"{self.__matches} {self.__players_waiting}")
         if len(self.__matches) > previous_match_count:
             try:
                 save_bracket_matches(None, self)
             except Exception:
                 del self.__matches[previous_match_count:]
                 self.__current_state = previous_state
+                self.__players_waiting = previous_waiting
                 raise
 
-    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | None]:
+    def get_all_qualified(self) -> list[Player | None]:
+        qualified_players = []
+        waiting_players = []
+
         if self.__current_state == MatchType.POOL:
             all_players = []
             for pool in self.__pools:
@@ -149,8 +164,6 @@ class Bracket:
                     taby = pool.ranking()
                     all_players.append((taby[0][0], taby[1][0], taby[0][4]))
                     # (first player, second player, points of first player)
-                elif preview_pool_qualified:
-                    all_players.append((None, None, -1))
 
             nbr_player = len(self.__pools) * 2
             nbr_magic = int(log2(nbr_player))
@@ -162,8 +175,6 @@ class Bracket:
             all_players.sort(key=lambda p: p[2], reverse=put_2_first)
 
             left = True
-            qualified_players = []
-            waiting_players = []
 
             for pool_players in all_players:
                 if put_2_first:
@@ -199,22 +210,53 @@ class Bracket:
                 nbr_in_wait -= 1
                 left = not left
 
-            if not preview_pool_qualified:
-                self.__players_waiting = waiting_players
-
         else:
-            if not self.__players_waiting:
-                qualified_players = []
-            else:
-                qualified_players = self.__players_waiting
-                self.__players_waiting = []
+            waiting_players = self.__players_waiting
 
             all_matches = self.get_all_matches_from_type(self.__current_state)
+            for match in all_matches:
+                winner = match.winner if match.is_played() else None
+                qualified_players.append(winner)
+
             for i in range(len(all_matches) // 2):
                 qualified_players.insert(0, all_matches[i])
                 qualified_players.append([-(1 + i)])
 
-        return qualified_players
+        return qualified_players, waiting_players
+
+    def split_phase(self, players: list, waiting: list, phase_size: int) -> list:
+        # Split de players in two (left and right side), reverse the left one and add the waiting players.
+        half_size = phase_size // 2
+
+        mid = len(players) // 2
+        left_players = players[:mid][::-1]
+        right_players = players[mid:]
+
+        mid_waiting = len(waiting) // 2
+        left_waiting = waiting[:mid_waiting]
+        right_waiting = waiting[mid_waiting:]
+
+        nbr_none_left = half_size - len(left_players) - len(left_waiting)
+        nbr_none_right = half_size - len(right_players) - len(right_waiting)
+
+        left = left_players + [None] * nbr_none_left + left_waiting
+        right = right_players + [None] * nbr_none_right + right_waiting
+        return left + right
+
+    def get_preview_qualified(self, phase: MatchType) -> list[Player | None]:
+        qualified_players, waiting_players = self.get_all_qualified()
+        first_phase = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools))))
+        if phase == first_phase:
+            nbr_player = len(self.__pools) * 2
+            size = 2 * nbr_player - 2 ** ceil(log2(nbr_player))  # Size of phase without waiting players
+            return self.split_phase(qualified_players, [], size * 2)
+
+        previous_phase = MatchType.get_type_from_index(phase.index - 1)
+        players = qualified_players if previous_phase == self.__current_state else []
+        waiting = waiting_players if previous_phase == first_phase else []
+
+        size = 2 ** (MatchType.FINAL.index - phase.index + 1)
+        return self.split_phase(players, waiting, size)
 
     def get_all_matches_from_type(self, match_type) -> list[Match]:
         all_matches_from_type = []

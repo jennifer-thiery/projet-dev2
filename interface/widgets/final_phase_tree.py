@@ -44,12 +44,12 @@ class FinalPhaseTree(ScrollableContainer):
     def __init__(self, bracket):
         super().__init__()
         self.__bracket = bracket
-        self.__preview_pool_qualified = any(pool.nbr_matches_left() != 0 for pool in self.__bracket.pools)
 
-        if self.__preview_pool_qualified:
-            self.__first_round = MatchType.get_type_from_index(index=-ceil(log2(len(self.__bracket.pools))))
-            self.__pool_preview_players = self.__bracket.get_all_qualified(preview_pool_qualified=True)
+        pools = self.__bracket.pools
+        preview = bool(pools) and self.__bracket.current_state == MatchType.POOL and len(pools) * 2 <= 32
 
+        if preview:
+            self.__first_round = MatchType.get_type_from_index(index=-ceil(log2(len(pools))))
         else:
             self.__first_round = MatchType.FINAL
             for i in range(MatchType.ROUND_OF_32.index, MatchType.FINAL.index + 1):
@@ -59,29 +59,19 @@ class FinalPhaseTree(ScrollableContainer):
                     break
 
     def compose(self) -> ComposeResult:
-        if self.__preview_pool_qualified:
-            nbr_matches_type = len(self.__pool_preview_players) // 2
-        else:
-            nbr_matches_type = len(self.__bracket.get_all_matches_from_type(self.__first_round))
-
         for i in range(self.__first_round.index, MatchType.FINAL.index + 1):
             match_type = MatchType.get_type_from_index(i)
+            matchs = self.__bracket.get_all_matches_from_type(match_type)
 
             with Vertical():
-                yield Static(match_type)
+                yield Static(match_type.value)
 
-                # for match in matchs:
-                #     yield MatchCard(match.players[0], match.scores[0], match.players[1], match.scores[1])
-
-                # # Add temperary (empty) matches for next phases
-                # temp_matches = nbr_matches_type - len(matchs)
-                # for i in range(temp_matches):
-                #     yield MatchCard(None, None, None, None)
-
-                if self.__preview_pool_qualified and i == self.__first_round.index:
-                    for j in range(0, len(self.__pool_preview_players), 2):
-                        p1 = self.__pool_preview_players[j]
-                        p2 = self.__pool_preview_players[j + 1]
+                if matchs:
+                    for match in matchs:
+                        yield MatchCard(match.players[0], match.scores[0], match.players[1], match.scores[1])
+                else:
+                    players = self.__bracket.get_preview_qualified(match_type)
+                    for j in range(0, len(players), 2):
+                        p1 = players[j]
+                        p2 = players[j + 1]
                         yield MatchCard(p1, None, p2, None)
-
-            nbr_matches_type = nbr_matches_type // 2
