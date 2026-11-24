@@ -1,7 +1,7 @@
 from math import ceil, log2
 
 from textual.app import ComposeResult
-from textual.containers import Horizontal, HorizontalScroll, Vertical
+from textual.containers import Horizontal, ScrollableContainer, Vertical
 from textual.widgets import Label, Static
 
 from domain.enums import MatchType
@@ -40,7 +40,7 @@ class MatchCard(Static):
             yield Label(str(sets_2), classes="score")
 
 
-class FinalPhaseTree(HorizontalScroll):
+class FinalPhaseTree(ScrollableContainer):
     def __init__(self, bracket):
         super().__init__()
         self.__bracket = bracket

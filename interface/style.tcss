@@ -16,8 +16,18 @@ ModalScreen > #modal-content > * {
 
 /***** FinalPhaseTree *****/
 FinalPhaseTree {
+    layout: horizontal;
+    width: 100%;
+    height: 1fr;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+FinalPhaseTree > Vertical {
     width: auto;
     height: auto;
+    min-width: 28;
+    margin-right: 2;
     padding: 1 0;
 }
 
