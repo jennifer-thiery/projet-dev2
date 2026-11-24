@@ -185,7 +185,17 @@ def save_match_result(bracket_type, match):
             ),
         ).fetchone()
         if row is None:
-            raise ValueError("Ce match n'a pas été retrouvé. Rouvrez le tournoi.")
+            raise ValueError(
+                f"Ce match n'a pas été retrouvé. Rouvrez le tournoi.{
+                    (
+                        bracket_type.name,
+                        match.id,
+                        match.type.name,
+                        first.licence_number,
+                        second.licence_number,
+                    )
+                }"
+            )
         if db.execute(
             "SELECT 1 FROM match_sets WHERE bracket_type = ? AND match_label = ?",
             (bracket_type.name, match.id),
