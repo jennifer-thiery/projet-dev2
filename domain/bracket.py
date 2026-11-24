@@ -7,13 +7,12 @@ from domain.pool import Pool
 
 
 class Bracket:
-    def __init__(self, type: BracketType):
-        self.__type: BracketType = type
+    def __init__(self, type: BracketType, phase: MatchType = MatchType.POOL):
+        self.__type = type
         self.__players: list[Player] = []
         self.__pools: list[Pool] = []
         self.__matches = []
-        self.__current_state = MatchType.POOL
-        self.__players_waiting = []
+        self.__current_state = phase
 
     @property
     def type(self):
@@ -54,7 +53,6 @@ class Bracket:
         self.__pools.clear()
         self.__matches.clear()
         self.__current_state = MatchType.POOL
-        self.__players_waiting.clear()
 
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
@@ -98,6 +96,7 @@ class Bracket:
                     else:
                         reverse = False
                 nbr_in_pool += 1
+
         elif nbr_play != 0:
             self.__pools.append(Pool(1))
             while len(temp_list) > 0:
@@ -109,151 +108,88 @@ class Bracket:
         for pool in self.__pools:
             pool.create_matches()
 
-    def get_all_qualified(self) -> list[Player | None]:
-        qualified_players = []
-        waiting_players = []
+    def create_matches_from_qualified(self) -> bool:
+        from data.action_db_tournament import save_final_phase
 
+        phase = self.next_phase()
+        if phase == self.__current_state:
+            return False
+        players = self.get_all_qualified()
+        if not players or len(players) % 2 or None in players:
+            return False
+
+        matches = []
+        for i in range(0, len(players), 2):
+            matches.append(Match(f"{phase.name.lower()}-match-{i // 2 + 1}", players[i : i + 2], phase))
+        save_final_phase(self, phase, matches)
+        return True
+
+    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | None]:
         if self.__current_state == MatchType.POOL:
-            all_players = []
-            for pool in self.__pools:
-                if pool.nbr_matches_left() == 0:
-                    taby = pool.ranking()
-                    all_players.append((taby[0][0], taby[1][0], taby[0][4]))
-                    # (first player, second player, points of first player)
+            qualified, _ = self.pool_qualifiers(preview_pool_qualified)
+            return qualified
 
-            nbr_player = len(self.__pools) * 2
-            nbr_magic = int(log2(nbr_player))
-            nbr_in_wait = nbr_player - (2**nbr_magic)
-            put_2_first = nbr_player / 2 < nbr_in_wait
-            if put_2_first:
-                nbr_in_wait = nbr_player - nbr_in_wait
-
-            all_players.sort(key=lambda p: p[2], reverse=put_2_first)
-
-            left = True
-
-            for pool_players in all_players:
-                if put_2_first:
-                    if left:
-                        if nbr_in_wait > 0:
-                            waiting_players.insert(0, pool_players[0])
-                            qualified_players.append(pool_players[1])
-                        else:
-                            waiting_players.insert(0, pool_players[0])
-                            waiting_players.append(pool_players[1])
-                    else:
-                        if nbr_in_wait > 0:
-                            waiting_players.append(pool_players[0])
-                            qualified_players.insert(0, pool_players[1])
-                        else:
-                            waiting_players.append(pool_players[0])
-                            waiting_players.insert(0, pool_players[1])
-                else:
-                    if left:
-                        if nbr_in_wait > 0:
-                            waiting_players.insert(0, pool_players[0])
-                            qualified_players.append(pool_players[1])
-                        else:
-                            qualified_players.insert(0, pool_players[0])
-                            qualified_players.append(pool_players[1])
-                    else:
-                        if nbr_in_wait > 0:
-                            waiting_players.append(pool_players[0])
-                            qualified_players.insert(0, pool_players[1])
-                        else:
-                            qualified_players.append(pool_players[0])
-                            qualified_players.insert(0, pool_players[1])
-                nbr_in_wait -= 1
-                left = not left
-
-        else:
-            waiting_players = self.__players_waiting
-
-            all_matches = self.get_all_matches_from_type(self.__current_state)
-            for match in all_matches:
-                winner = match.winner if match.is_played() else None
-                qualified_players.append(winner)
-
-            for i in range(len(all_matches) // 2):
-                qualified_players.insert(0, all_matches[i])
-                qualified_players.append([-(1 + i)])
-
-        return qualified_players, waiting_players
-
-    def split_phase(self, players: list, waiting: list, phase_size: int) -> list:
-        # Split de players in two (left and right side), reverse the left one and add the waiting players.
-        half_size = phase_size // 2
-
-        mid = len(players) // 2
-        left_players = players[:mid][::-1]
-        right_players = players[mid:]
-
-        mid_waiting = len(waiting) // 2
-        left_waiting = waiting[:mid_waiting]
-        right_waiting = waiting[mid_waiting:]
-
-        nbr_none_left = half_size - len(left_players) - len(left_waiting)
-        nbr_none_right = half_size - len(right_players) - len(right_waiting)
-
-        left = left_players + [None] * nbr_none_left + left_waiting
-        right = right_players + [None] * nbr_none_right + right_waiting
-        return left + right
+        matches = self.get_all_matches_from_type(self.__current_state)
+        winners = [match.winner for match in matches]
+        if self.__current_state == self.first_final_round():
+            _, waiting = self.pool_qualifiers()
+            middle = len(winners) // 2
+            return winners[:middle] + waiting + winners[middle:]
+        return winners
 
     def get_preview_qualified(self, phase: MatchType) -> list[Player | None]:
-        qualified_players, waiting_players = self.get_all_qualified()
-        first_phase = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools) * 2)))
+        if self.__current_state == MatchType.POOL:
+            first_round = self.first_final_round()
+            if phase == first_round:
+                return self.get_all_qualified(preview_pool_qualified=True)
+            if first_round is not None and phase.index == first_round.index + 1:
+                qualified, waiting = self.pool_qualifiers(preview=True)
+                winner_count = len(qualified) // 2
+                middle = winner_count // 2
+                return [None] * middle + waiting + [None] * (winner_count - middle)
+        elif phase.index == self.__current_state.index + 1:
+            return self.get_all_qualified()
 
-        if phase == first_phase:
-            nbr_player = len(self.__pools) * 2
-            size = 2 ** int(log2(nbr_player))
-            return self.split_phase(qualified_players, [], size)
+        return [None] * 2 ** (MatchType.FINAL.index - phase.index + 1)
 
-        previous_phase = MatchType.get_type_from_index(phase.index - 1)
-        players = qualified_players if previous_phase == self.__current_state else []
-        waiting = waiting_players if previous_phase == first_phase else []
+    def pool_qualifiers(self, preview: bool = False) -> tuple[list[Player | None], list[Player | None]]:
+        pool_results = []
+        for pool in self.__pools:
+            if pool.nbr_matches_left() == 0:
+                ranking = pool.ranking()
+                pool_results.append((ranking[0][0], ranking[1][0], ranking[0][4]))
+            elif preview:
+                pool_results.append((None, None, -1))
+            else:
+                return [], []
 
-        size = 2 ** (MatchType.FINAL.index - phase.index + 1)
-        return self.split_phase(players, waiting, size)
+        if not pool_results:
+            return [], []
 
-    def create_matches_from_qualified(self) -> None:
-        from data.action_db_write import save_bracket_matches
+        player_count = len(pool_results) * 2
+        full_round_size = 2 ** int(log2(player_count))
+        # Chaque match préliminaire retire un joueur du tour suivant.
+        waiting_count = 2 * full_round_size - player_count if player_count != full_round_size else 0
+        both_can_wait = waiting_count > len(pool_results)
+        split_pools = player_count - waiting_count if both_can_wait else waiting_count
+        pool_results.sort(key=lambda result: result[2], reverse=both_can_wait)
 
-        qualified_players, waiting_players = self.get_all_qualified()
-        previous_state = self.__current_state
-        previous_waiting = list(self.__players_waiting)
-        previous_match_count = len(self.__matches)
-        self.change_state()
-
-        if self.__current_state == previous_state:
-            return
-
-        if previous_state == MatchType.POOL:
-            self.__players_waiting = waiting_players
-        else:
-            qualified_players = self.split_phase(
-                qualified_players, waiting_players, len(qualified_players) + len(waiting_players)
-            )
-            self.__players_waiting = []
-
-        i = 1
-        while len(qualified_players) > 0:
-            self.__matches.append(
-                Match(
-                    f"{self.__current_state.name.lower()}-match-{i}",
-                    [qualified_players.pop(0), qualified_players.pop(0)],
-                    self.__current_state,
-                )
-            )
-            i += 1
-
-        if len(self.__matches) > previous_match_count:
-            try:
-                save_bracket_matches(None, self)
-            except Exception:
-                del self.__matches[previous_match_count:]
-                self.__current_state = previous_state
-                self.__players_waiting = previous_waiting
-                raise
+        qualified = []
+        waiting = []
+        for index, (first, second, _) in enumerate(pool_results):
+            if index < split_pools:
+                first_list, second_list = waiting, qualified
+            elif both_can_wait:
+                first_list = second_list = waiting
+            else:
+                first_list = second_list = qualified
+            if index % 2 == 0:
+                first_list.insert(0, first)
+                second_list.append(second)
+            else:
+                first_list.append(first)
+                second_list.insert(0, second)
+        return qualified, waiting
 
     def get_all_matches_from_type(self, match_type) -> list[Match]:
         all_matches_from_type = []
@@ -262,15 +198,19 @@ class Bracket:
                 all_matches_from_type.append(match)
         return all_matches_from_type
 
-    def change_state(self) -> None:
-        all_done = all(pool.nbr_matches_left() == 0 for pool in self.__pools)
+    def first_final_round(self) -> MatchType | None:
+        qualifiers = len(self.__pools) * 2
+        if 0 < qualifiers <= 32:
+            return MatchType.get_type_from_index(index=-ceil(log2(qualifiers)))
+        return None
+
+    def next_phase(self) -> MatchType:
         if self.__current_state == MatchType.POOL:
-            if all_done and len(self.__pools) * 2 <= 32:
-                self.__current_state = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools))))
-        else:
-            for match in self.__matches:
-                if match.type == self.__current_state and not match.is_played():
-                    all_done = False
-                    break
-            if all_done:
-                self.__current_state = MatchType.get_type_from_index(index=self.__current_state.index - 1)
+            first_round = self.first_final_round()
+            if first_round is not None and all(pool.nbr_matches_left() == 0 for pool in self.__pools):
+                return first_round
+        elif self.__current_state != MatchType.FINAL:
+            matches = self.get_all_matches_from_type(self.__current_state)
+            if matches and all(match.is_played() for match in matches):
+                return MatchType.get_type_from_index(index=self.__current_state.index + 1)
+        return self.__current_state

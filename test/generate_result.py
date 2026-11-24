@@ -1,8 +1,8 @@
+from copy import copy
 from random import randint
 
-from domain.bracket import Bracket
+from data.action_db_tournament import save_match_result
 from domain.match import Match
-from domain.pool import Pool
 from domain.tournament import Tournament
 
 
@@ -31,8 +31,11 @@ def result_random(match: Match) -> None:
     match.record_result(sets)
 
 
-async def generate_for_pools(tournament: Tournament) -> None:
+def generate_for_pools(tournament: Tournament) -> None:
     for bracket in tournament.brackets:
         for pool in bracket.pools:
             for match in pool.matches:
-                result_random(match)
+                if not match.is_played():
+                    result = copy(match)
+                    result_random(result)
+                    save_match_result(bracket.type, result)

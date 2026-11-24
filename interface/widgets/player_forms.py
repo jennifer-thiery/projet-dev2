@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlite3 import Error
 
 from textual.app import ComposeResult
 from textual.containers import VerticalScroll
@@ -55,13 +56,14 @@ class AddPlayerForm(Screen[bool]):
     TITLE = "Ajouter un participant"
     BINDINGS = [("escape", "app.pop_screen", "Annuler")]
 
-    def __init__(self, tournament: Tournament, player: Player | None = None):
+    def __init__(self, player: Player | None = None):
         super().__init__()
-        self.__tournament = tournament
         self.__player = player
-        current_licence = player.licence_number if player else ""
+
+    def compose(self) -> ComposeResult:
+        current_licence = self.__player.licence_number if self.__player else ""
         self.__player_fields = [
-            ("licence_number", "Numéro de licence", [LicenceNumber(self.__tournament, current_licence)]),
+            ("licence_number", "Numéro de licence", [LicenceNumber(self.app.tournament, current_licence)]),
             ("firstname", "Prénom", [NotEmpty()]),
             ("lastname", "Nom", [NotEmpty()]),
             ("birthdate", "Date de naissance", [DateFormat()]),
@@ -71,7 +73,6 @@ class AddPlayerForm(Screen[bool]):
             ("phone_number", "Numéro de téléphone", [NotEmpty()]),
         ]
 
-    def compose(self) -> ComposeResult:
         yield Header()
 
         with VerticalScroll():
@@ -95,21 +96,29 @@ class AddPlayerForm(Screen[bool]):
             if not self.validate_fields():
                 return
             fields = {field: self.get_widget_by_id(field, Input).value for field, _, _ in self.__player_fields}
-            fields["birthdate"] = datetime.strptime(fields["birthdate"], "%d/%m/%Y")
-            if self.__player is None:
-                second_bracket = self.get_widget_by_id("second_bracket", Checkbox).value
-                self.__tournament.add_player_to_tournament(Player(**fields, second_bracket=second_bracket))
-                self.notify("Participant ajouté.")
-            else:
-                self.__tournament.edit_player(self.__player.licence_number, **fields)
-                self.notify("Participant modifié.")
+            fields["birthdate"] = datetime.strptime(fields["birthdate"], "%d/%m/%Y").date()
+            try:
+                if self.__player is None:
+                    second_bracket = self.get_widget_by_id("second_bracket", Checkbox).value
+                    self.app.tournament.add_player_to_tournament(Player(**fields, second_bracket=second_bracket))
+                    self.notify("Participant ajouté.")
+                else:
+                    self.app.tournament.edit_player(self.__player.licence_number, **fields)
+                    self.notify("Participant modifié.")
+            except (Error, ValueError) as error:
+                self.notify(f"Enregistrement impossible ({error}).", severity="error")
+                return
             self.dismiss(True)
         elif event.button.id == "remove":
             self.app.push_screen(ConfirmModal("Supprimer ce participant ?"), self.remove_confirmed)
 
     def remove_confirmed(self, confirmed: bool | None) -> None:
         if confirmed and self.__player is not None:
-            self.__tournament.delete_player_from_tournament(self.__player.licence_number)
+            try:
+                self.app.tournament.delete_player_from_tournament(self.__player.licence_number)
+            except (Error, ValueError) as error:
+                self.notify(f"Suppression impossible ({error}).", severity="error")
+                return
             self.notify("Participant supprimé.")
             self.dismiss(True)
 

@@ -9,10 +9,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Static
 
 from data.action_db_players import import_players_to_db
-from data.action_db_tounament import load_tournament
 from data.database import reset_database
 from domain.enums import FederationRanking
-from domain.tournament import Tournament
 from interface.widgets.confirm_modal import ConfirmModal
 
 PLAYERS_FILE = Path(__file__).resolve().parents[2] / "data" / "all_players.json"
@@ -51,10 +49,6 @@ class DatabaseScreen(Screen[bool]):
     TITLE = "Base de données"
     BINDINGS = [("escape", "app.pop_screen", "Retour")]
 
-    def __init__(self, tournament: Tournament):
-        super().__init__()
-        self.__tournament = tournament
-
     def compose(self) -> ComposeResult:
         yield Header()
         yield VerticalScroll(
@@ -65,24 +59,33 @@ class DatabaseScreen(Screen[bool]):
         )
         yield Footer()
 
+    def show_snapshot(self) -> None:
+        tournament = self.app.tournament
+        lines = [f"Participants inscrits : {len(tournament.all_players)}"]
+        for bracket in tournament.brackets:
+            if bracket.players:
+                matches = bracket.matches.copy()
+                for pool in bracket.pools:
+                    matches.extend(pool.matches)
+                played = sum(match.is_played() for match in matches)
+                lines.append(
+                    f"{bracket.type.value} · {bracket.current_state.value} · "
+                    f"{len(bracket.pools)} poules · {played}/{len(matches)} matchs joués"
+                )
+        self.query_one("#snapshot-content", Static).update("\n".join(lines))
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "snapshot":
-                snapshot = load_tournament()
-                content = (
-                    json.dumps(snapshot, ensure_ascii=False, indent=2)
-                    if snapshot is not None
-                    else "Aucun tournoi sauvegardé."
-                )
-                self.query_one("#snapshot-content", Static).update(content)
+                self.app.reload_tournament()
             case "import":
                 try:
-                    count = import_players_to_db(read_players())
-                    self.__tournament.load_players()
+                    players = import_players_to_db(read_players())
                 except (OSError, TypeError, ValueError, Error) as error:
                     self.notify(f"Import impossible ({error}).", severity="error")
                     return
-                self.notify(f"Joueurs importés : {count}. Générez les poules depuis l’onglet Général.")
+                self.app.reload_tournament()
+                self.notify(f"Joueurs importés : {len(players)}. Générez les poules depuis l’onglet Général.")
             case "reset":
                 self.app.push_screen(
                     ConfirmModal("Effacer tous les joueurs et la sauvegarde du tournoi ?"), self.reset_confirmed
@@ -95,6 +98,6 @@ class DatabaseScreen(Screen[bool]):
             except Error as error:
                 self.notify(f"Réinitialisation impossible ({error}).", severity="error")
                 return
-            self.__tournament.clear()
+            self.app.reload_tournament()
             self.notify("Base réinitialisée.")
             self.dismiss(True)

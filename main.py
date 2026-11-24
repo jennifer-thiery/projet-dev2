@@ -1,16 +1,16 @@
-from data.action_db_tounament import load_saved_brackets
-from domain.tournament import Tournament
+from sqlite3 import Error
+
+from data.action_db_tournament import load_tournament
 from interface.tui_textual import TableTennisTournamentManager
 
 
 def main():
-    tournament = Tournament()
-    saved = load_saved_brackets(tournament.all_players)
-    if any(bracket.type not in saved for bracket in tournament.brackets):
-        tournament.add_players_to_brackets()
-    tournament.brackets[:] = [
-        saved.get(bracket.type, bracket) for bracket in tournament.brackets
-    ]
+    try:
+        tournament = load_tournament()
+    except Error as error:
+        raise SystemExit(
+            f"Impossible d'ouvrir la base du tournoi ({error})."
+        ) from error
 
     TableTennisTournamentManager(tournament=tournament).run()
 

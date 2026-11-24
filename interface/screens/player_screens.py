@@ -5,17 +5,12 @@ from textual.containers import VerticalScroll
 from textual.screen import Screen
 from textual.widgets import Button, DataTable, Footer, Header
 
-from domain.tournament import Tournament
 from interface.widgets.player_forms import AddPlayerForm, EditOrRemoveForm
 
 
-class PlayerScreen(Screen):
+class PlayerScreen(Screen[bool]):
     TITLE = "Gestion des participants"
     BINDINGS = [("escape", "app.pop_screen", "Retour")]
-
-    def __init__(self, tournament: Tournament) -> None:
-        super().__init__()
-        self.__tournament = tournament
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -38,12 +33,11 @@ class PlayerScreen(Screen):
         )
         self.update_players()
 
-    def update_players(self, changed: bool | None = True) -> None:
-        if not changed:
-            return
+    def update_players(self) -> None:
         table = self.query_one(DataTable)
+        row = table.cursor_row
         table.clear()
-        for player in self.__tournament.all_players:
+        for player in self.app.tournament.all_players:
             table.add_row(
                 player.licence_number,
                 player.firstname,
@@ -57,12 +51,15 @@ class PlayerScreen(Screen):
                 key=player.licence_number,
             )
 
+        if table.row_count:
+            table.move_cursor(row=min(row, table.row_count - 1))
+
     def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
-        player = self.__tournament.player_pointer(event.row_key.value)
+        player = self.app.tournament.player_pointer(event.row_key.value)
         if player is not None:
-            self.app.push_screen(EditOrRemoveForm(self.__tournament, player), self.update_players)
+            self.app.push_screen(EditOrRemoveForm(player), self.app.reload_tournament)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "add":
-                self.app.push_screen(AddPlayerForm(tournament=self.__tournament))
+                self.app.push_screen(AddPlayerForm(), self.app.reload_tournament)
