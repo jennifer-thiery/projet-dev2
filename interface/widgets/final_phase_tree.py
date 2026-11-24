@@ -20,21 +20,23 @@ class MatchCard(Static):
 
     def compose(self) -> ComposeResult:
         with Horizontal(classes="player-row"):
-            if self.__player_1 is not None:
-                yield Label(f"{self.__player_1.firstname} {self.__player_1.lastname}", classes="name")
-            else:
-                yield Label("À déterminer", classes="name tbd")
-
+            player_1 = (
+                f"{self.__player_1.firstname} {self.__player_1.lastname}"
+                if self.__player_1 is not None
+                else "À déterminer"
+            )
             sets_1 = self.__sets_1 if self.__sets_1 is not None else 0
+            yield Label(player_1, classes="name")
             yield Label(str(sets_1), classes="score")
 
         with Horizontal(classes="player-row"):
-            if self.__player_2 is not None:
-                yield Label(f"{self.__player_2.firstname} {self.__player_2.lastname}", classes="name")
-            else:
-                yield Label("À déterminer", classes="name tbd")
-
+            player_2 = (
+                f"{self.__player_2.firstname} {self.__player_2.lastname}"
+                if self.__player_2 is not None
+                else "À déterminer"
+            )
             sets_2 = self.__sets_2 if self.__sets_2 is not None else 0
+            yield Label(player_2, classes="name")
             yield Label(str(sets_2), classes="score")
 
 
@@ -47,7 +49,7 @@ class FinalPhaseTree(ScrollableContainer):
         preview = bool(pools) and self.__bracket.current_state == MatchType.POOL and len(pools) * 2 <= 32
 
         if preview:
-            self.__first_round = MatchType.get_type_from_index(index=-ceil(log2(len(pools))))
+            self.__first_round = MatchType.get_type_from_index(index=-ceil(log2(len(pools) * 2)))
         else:
             self.__first_round = MatchType.FINAL
             for i in range(MatchType.ROUND_OF_32.index, MatchType.FINAL.index + 1):
@@ -71,5 +73,5 @@ class FinalPhaseTree(ScrollableContainer):
                     players = self.__bracket.get_preview_qualified(match_type)
                     for j in range(0, len(players), 2):
                         p1 = players[j]
-                        p2 = players[j + 1]
+                        p2 = players[j + 1] if j + 1 < len(players) else None
                         yield MatchCard(p1, None, p2, None)

@@ -109,50 +109,6 @@ class Bracket:
         for pool in self.__pools:
             pool.create_matches()
 
-    # def temp(self):
-    #     self.__matches = []
-    #     self.__players_waiting = []
-    #     self.__current_state = MatchType.POOL
-    #     self.create_matches_from_qualified()
-
-    def create_matches_from_qualified(self) -> None:
-        from data.action_db_write import save_bracket_matches
-
-        qualified_players, waiting_players = self.get_all_qualified()
-        previous_state = self.__current_state
-        previous_waiting = list(self.__players_waiting)
-        previous_match_count = len(self.__matches)
-        self.change_state()
-
-        if self.__current_state == previous_state:
-            return
-
-        if previous_state == MatchType.POOL:
-            self.__players_waiting = waiting_players
-        else:
-            qualified_players = self.__arrange_phase(
-                qualified_players, waiting_players, len(qualified_players) + len(waiting_players)
-            )
-            self.__players_waiting = []
-
-        while len(qualified_players) > 0:
-            self.__matches.append(
-                Match(
-                    f"{self.__current_state.name.lower()}-match-1",
-                    [qualified_players.pop(0), qualified_players.pop(0)],
-                    self.__current_state,
-                )
-            )
-
-        if len(self.__matches) > previous_match_count:
-            try:
-                save_bracket_matches(None, self)
-            except Exception:
-                del self.__matches[previous_match_count:]
-                self.__current_state = previous_state
-                self.__players_waiting = previous_waiting
-                raise
-
     def get_all_qualified(self) -> list[Player | None]:
         qualified_players = []
         waiting_players = []
@@ -245,11 +201,12 @@ class Bracket:
 
     def get_preview_qualified(self, phase: MatchType) -> list[Player | None]:
         qualified_players, waiting_players = self.get_all_qualified()
-        first_phase = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools))))
+        first_phase = MatchType.get_type_from_index(index=-ceil(log2(len(self.__pools) * 2)))
+
         if phase == first_phase:
             nbr_player = len(self.__pools) * 2
-            size = 2 * nbr_player - 2 ** ceil(log2(nbr_player))  # Size of phase without waiting players
-            return self.split_phase(qualified_players, [], size * 2)
+            size = 2 ** int(log2(nbr_player))
+            return self.split_phase(qualified_players, [], size)
 
         previous_phase = MatchType.get_type_from_index(phase.index - 1)
         players = qualified_players if previous_phase == self.__current_state else []
@@ -257,6 +214,44 @@ class Bracket:
 
         size = 2 ** (MatchType.FINAL.index - phase.index + 1)
         return self.split_phase(players, waiting, size)
+
+    def create_matches_from_qualified(self) -> None:
+        from data.action_db_write import save_bracket_matches
+
+        qualified_players, waiting_players = self.get_all_qualified()
+        previous_state = self.__current_state
+        previous_waiting = list(self.__players_waiting)
+        previous_match_count = len(self.__matches)
+        self.change_state()
+
+        if self.__current_state == previous_state:
+            return
+
+        if previous_state == MatchType.POOL:
+            self.__players_waiting = waiting_players
+        else:
+            qualified_players = self.split_phase(
+                qualified_players, waiting_players, len(qualified_players) + len(waiting_players)
+            )
+            self.__players_waiting = []
+
+        while len(qualified_players) > 0:
+            self.__matches.append(
+                Match(
+                    f"{self.__current_state.name.lower()}-match-{i}",
+                    [qualified_players.pop(0), qualified_players.pop(0)],
+                    self.__current_state,
+                )
+            )
+
+        if len(self.__matches) > previous_match_count:
+            try:
+                save_bracket_matches(None, self)
+            except Exception:
+                del self.__matches[previous_match_count:]
+                self.__current_state = previous_state
+                self.__players_waiting = previous_waiting
+                raise
 
     def get_all_matches_from_type(self, match_type) -> list[Match]:
         all_matches_from_type = []
