@@ -4,7 +4,7 @@ from pathlib import Path
 from data.action_db_players import import_players_to_db
 from data.action_db_tounament import load_saved_brackets
 from domain.tournament import Tournament
-from interface.menu import menu
+from interface.gui_menu import menu
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 

@@ -1,8 +1,8 @@
 from nicegui import ui
 
 from domain.tournament import Tournament
-from interface.player.newplayer import new_player_form
-from interface.player.playerForms import player_forms
+from interface.player.new_player import new_player_form
+from interface.player.player_forms import player_forms
 from interface.tournament.tournament import tournament_form
 
 
