@@ -34,7 +34,8 @@ class GeneralTab(Container):
             case "database":
                 self.app.push_screen(DatabaseScreen(self.__tournament), self.refresh_brackets)
             case "pool-generator":
-                generate_for_pools(self.__tournament)
+                await generate_for_pools(self.__tournament)
+                self.notify("Les résultat des poules générées.")
 
     async def refresh_brackets(self, changed: bool | None) -> None:
         if changed:
