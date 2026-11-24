@@ -62,7 +62,14 @@ class PoolsContent(Vertical):
             )
 
     def compose(self) -> ComposeResult:
-        pools = [(f"Poule {pool.id}", pool.id - 1) for pool in self.__pools]
+        pools = [
+            (
+                f"{f'Poule {pool.id}':<8} | {', '.join(f'{p.firstname} {p.lastname}' for p in pool.players)}",
+                pool.id - 1,
+            )
+            for pool in self.__pools
+        ]
+
         selected = self.__pool_index if any(index == self.__pool_index for _, index in pools) else Select.NULL
         yield Select(pools, id="pools", value=selected)
         yield VerticalScroll(id="pools-container")
