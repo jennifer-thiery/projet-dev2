@@ -7,12 +7,12 @@ from domain.pool import Pool
 
 
 class Bracket:
-    def __init__(self, type: BracketType):
+    def __init__(self, type: BracketType, phase: MatchType = MatchType.POOL):
         self.__type = type
         self.__players: list[Player] = []
         self.__pools: list[Pool] = []
         self.__matches = []
-        self.__current_state = MatchType.POOL
+        self.__current_state = phase
 
     @property
     def type(self):
@@ -108,24 +108,24 @@ class Bracket:
         for pool in self.__pools:
             pool.create_matches()
 
-    def create_matches_from_qualified(self) -> None:
-        from data.action_db_write import save_bracket_matches
+    def create_matches_from_qualified(self) -> bool:
+        from data.action_db_tournament import save_final_phase
 
         qualified_players = self.get_all_qualified()
-        nbr_matches = len(qualified_players) / 2
-        previous_state = self.__current_state
-        previous_match_count = len(self.__matches)
-        self.change_state()
+        phase = self.next_phase()
+        if not qualified_players or phase == self.__current_state:
+            return False
+        nbr_matches = len(qualified_players) // 2
 
         all_matches = []
         i = 1
         while len(qualified_players) > 0:
-            if self.__current_state == MatchType.get_type_from_index(index=-1):
-                self.__matches.append(
+            if phase == MatchType.FINAL:
+                all_matches.append(
                     Match(
-                        f"{self.__current_state.name.lower()}-match-1",
+                        f"{phase.name.lower()}-match-1",
                         [qualified_players.pop(0), qualified_players.pop(0)],
-                        self.__current_state,
+                        phase,
                     )
                 )
                 break
@@ -133,36 +133,31 @@ class Bracket:
                 all_matches.insert(
                     0,
                     Match(
-                        f"{self.__current_state.name.lower()}-match-{i}",
+                        f"{phase.name.lower()}-match-{i}",
                         [qualified_players.pop(0), qualified_players.pop(2)],
-                        self.__current_state,
+                        phase,
                     ),
                 )
                 all_matches.insert(
                     -1,
                     Match(
-                        f"{self.__current_state.name.lower()}-match-{nbr_matches - i + 1}",
+                        f"{phase.name.lower()}-match-{nbr_matches - i + 1}",
                         [qualified_players.pop(0), qualified_players.pop(0)],
-                        self.__current_state,
+                        phase,
                     ),
                 )
                 i += 2
-        self.__matches += all_matches
-        if len(self.__matches) > previous_match_count:
-            try:
-                save_bracket_matches(None, self)
-            except Exception:
-                del self.__matches[previous_match_count:]
-                self.__current_state = previous_state
-                raise
+        save_final_phase(self, phase, all_matches)
+        return True
 
     def get_all_qualified(self) -> list:
         if self.__current_state == MatchType.POOL:
+            if not self.__pools or any(pool.nbr_matches_left() for pool in self.__pools):
+                return []
             qualified_players = []
             for pool in self.__pools:
-                if pool.nbr_matches_left == 0:
-                    taby = pool.ranking()
-                    qualified_players += [taby[0][0], taby[1][0]]
+                ranking = pool.ranking()
+                qualified_players += [ranking[0][0], ranking[1][0]]
             return qualified_players[0 : 2 ** int(log2(len(self.__pools) * 2))]
 
         else:
@@ -179,23 +174,13 @@ class Bracket:
                 all_matches_from_type.append(match)
         return all_matches_from_type
 
-    def change_state(self) -> None:
-        x = log2(len(self.__pools) * 2)
-        all_done = True
+    def next_phase(self) -> MatchType:
         if self.__current_state == MatchType.POOL:
-            for pool in self.__pools:
-                for match in self.__matches:
-                    if not match.is_played():
-                        all_done = False
-                        break
-                if not all_done:
-                    break
-            if all_done and len(self.__pools) * 2 <= 32:
-                self.__current_state = MatchType.get_type_from_index(index=-int(x))
-        else:
-            for match in self.__matches:
-                if match.type == self.__current_state and not match.is_played():
-                    all_done = False
-                    break
-            if all_done:
-                self.__current_state = MatchType.get_type_from_index(index=self.__current_state.index - 1)
+            qualifiers = len(self.__pools) * 2
+            if 0 < qualifiers <= 32 and all(pool.nbr_matches_left() == 0 for pool in self.__pools):
+                return MatchType.get_type_from_index(index=-int(log2(qualifiers)))
+        elif self.__current_state != MatchType.FINAL:
+            matches = self.get_all_matches_from_type(self.__current_state)
+            if matches and all(match.is_played() for match in matches):
+                return MatchType.get_type_from_index(index=self.__current_state.index + 1)
+        return self.__current_state

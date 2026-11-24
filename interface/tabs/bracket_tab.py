@@ -1,19 +1,19 @@
+from sqlite3 import Error
+
 from textual.app import ComposeResult
 from textual.containers import Container, Vertical, VerticalScroll
 from textual.widgets import DataTable, Select, Static
 
-from data.action_db_write import save_pool_match_result
 from domain.bracket import Bracket
-from domain.enums import MatchType
-from domain.match import Match
+from domain.enums import BracketType
 from interface.widgets.final_phase_tree import FinalPhaseTree
 from interface.widgets.score_modal import ScoreModal
 
 
 class BracketTab(Container):
-    def __init__(self, id, bracket: Bracket) -> None:
+    def __init__(self, id, bracket_type: BracketType) -> None:
         super().__init__(id=id)
-        self.__bracket = bracket
+        self.__bracket_type = bracket_type
 
     def compose(self) -> ComposeResult:
         yield Select([("Poules", "pools"), ("Phase final", "final-phase")], id="view-select")
@@ -24,30 +24,39 @@ class BracketTab(Container):
         if event.select.id != "view-select":
             return
 
+        if event.value == "final-phase":
+            bracket = self.app.tournament.brackets[self.__bracket_type.bracket_index]
+            if not bracket.matches:
+                try:
+                    if bracket.create_matches_from_qualified():
+                        self.app.reload_tournament()
+                        return
+                except (Error, ValueError) as error:
+                    self.notify(f"Phase finale impossible ({error}).", severity="error")
+
+        await self.refresh_view()
+
+    async def refresh_view(self) -> None:
+        view = self.query_one("#view-select", Select).value
         content_container = self.query_one("#content_container", VerticalScroll)
+        previous_pools = next(iter(content_container.query(PoolsContent)), None)
+        pool_index = previous_pools.query_one(Select).value if previous_pools else Select.NULL
         await content_container.remove_children()
+        bracket = self.app.tournament.brackets[self.__bracket_type.bracket_index]
 
-        if event.value == "pools":
-            content_container.mount(PoolsContent(self.__bracket))
-
-        elif event.value == "final-phase":
-            # Look if final matches have already been created
-            # TODO : delete this when logic of creating final matches / add players changed
-            final_matches_created = any(m.type != MatchType.POOL for m in self.__bracket.matches)
-            if not final_matches_created:
-                self.__bracket.create_matches_from_qualified()
-
-            content_container.mount(FinalPhaseTree(self.__bracket))
-        else:
-            return
+        if view == "pools":
+            await content_container.mount(PoolsContent(bracket, pool_index))
+        elif view == "final-phase":
+            await content_container.mount(FinalPhaseTree(bracket))
 
 
 class PoolsContent(Vertical):
-    def __init__(self, bracket: Bracket):
+    def __init__(self, bracket: Bracket, pool_index=Select.NULL):
         super().__init__()
         self.__bracket = bracket
         self.__pools = self.__bracket.pools
         self.__selected_pool = None
+        self.__pool_index = pool_index
 
     def generate_player_table(self, table: DataTable) -> None:
         table.clear()
@@ -58,7 +67,8 @@ class PoolsContent(Vertical):
 
     def compose(self) -> ComposeResult:
         pools = [(f"Poule {pool.id}", pool.id - 1) for pool in self.__pools]
-        yield Select(pools, id="pools")
+        selected = self.__pool_index if any(index == self.__pool_index for _, index in pools) else Select.NULL
+        yield Select(pools, id="pools", value=selected)
         yield VerticalScroll(id="pools-container")
 
     async def on_select_changed(self, event: Select.Changed):
@@ -94,13 +104,4 @@ class PoolsContent(Vertical):
 
         match = self.__selected_pool.matches[int(event.row_key.value)]
 
-        def save_result(result: Match) -> None:
-            save_pool_match_result(self.__bracket, self.__selected_pool, result)
-
-        def update_score(saved: bool | None) -> None:
-            if saved:
-                event.data_table.update_cell(event.row_key, "score", f"{match.scores[0]} - {match.scores[1]}")
-                players_table = self.query_one("#players", DataTable)
-                self.generate_player_table(players_table)
-
-        self.app.push_screen(ScoreModal(match, save_result), update_score)
+        self.app.push_screen(ScoreModal(match, self.__bracket.type), self.app.reload_tournament)

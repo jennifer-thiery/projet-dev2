@@ -78,7 +78,7 @@ class Pool:
     def ranking(self) -> list[tuple]:
         stats = {}
         for player in self.__players:
-            stats[player.licence_number] = {"player": player, "played": 0, "wins": 0, "losses": 0, "points": 0}
+            stats[player] = {"player": player, "played": 0, "wins": 0, "losses": 0, "points": 0}
 
         for match in self.__matches:
             winner = match.winner
@@ -87,8 +87,8 @@ class Pool:
 
             loser = match.players[0] if winner == match.players[1] else match.players[1]
 
-            winner_stats = stats[winner.licence_number]
-            loser_stats = stats[loser.licence_number]
+            winner_stats = stats[winner]
+            loser_stats = stats[loser]
 
             winner_stats["played"] += 1
             winner_stats["wins"] += 1

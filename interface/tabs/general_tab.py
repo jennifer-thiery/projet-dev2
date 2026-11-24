@@ -1,38 +1,31 @@
+from sqlite3 import Error
+
 from textual.app import ComposeResult
 from textual.containers import Container, VerticalScroll
 from textual.widgets import Button
 
-from data.action_db_tounament import save_tournament
-from domain.tournament import Tournament
 from interface.screens.database_screen import DatabaseScreen
 from interface.screens.player_screens import PlayerScreen
-from interface.tabs.bracket_tab import BracketTab
 
 
 class GeneralTab(Container):
-    def __init__(self, id, tournament: Tournament) -> None:
-        super().__init__(id=id)
-        self.__tournament = tournament
-
     def compose(self) -> ComposeResult:
         with VerticalScroll():
             yield Button("Gérer les participants", id="players")
             yield Button("Générer les poules", id="pools")
             yield Button("Gérer la base de données", id="database")
 
-    async def on_button_pressed(self, event: Button.Pressed) -> None:
+    def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "players":
-                self.app.push_screen(PlayerScreen(tournament=self.__tournament))
+                self.app.push_screen(PlayerScreen())
             case "pools":
-                self.__tournament.add_players_to_brackets()
-                save_tournament(self.__tournament)
-                await self.refresh_brackets(True)
+                try:
+                    self.app.tournament.add_players_to_brackets()
+                except (Error, ValueError) as error:
+                    self.notify(f"Génération impossible ({error}).", severity="error")
+                    return
+                self.app.reload_tournament()
                 self.notify("Poules générées et tournoi sauvegardé.")
             case "database":
-                self.app.push_screen(DatabaseScreen(self.__tournament), self.refresh_brackets)
-
-    async def refresh_brackets(self, changed: bool | None) -> None:
-        if changed:
-            for bracket_tab in self.app.query(BracketTab):
-                await bracket_tab.recompose()
+                self.app.push_screen(DatabaseScreen())
