@@ -7,6 +7,7 @@ from domain.tournament import Tournament
 from interface.screens.database_screen import DatabaseScreen
 from interface.screens.player_screens import PlayerScreen
 from interface.tabs.bracket_tab import BracketTab
+from test.generate_result import generate_for_pools
 
 
 class GeneralTab(Container):
@@ -19,6 +20,7 @@ class GeneralTab(Container):
             yield Button("Gérer les participants", id="players")
             yield Button("Générer les poules", id="pools")
             yield Button("Gérer la base de données", id="database")
+            yield Button("Générer resultat des poules", id="pool-generator")
 
     async def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
@@ -31,6 +33,8 @@ class GeneralTab(Container):
                 self.notify("Poules générées et tournoi sauvegardé.")
             case "database":
                 self.app.push_screen(DatabaseScreen(self.__tournament), self.refresh_brackets)
+            case "pool-generator":
+                generate_for_pools(self.__tournament)
 
     async def refresh_brackets(self, changed: bool | None) -> None:
         if changed:
