@@ -61,6 +61,11 @@ class FinalPhaseTree(ScrollableContainer):
     def compose(self) -> ComposeResult:
         for i in range(self.__first_round.index, MatchType.FINAL.index + 1):
             match_type = MatchType.get_type_from_index(i)
+            players = self.__bracket.get_preview_qualified(match_type)
+
+            if len(players) == ceil(log2(len(self.__bracket.pools) * 2)):
+                self.__bracket.create_matches_from_qualified()
+
             matchs = self.__bracket.get_all_matches_from_type(match_type)
 
             with Vertical():
@@ -70,7 +75,6 @@ class FinalPhaseTree(ScrollableContainer):
                     for match in matchs:
                         yield MatchCard(match.players[0], match.scores[0], match.players[1], match.scores[1])
                 else:
-                    players = self.__bracket.get_preview_qualified(match_type)
                     for j in range(0, len(players), 2):
                         p1 = players[j]
                         p2 = players[j + 1] if j + 1 < len(players) else None

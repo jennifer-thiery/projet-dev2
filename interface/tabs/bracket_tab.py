@@ -31,12 +31,6 @@ class BracketTab(Container):
             content_container.mount(PoolsContent(self.__bracket))
 
         elif event.value == "final-phase":
-            # Look if final matches have already been created
-            # TODO : delete this when logic of creating final matches / add players changed
-            final_matches_created = any(m.type != MatchType.POOL for m in self.__bracket.matches)
-            if not final_matches_created:
-                self.__bracket.create_matches_from_qualified()
-
             content_container.mount(FinalPhaseTree(self.__bracket))
         else:
             return

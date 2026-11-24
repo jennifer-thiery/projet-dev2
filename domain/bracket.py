@@ -235,6 +235,7 @@ class Bracket:
             )
             self.__players_waiting = []
 
+        i = 1
         while len(qualified_players) > 0:
             self.__matches.append(
                 Match(
@@ -243,6 +244,7 @@ class Bracket:
                     self.__current_state,
                 )
             )
+            i += 1
 
         if len(self.__matches) > previous_match_count:
             try:
