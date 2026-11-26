@@ -23,7 +23,7 @@ class GeneralTab(Container):
                 self.app.push_screen(PlayerScreen())
             case "pools":
                 try:
-                    self.app.tournament.add_players_to_brackets()
+                    self.app.tournament.add_players_to_all_brackets()
                 except (Error, ValueError) as error:
                     self.notify(f"Génération impossible ({error}).", severity="error")
                     return
