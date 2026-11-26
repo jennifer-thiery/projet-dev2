@@ -11,7 +11,9 @@ from domain.player import Player
 from interface.widgets.score_modal import ScoreModal
 
 
-class MatchCard(Static):
+class MatchCard(Static, can_focus=True):
+    BINDINGS = [("enter", "open_score", "Ajouter un score")]
+
     def __init__(
         self,
         player_1: Player | None,
@@ -28,6 +30,8 @@ class MatchCard(Static):
         self.__sets_2 = sets_2
         self.__match = match
         self.__bracket_type = bracket_type
+
+        self.can_focus = match is not None
 
     def compose(self) -> ComposeResult:
         with Horizontal(classes="player-row"):
@@ -50,9 +54,12 @@ class MatchCard(Static):
             yield Label(player_2, classes="name tbd" if self.__player_2 is None else "name")
             yield Label(str(sets_2), classes="score")
 
-    def on_click(self):
+    def action_open_score(self) -> None:
         if self.__match is not None:
             self.app.push_screen(ScoreModal(self.__match, self.__bracket_type), self.app.reload_tournament)
+
+    def on_click(self):
+        self.action_open_score()
 
 
 class FinalPhaseTree(ScrollableContainer):

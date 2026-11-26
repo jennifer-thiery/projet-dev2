@@ -38,6 +38,10 @@ MatchCard {
     padding: 0 1;
 }
 
+MatchCard:focus {
+    border: round cyan;
+}
+
 .player-row {
     height: 1;
     width: 100%;
