@@ -94,6 +94,10 @@ class Player:
     def second_bracket(self) -> bool:
         return self.__second_bracket
 
+    @property
+    def ranking_weight(self):
+        return FederationRanking(self.federation_ranking)
+
     @second_bracket.setter
     def second_bracket(self, second_bracket) -> None:
         self.__second_bracket = second_bracket
@@ -149,3 +153,6 @@ class Player:
             f"Club : {self.__club}\n"
             f"Coordonées : {self.__email} | {self.__phone_number}\n"
         )
+
+    def affichage(self) -> str:
+        return f"{self.__firstname} {self.__lastname}"

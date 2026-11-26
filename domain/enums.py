@@ -2,6 +2,7 @@ from enum import StrEnum
 
 
 class BracketType(StrEnum):
+    DOUBLE = "Double mixte"
     JUNIOR = "Jeunes"
     BEGINNER = "Débutants"
     INTERMEDIATE = "Intermédiaires"

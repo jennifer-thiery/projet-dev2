@@ -8,16 +8,17 @@ from data.action_db_players import (
 from data.action_db_tournament import save_new_brackets
 from domain.bracket import Bracket
 from domain.enums import BracketType
+from domain.group import Group
 from domain.player import Player
 
 
 class Tournament:
     def __init__(self):
-        self.__all_players: list[Player] = []
+        self.__all_players: list[Player] | list[Group] = []
         self.__brackets = [Bracket(bracket_type) for bracket_type in BracketType]
 
     @property
-    def all_players(self) -> list[Player]:
+    def all_players(self) -> list[Player] | list[Group]:
         return self.__all_players
 
     @property
@@ -77,17 +78,16 @@ class Tournament:
     def delete_player_from_tournament(self, licence_number: str) -> None:
         remove_player_from_db(licence_number)
 
-    def add_players_to_brackets(self) -> None:
+    def add_players_to_all_brackets(self) -> None:
         """Prépare le nouveau tirage, puis le sauvegarde avant de l'afficher."""
-        brackets = [Bracket(bracket_type) for bracket_type in BracketType]
         for player in self.__all_players:
             for bracket_type in player.get_brackets():
-                brackets[bracket_type.bracket_index].add_player(player)
-        self.check_enough_players(brackets)
-        for bracket in brackets:
+                self.__brackets[bracket_type.bracket_index].add_player(player)
+        self.check_enough_players(self.__brackets)
+        for bracket in self.__brackets:
             if len(bracket.players) > 6:
                 bracket.create_pools()
-        save_new_brackets(brackets)
+        save_new_brackets(self.__brackets)
 
     def check_enough_players(self, brackets: list[Bracket]) -> None:
         for bracket in brackets:
@@ -95,6 +95,10 @@ class Tournament:
                 new_index = bracket.type.bracket_index + 1
                 if new_index == len(brackets):
                     new_index -= 2
+                elif bracket[new_index] == BracketType.JUNIOR:
+                    pass
+                elif new_index == 0:
+                    return
                 for player in bracket.players:
                     if brackets[new_index].is_player_in(player.licence_number) == -1:
                         brackets[new_index].add_player(player)

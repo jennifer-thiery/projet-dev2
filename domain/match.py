@@ -1,9 +1,10 @@
 from domain.enums import MatchType
+from domain.group import Group
 from domain.player import Player
 
 
 class Match:
-    def __init__(self, id: str, players: list[Player], type: MatchType):
+    def __init__(self, id: str, players: list[Player] | list[Group], type: MatchType):
 
         self.__id = id
         self.__scores = [0, 0]
@@ -24,7 +25,7 @@ class Match:
         return self.__sets
 
     @property
-    def players(self) -> list[Player]:
+    def players(self) -> list[Player] | list[Group]:
         return self.__players
 
     @property
@@ -80,7 +81,7 @@ class Match:
             f"ID : {self.__id}\n"
             f"Type : {self.__type}\n"
             f"Scores : {self.__scores}\n"
-            f"Joueurs : {[(player.firstname() + ' ' + player.last_name()) for player in self.__players]}\n"
+            f"Joueurs : {[(player.affichage()) for player in self.__players]}\n"
             f"Gagnant : {self.__winner.player_overview() if self.__winner else 'Aucun gagnant'}\n"
         )
 

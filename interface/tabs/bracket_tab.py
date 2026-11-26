@@ -57,14 +57,12 @@ class PoolsContent(Vertical):
     def generate_player_table(self, table: DataTable) -> None:
         table.clear()
         for rank, (player, played, wins, losses, points) in enumerate(self.__selected_pool.ranking()):
-            table.add_row(
-                rank + 1, player.licence_number, f"{player.firstname} {player.lastname}", played, wins, losses, points
-            )
+            table.add_row(rank + 1, player.licence_number, player.affichage(), played, wins, losses, points)
 
     def compose(self) -> ComposeResult:
         pools = [
             (
-                f"{f'Poule {pool.id}':<8} | {', '.join(f'{p.firstname} {p.lastname}' for p in pool.players)}",
+                f"{f'Poule {pool.id}':<8} | {', '.join(p.affichage() for p in pool.players)}",
                 pool.id - 1,
             )
             for pool in self.__pools

@@ -6,6 +6,7 @@ from textual.widgets import Label, Static
 
 from domain.bracket import Bracket
 from domain.enums import BracketType, MatchType
+from domain.group import Group
 from domain.match import Match
 from domain.player import Player
 from interface.widgets.score_modal import ScoreModal
@@ -14,9 +15,9 @@ from interface.widgets.score_modal import ScoreModal
 class MatchCard(Static):
     def __init__(
         self,
-        player_1: Player | None,
+        player_1: Player | Group | None,
         sets_1: int | None,
-        player_2: Player | None,
+        player_2: Player | Group | None,
         sets_2: int | None,
         match: Match | None = None,
         bracket_type: BracketType | None = None,

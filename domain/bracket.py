@@ -1,6 +1,7 @@
 from math import ceil, log2
 
-from domain.enums import BracketType, FederationRanking, MatchType
+from domain.enums import BracketType, MatchType
+from domain.group import Group
 from domain.match import Match
 from domain.player import Player
 from domain.pool import Pool
@@ -9,10 +10,11 @@ from domain.pool import Pool
 class Bracket:
     def __init__(self, type: BracketType, phase: MatchType = MatchType.POOL):
         self.__type = type
-        self.__players: list[Player] = []
+        self.__players: list[Player] | list[Group] = []
         self.__pools: list[Pool] = []
         self.__matches = []
         self.__current_state = phase
+        self.__double = type == BracketType.DOUBLE
 
     @property
     def type(self):
@@ -35,6 +37,12 @@ class Bracket:
         return self.__current_state
 
     def is_player_in(self, licence_number):
+        if self.__double:
+            for i, players in enumerate(self.players):
+                for player in players:
+                    if player.licence_number == licence_number:
+                        return i
+            return -1
         for i, player in enumerate(self.players):
             if player.licence_number == licence_number:
                 return i
@@ -45,7 +53,7 @@ class Bracket:
         if index != -1:
             self.players.remove(index)
 
-    def add_player(self, player: Player) -> None:
+    def add_player(self, player: Group | Player) -> None:
         self.__players.append(player)
 
     def clear(self) -> None:
@@ -53,6 +61,7 @@ class Bracket:
         self.__pools.clear()
         self.__matches.clear()
         self.__current_state = MatchType.POOL
+        self.__double.clear()
 
     def create_pools(self) -> None:
         """Crée la poule en serpentin.
@@ -62,7 +71,7 @@ class Bracket:
         """
         self.__pools = []
 
-        self.__players.sort(key=lambda p: FederationRanking(p.federation_ranking).ranking_weight, reverse=True)
+        self.__players.sort(key=lambda p: p.ranking_weight, reverse=True)
         temp_list = self.__players.copy()
 
         nbr_play = len(temp_list)
@@ -124,7 +133,7 @@ class Bracket:
         save_final_phase(self, phase, matches)
         return True
 
-    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | None]:
+    def get_all_qualified(self, preview_pool_qualified: bool = False) -> list[Player | Group | None]:
         if self.__current_state == MatchType.POOL:
             qualified, _ = self.pool_qualifiers(preview_pool_qualified)
             return qualified
@@ -137,7 +146,7 @@ class Bracket:
             return winners[:middle] + waiting + winners[middle:]
         return winners
 
-    def get_preview_qualified(self, phase: MatchType) -> list[Player | None]:
+    def get_preview_qualified(self, phase: MatchType) -> list[Player | Group | None]:
         if self.__current_state == MatchType.POOL:
             first_round = self.first_final_round()
             if phase == first_round:
@@ -152,7 +161,7 @@ class Bracket:
 
         return [None] * 2 ** (MatchType.FINAL.index - phase.index + 1)
 
-    def pool_qualifiers(self, preview: bool = False) -> tuple[list[Player | None], list[Player | None]]:
+    def pool_qualifiers(self, preview: bool = False) -> tuple[list[Player | Group | None], list[Player | Group | None]]:
         pool_results = []
         for pool in self.__pools:
             if pool.nbr_matches_left() == 0:
